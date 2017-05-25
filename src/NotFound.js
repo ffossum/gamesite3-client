@@ -1,10 +1,10 @@
 /* @flow */
 import React from 'react';
 
-export default function HelloWorld() {
+export default function NotFound() {
   return (
     <div>
-      Hello world
+      <h1>Not found</h1>
     </div>
   );
 }

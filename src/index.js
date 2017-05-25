@@ -1,6 +1,13 @@
 /* @flow */
 import React from 'react';
 import { render } from 'react-dom';
-import HelloWorld from './HelloWorld';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-render(<HelloWorld />, document.getElementById('root'));
+import Routes from './Routes';
+
+render(
+  <Router>
+    <Routes />
+  </Router>,
+  document.getElementById('root')
+);
