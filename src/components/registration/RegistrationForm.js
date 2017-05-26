@@ -2,6 +2,9 @@
 import React from 'react';
 
 export default class RegistrationForm extends React.Component {
+  props: {
+    register: Function,
+  };
   handleSubmit: (e: SyntheticInputEvent) => void;
   handleChange: (e: SyntheticInputEvent) => void;
   state: {
@@ -15,6 +18,7 @@ export default class RegistrationForm extends React.Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
+      this.props.register(this.state);
     };
 
     this.handleChange = e => {

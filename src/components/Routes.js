@@ -2,7 +2,8 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import FrontPage from './FrontPage';
-import RegistrationForm from './registration/RegistrationForm';
+import RegistrationFormContainer
+  from './registration/RegistrationFormContainer';
 import NotFound from './NotFound';
 
 export default function Routes() {
@@ -16,7 +17,11 @@ export default function Routes() {
       </nav>
       <Switch>
         <Route exact path="/" component={FrontPage} />
-        <Route exact path="/registration" component={RegistrationForm} />
+        <Route
+          exact
+          path="/registration"
+          component={RegistrationFormContainer}
+        />
         <Route component={NotFound} />
       </Switch>
     </div>
