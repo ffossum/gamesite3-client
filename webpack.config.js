@@ -1,10 +1,12 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: './src/index.js',
   output: {
     path: __dirname + '/output/scripts',
     filename: 'bundle.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -16,4 +18,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      DEVELOPMENT: JSON.stringify(true),
+    }),
+  ],
 };

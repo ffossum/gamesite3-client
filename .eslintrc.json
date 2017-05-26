@@ -3,6 +3,9 @@
     "browser": true,
     "node": true
   },
+  "globals": {
+    "DEVELOPMENT": false
+  },
   "extends": [
     "eslint:recommended",
     "plugin:flowtype/recommended",
