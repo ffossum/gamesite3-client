@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prettier": "prettier --write --single-quote --trailing-comma es5 *.js src/**/*.js",
-    "test": "flow check && prettier --list-different --single-quote --trailing-comma es5 *.js src/**/*.js"
+    "prettier": "prettier --write --single-quote --trailing-comma es5 \"*.js\" \"src/**/*.js\"",
+    "test": "flow check && prettier --list-different --single-quote --trailing-comma es5 \"*.js\" \"src/**/*.js\""
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
