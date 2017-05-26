@@ -1,18 +1,18 @@
 {
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
+    "plugin:flowtype/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended"
   ],
   "plugins": [
+    "flowtype",
     "react",
     "jsx-a11y"
   ],
-  "parserOptions": {
-    "ecmaVersion": 8,
-    "sourceType": "module"
-  }
+  "parser": "babel-eslint"
 }
