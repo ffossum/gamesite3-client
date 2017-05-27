@@ -1,35 +1,27 @@
 /* @flow */
+import { ajax } from 'rxjs/observable/dom/ajax';
 import {
   REGISTRATION_REQUEST,
   registrationSuccess,
+  registrationFailure,
 } from './registrationActions';
+import type { RegistrationRequestAction } from './registrationActions';
 
-import type { Action } from '../../actions';
-
-const registrationEpic = (action$: ActionsObservable<Action>) =>
-  action$.ofType(REGISTRATION_REQUEST).delay(1000).mapTo(registrationSuccess());
+const registrationEpic = (action$: ActionsObservable<*>) =>
+  action$
+    .ofType(REGISTRATION_REQUEST)
+    .mergeMap((action: RegistrationRequestAction) =>
+      ajax({
+        url: '/api/registration',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(action.payload),
+      })
+        .mapTo(registrationSuccess())
+        .catch(() => [registrationFailure(action.payload)])
+    );
 
 export default registrationEpic;
-
-// TODO: rewrite this to rxjs
-// function register(registration: Registration) {
-//   return (dispatch: Dispatch<*>) => {
-//     dispatch(registrationRequest(registration));
-
-//     fetch('/api/registration', {
-//       method: 'POST',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//       credentials: 'include',
-//       body: JSON.stringify(registration),
-//     }).then(response => {
-//       if (response.ok) {
-//         dispatch(registrationSuccess());
-//       } else {
-//         dispatch(registrationFailure(registration));
-//       }
-//     });
-//   };
-// }

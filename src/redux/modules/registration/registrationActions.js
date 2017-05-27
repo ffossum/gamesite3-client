@@ -9,7 +9,7 @@ export type Registration = {
   password: string,
   repeatPassword: string,
 };
-type RegistrationRequestAction = {
+export type RegistrationRequestAction = {
   type: 'registration/request',
   payload: Registration,
 };
