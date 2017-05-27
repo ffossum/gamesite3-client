@@ -2,13 +2,13 @@
 import { connect } from 'react-redux';
 import RegistrationForm
   from '../../../components/registration/RegistrationForm';
-import { register } from './registrationActions';
+import { registrationRequest } from './registrationActions';
 
 export default connect(
   () => ({}),
   (dispatch: Dispatch<*>) => ({
     register(...args) {
-      dispatch(register(...args));
+      dispatch(registrationRequest(...args));
     },
   })
 )(RegistrationForm);

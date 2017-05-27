@@ -1,7 +1,7 @@
 /* @flow */
-const REGISTRATION_REQUEST = 'registration/request';
-const REGISTRATION_SUCCESS = 'registration/success';
-const REGISTRATION_FAILURE = 'registration/failure';
+export const REGISTRATION_REQUEST = 'registration/request';
+export const REGISTRATION_SUCCESS = 'registration/success';
+export const REGISTRATION_FAILURE = 'registration/failure';
 
 export type Registration = {
   username: string,
@@ -13,7 +13,7 @@ type RegistrationRequestAction = {
   type: 'registration/request',
   payload: Registration,
 };
-function registrationRequest(
+export function registrationRequest(
   registration: Registration
 ): RegistrationRequestAction {
   return {
@@ -41,28 +41,6 @@ export function registrationFailure(
   return {
     type: REGISTRATION_FAILURE,
     payload: registration,
-  };
-}
-
-export function register(registration: Registration) {
-  return (dispatch: Dispatch<*>) => {
-    dispatch(registrationRequest(registration));
-
-    fetch('/api/registration', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(registration),
-    }).then(response => {
-      if (response.ok) {
-        dispatch(registrationSuccess());
-      } else {
-        dispatch(registrationFailure(registration));
-      }
-    });
   };
 }
 
