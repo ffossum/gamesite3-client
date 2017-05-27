@@ -1,7 +1,6 @@
 /* @flow */
-
 const REGISTRATION_REQUEST = 'registration/request';
-// const REGISTRATION_SUCCESS = 'registration/success';
+const REGISTRATION_SUCCESS = 'registration/success';
 const REGISTRATION_FAILURE = 'registration/failure';
 
 export type Registration = {
@@ -25,14 +24,18 @@ function registrationRequest(
 
 type RegistrationSuccessAction = {
   type: 'registration/success',
-  payload: Registration,
 };
+export function registrationSuccess(): RegistrationSuccessAction {
+  return {
+    type: REGISTRATION_SUCCESS,
+  };
+}
 
 type RegistrationFailureAction = {
   type: 'registration/failure',
   payload: Registration,
 };
-function registrationFailure(
+export function registrationFailure(
   registration: Registration
 ): RegistrationFailureAction {
   return {
@@ -55,7 +58,7 @@ export function register(registration: Registration) {
       body: JSON.stringify(registration),
     }).then(response => {
       if (response.ok) {
-        location.reload(); // cookie is set, now refresh page
+        dispatch(registrationSuccess());
       } else {
         dispatch(registrationFailure(registration));
       }

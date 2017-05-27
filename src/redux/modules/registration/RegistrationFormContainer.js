@@ -1,7 +1,8 @@
 /* @flow */
 import { connect } from 'react-redux';
-import RegistrationForm from './RegistrationForm';
-import { register } from '../../actions/registrationActions';
+import RegistrationForm
+  from '../../../components/registration/RegistrationForm';
+import { register } from './registrationActions';
 
 export default connect(
   () => ({}),

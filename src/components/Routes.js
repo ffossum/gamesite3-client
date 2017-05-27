@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import FrontPage from './FrontPage';
 import RegistrationFormContainer
-  from './registration/RegistrationFormContainer';
+  from '../redux/modules/registration/RegistrationFormContainer';
 import NotFound from './NotFound';
 
 export default function Routes() {
