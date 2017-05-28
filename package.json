@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "jest": "jest",
+    "coverage": "jest --coverage --collectCoverageFrom=\"src/**/*.js\"",
     "eslint": "eslint src/",
     "prettier": "prettier --write --single-quote --trailing-comma es5 \"*.js\" \"src/**/*.js\"",
-    "test": "npm run eslint && flow check && prettier --list-different --single-quote --trailing-comma es5 \"*.js\" \"src/**/*.js\""
+    "test": "npm run eslint && flow check && prettier --list-different --single-quote --trailing-comma es5 \"*.js\" \"src/**/*.js\" && npm run coverage"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
