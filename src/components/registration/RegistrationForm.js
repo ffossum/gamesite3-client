@@ -4,6 +4,7 @@ import React from 'react';
 export default class RegistrationForm extends React.Component {
   props: {
     register: Function,
+    loading: boolean,
   };
   handleSubmit: (e: SyntheticInputEvent) => void;
   handleChange: (e: SyntheticInputEvent) => void;
@@ -18,7 +19,9 @@ export default class RegistrationForm extends React.Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
-      this.props.register(this.state);
+      if (!this.props.loading) {
+        this.props.register(this.state);
+      }
     };
 
     this.handleChange = e => {
@@ -30,6 +33,7 @@ export default class RegistrationForm extends React.Component {
   }
 
   render() {
+    const { loading } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -39,6 +43,7 @@ export default class RegistrationForm extends React.Component {
             id="username"
             name="username"
             onChange={this.handleChange}
+            readOnly={loading}
           />
         </div>
 
@@ -49,6 +54,7 @@ export default class RegistrationForm extends React.Component {
             id="email"
             name="email"
             onChange={this.handleChange}
+            readOnly={loading}
           />
         </div>
 
@@ -59,6 +65,7 @@ export default class RegistrationForm extends React.Component {
             id="password"
             name="password"
             onChange={this.handleChange}
+            readOnly={loading}
           />
         </div>
 
@@ -69,10 +76,11 @@ export default class RegistrationForm extends React.Component {
             id="repeatPassword"
             name="repeatPassword"
             onChange={this.handleChange}
+            readOnly={loading}
           />
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>Register</button>
       </form>
     );
   }
