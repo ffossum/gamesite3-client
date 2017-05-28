@@ -1,0 +1,5 @@
+[![Build Status](https://travis-ci.org/ffossum/gamesite3-client.svg?branch=master)](https://travis-ci.org/ffossum/gamesite3-client)
+[![codecov](https://codecov.io/gh/ffossum/gamesite3-client/branch/master/graph/badge.svg)](https://codecov.io/gh/ffossum/gamesite3-client)
+[![dependencies Status](https://david-dm.org/ffossum/gamesite3-client/status.svg)](https://david-dm.org/ffossum/gamesite3-client)
+[![devDependencies Status](https://david-dm.org/ffossum/gamesite3-client/dev-status.svg)](https://david-dm.org/ffossum/gamesite3-client?type=dev)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
