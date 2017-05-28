@@ -5,12 +5,15 @@ import {
   registrationFailure,
 } from './registrationActions';
 import type { RegistrationRequestAction } from './registrationActions';
-import type { EpicDependencies } from '../../configureStore';
+
+type Dependencies = {
+  ajax: any,
+};
 
 const registrationEpic = (
   action$: ActionsObservable<*>,
   store: Store<*>,
-  { ajax }: EpicDependencies
+  { ajax }: Dependencies
 ) =>
   action$
     .ofType(REGISTRATION_REQUEST)

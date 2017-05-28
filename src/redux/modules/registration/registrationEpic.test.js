@@ -7,7 +7,6 @@ import registrationEpic from './registrationEpic';
 import { ActionsObservable } from 'redux-observable';
 import {
   registrationRequest,
-  REGISTRATION_REQUEST,
   registrationSuccess,
   registrationFailure,
 } from './registrationActions';

@@ -32,7 +32,7 @@ export function registrationSuccess(): RegistrationSuccessAction {
 }
 
 type RegistrationFailureAction = {
-  type: 'registration/failure'
+  type: 'registration/failure',
 };
 export function registrationFailure(): RegistrationFailureAction {
   return {
