@@ -22,11 +22,22 @@ describe('registration epic', () => {
   test('registration success', async () => {
     const action = registrationRequest(registration);
     const action$ = ActionsObservable.of(action);
-    const ajax = () => Observable.of('ok');
+    const ajax = () =>
+      Observable.of({
+        response: {
+          id: 'user id',
+          username: 'bob',
+        },
+      });
 
     await new Promise(resolve => {
       registrationEpic(action$, null, { ajax }).toArray().subscribe(actions => {
-        expect(actions).toEqual([registrationSuccess()]);
+        expect(actions).toEqual([
+          registrationSuccess({
+            id: 'user id',
+            username: 'bob',
+          }),
+        ]);
         resolve();
       });
     });

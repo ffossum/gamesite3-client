@@ -3,6 +3,8 @@ export const REGISTRATION_REQUEST = 'registration/request';
 export const REGISTRATION_SUCCESS = 'registration/success';
 export const REGISTRATION_FAILURE = 'registration/failure';
 
+import type { SessionUser } from '../session/sessionReducer';
+
 export type Registration = {
   username: string,
   email: string,
@@ -24,10 +26,14 @@ export function registrationRequest(
 
 type RegistrationSuccessAction = {
   type: 'registration/success',
+  payload: SessionUser,
 };
-export function registrationSuccess(): RegistrationSuccessAction {
+export function registrationSuccess(
+  user: SessionUser
+): RegistrationSuccessAction {
   return {
     type: REGISTRATION_SUCCESS,
+    payload: user,
   };
 }
 

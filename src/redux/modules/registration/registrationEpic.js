@@ -27,7 +27,12 @@ const registrationEpic = (
         },
         body: JSON.stringify(action.payload),
       })
-        .mapTo(registrationSuccess())
+        .map(res =>
+          registrationSuccess({
+            username: action.payload.username,
+            ...res.response,
+          })
+        )
         .catch(() => [registrationFailure()])
     );
 

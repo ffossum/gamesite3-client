@@ -27,7 +27,13 @@ describe('registration reducer', () => {
 
   test('is no longer loading after success', () => {
     let state = reducer(initialState, registrationRequest(registration));
-    state = reducer(state, registrationSuccess());
+    state = reducer(
+      state,
+      registrationSuccess({
+        id: 'abc123',
+        username: 'bob',
+      })
+    );
     expect(state.loading).toBe(false);
   });
 
