@@ -1,13 +1,17 @@
 /* @flow */
-import { ajax } from 'rxjs/observable/dom/ajax';
 import {
   REGISTRATION_REQUEST,
   registrationSuccess,
   registrationFailure,
 } from './registrationActions';
 import type { RegistrationRequestAction } from './registrationActions';
+import type { EpicDependencies } from '../../configureStore';
 
-const registrationEpic = (action$: ActionsObservable<*>) =>
+const registrationEpic = (
+  action$: ActionsObservable<*>,
+  store: Store<*>,
+  { ajax }: EpicDependencies
+) =>
   action$
     .ofType(REGISTRATION_REQUEST)
     .mergeMap((action: RegistrationRequestAction) =>
