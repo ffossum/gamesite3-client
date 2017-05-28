@@ -7,12 +7,12 @@ type Dependencies = {
   location: any,
 };
 
-const loginEpic = (
+export default function loginEpic(
   action$: ActionsObservable<*>,
   store: Store<*>,
   { ajax, location }: Dependencies
-) =>
-  action$.ofType(LOGIN_REQUEST).mergeMap((action: LoginRequestAction) =>
+) {
+  return action$.ofType(LOGIN_REQUEST).mergeMap((action: LoginRequestAction) =>
     ajax({
       url: '/api/login',
       method: 'POST',
@@ -26,5 +26,4 @@ const loginEpic = (
       .map(res => loginSuccess(res.response))
       .catch(() => [loginFailure()])
   );
-
-export default loginEpic;
+}

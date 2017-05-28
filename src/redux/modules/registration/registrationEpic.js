@@ -11,12 +11,12 @@ type Dependencies = {
   location: any,
 };
 
-const registrationEpic = (
+export default function registrationEpic(
   action$: ActionsObservable<*>,
   store: Store<*>,
   { ajax, location }: Dependencies
-) =>
-  action$
+) {
+  return action$
     .ofType(REGISTRATION_REQUEST)
     .mergeMap((action: RegistrationRequestAction) =>
       ajax({
@@ -37,5 +37,4 @@ const registrationEpic = (
         )
         .catch(() => [registrationFailure()])
     );
-
-export default registrationEpic;
+}
