@@ -4,12 +4,13 @@ import type { LoginRequestAction } from './loginActions';
 
 type Dependencies = {
   ajax: any,
+  location: any,
 };
 
 const loginEpic = (
   action$: ActionsObservable<*>,
   store: Store<*>,
-  { ajax }: Dependencies
+  { ajax, location }: Dependencies
 ) =>
   action$.ofType(LOGIN_REQUEST).mergeMap((action: LoginRequestAction) =>
     ajax({

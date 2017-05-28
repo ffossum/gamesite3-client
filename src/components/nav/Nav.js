@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import type { SessionUser } from '../../redux/modules/session/sessionReducer';
+
 type Props = {
   user?: SessionUser,
 };
@@ -15,8 +17,8 @@ export default function Nav(props: Props) {
         {user
           ? [
               <li key="user">Logged in as: {user.username}</li>,
-              <li key="logout"><a href="/logout">Log out</a></li>
-          ]
+              <li key="logout"><a href="/logout">Log out</a></li>,
+            ]
           : [
               <li key="registration">
                 <Link to="/registration">Register</Link>

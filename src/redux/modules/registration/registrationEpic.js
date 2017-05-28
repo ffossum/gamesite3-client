@@ -8,12 +8,13 @@ import type { RegistrationRequestAction } from './registrationActions';
 
 type Dependencies = {
   ajax: any,
+  location: any,
 };
 
 const registrationEpic = (
   action$: ActionsObservable<*>,
   store: Store<*>,
-  { ajax }: Dependencies
+  { ajax, location }: Dependencies
 ) =>
   action$
     .ofType(REGISTRATION_REQUEST)
@@ -27,6 +28,7 @@ const registrationEpic = (
         },
         body: JSON.stringify(action.payload),
       })
+        .do(() => location.reload()) // cookie is set, now reload page to reconnect deepstream etc
         .map(res =>
           registrationSuccess({
             username: action.payload.username,

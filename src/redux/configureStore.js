@@ -9,6 +9,7 @@ import deepstream from './deepstream';
 const dependencies = {
   ajax,
   deepstream,
+  location: window.location,
 };
 
 const composeEnhancers =

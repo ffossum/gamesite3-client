@@ -18,6 +18,12 @@ describe('registration epic', () => {
     password: 'bobisthebest',
     repeatPassword: 'bobisthebest',
   };
+  let location;
+  beforeEach(() => {
+    location = {
+      reload: jest.fn(),
+    };
+  });
 
   test('registration success', async () => {
     const action = registrationRequest(registration);
@@ -31,15 +37,18 @@ describe('registration epic', () => {
       });
 
     await new Promise(resolve => {
-      registrationEpic(action$, null, { ajax }).toArray().subscribe(actions => {
-        expect(actions).toEqual([
-          registrationSuccess({
-            id: 'user id',
-            username: 'bob',
-          }),
-        ]);
-        resolve();
-      });
+      registrationEpic(action$, null, { ajax, location })
+        .toArray()
+        .subscribe(actions => {
+          expect(location.reload).toHaveBeenCalled();
+          expect(actions).toEqual([
+            registrationSuccess({
+              id: 'user id',
+              username: 'bob',
+            }),
+          ]);
+          resolve();
+        });
     });
   });
 
@@ -49,10 +58,13 @@ describe('registration epic', () => {
     const ajax = () => Observable.throw(new Error('error'));
 
     await new Promise(resolve => {
-      registrationEpic(action$, null, { ajax }).toArray().subscribe(actions => {
-        expect(actions).toEqual([registrationFailure()]);
-        resolve();
-      });
+      expect(location.reload).not.toHaveBeenCalled();
+      registrationEpic(action$, null, { ajax, location })
+        .toArray()
+        .subscribe(actions => {
+          expect(actions).toEqual([registrationFailure()]);
+          resolve();
+        });
     });
   });
 });
