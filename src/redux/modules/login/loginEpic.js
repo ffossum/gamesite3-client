@@ -21,6 +21,7 @@ const loginEpic = (
       },
       body: JSON.stringify(action.payload),
     })
+      .do(() => location.reload()) // cookie is set, reload page to reconnect deepstream etc
       .map(res => loginSuccess(res.response))
       .catch(() => [loginFailure()])
   );

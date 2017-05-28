@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Nav from './nav/Nav';
+import NavContainer from '../redux/modules/nav/NavContainer';
 import FrontPage from './FrontPage';
 import RegistrationFormContainer
   from '../redux/modules/registration/RegistrationFormContainer';
@@ -11,7 +11,7 @@ import NotFound from './NotFound';
 export default function Routes() {
   return (
     <div>
-      <Nav />
+      <NavContainer />
       <Switch>
         <Route exact path="/" component={FrontPage} />
         <Route
