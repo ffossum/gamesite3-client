@@ -8,7 +8,7 @@ import Routes from './components/Routes';
 import configureStore from './redux/configureStore';
 import { Provider } from 'react-redux';
 
-const store = configureStore({});
+const store = configureStore();
 
 render(
   <Provider store={store}>
