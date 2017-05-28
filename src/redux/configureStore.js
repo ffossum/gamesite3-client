@@ -7,8 +7,8 @@ import type { State } from './modules/root';
 import deepstream from './deepstream';
 
 export type EpicDependencies = {
-  ajax: any,
-  deepstream: any,
+  ajax?: any,
+  deepstream?: any,
 };
 const dependencies: EpicDependencies = {
   ajax,

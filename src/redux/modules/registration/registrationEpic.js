@@ -25,7 +25,7 @@ const registrationEpic = (
         body: JSON.stringify(action.payload),
       })
         .mapTo(registrationSuccess())
-        .catch(() => [registrationFailure(action.payload)])
+        .catch(() => [registrationFailure()])
     );
 
 export default registrationEpic;

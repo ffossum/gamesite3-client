@@ -32,15 +32,11 @@ export function registrationSuccess(): RegistrationSuccessAction {
 }
 
 type RegistrationFailureAction = {
-  type: 'registration/failure',
-  payload: Registration,
+  type: 'registration/failure'
 };
-export function registrationFailure(
-  registration: Registration
-): RegistrationFailureAction {
+export function registrationFailure(): RegistrationFailureAction {
   return {
     type: REGISTRATION_FAILURE,
-    payload: registration,
   };
 }
 
