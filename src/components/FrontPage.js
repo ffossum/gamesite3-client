@@ -1,10 +1,16 @@
 /* @flow */
 import React from 'react';
+import Chat from './chat/Chat';
 
-export default function HelloWorld() {
+const sendMessage = () => {}
+
+export default function FrontPage() {
   return (
     <main>
-      <h1>Hello world</h1>
+      <h1>Welcome</h1>
+      <section>
+        <Chat sendMessage={sendMessage} messages={[]} />
+      </section>
     </main>
   );
 }

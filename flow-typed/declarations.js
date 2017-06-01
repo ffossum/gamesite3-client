@@ -9,3 +9,9 @@ declare class ActionsObservable<T> extends rxjs$Observable<T> {
 declare module 'rxjs/observable/dom/ajax' {
   declare module.exports: any;
 }
+
+
+export type PublicUserData = {
+  id: string,
+  username: string,
+}
