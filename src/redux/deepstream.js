@@ -1,6 +1,14 @@
 /* @flow */
 import deepstream from 'deepstream.io-client-js';
 
-const client = deepstream('localhost:6020').login();
-
-export default client;
+export function login() {
+  return new Promise((resolve, reject) => {
+    const client = deepstream('localhost:6020');
+    client.login(success => {
+      if (success) {
+        resolve(client);
+      }
+      reject();
+    });
+  });
+}

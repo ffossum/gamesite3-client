@@ -1,25 +1,27 @@
 /* @flow */
-import { ajax } from 'rxjs/observable/dom/ajax';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { rootReducer, rootEpic } from './modules/root';
 import type { State } from './modules/root';
-import deepstream from './deepstream';
 
-const dependencies = {
-  ajax,
-  deepstream,
-  location: window.location,
+type Dependencies = {
+  ajax: any,
+  deepstreamClient: any,
+  location: any,
+  devToolsCompose: any,
 };
 
-const composeEnhancers =
-  (DEVELOPMENT && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+export default function configureStore(
+  preloadedState?: State,
+  dependencies: Dependencies
+) {
+  const composeEnhancers =
+    (DEVELOPMENT && dependencies.devToolsCompose) || compose;
 
-const epicMiddleware = createEpicMiddleware(rootEpic, {
-  dependencies,
-});
+  const epicMiddleware = createEpicMiddleware(rootEpic, {
+    dependencies,
+  });
 
-export default function configureStore(preloadedState?: State) {
   return createStore(
     rootReducer,
     preloadedState,
