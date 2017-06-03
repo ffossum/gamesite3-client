@@ -40,7 +40,7 @@ export function sendMessage(
   };
 }
 
-type ReceiveMessageAction = {
+export type ReceiveMessageAction = {
   type: 'chat/receive message',
   payload: UserMessage,
 };
