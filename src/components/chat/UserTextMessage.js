@@ -1,14 +1,13 @@
 /* @flow */
 import React from 'react';
 
-export type UserChatMessage = {
+export type MessageProp = {
   user: PublicUserData,
   text: string,
-  time: string,
 };
 
 type Props = {
-  message: UserChatMessage,
+  message: MessageProp,
 };
 export default function UserTextMessage(props: Props) {
   const { message } = props;

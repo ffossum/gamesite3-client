@@ -22,9 +22,11 @@ export default function configureStore(
     dependencies,
   });
 
-  return createStore(
-    rootReducer,
-    preloadedState,
-    composeEnhancers(applyMiddleware(epicMiddleware))
-  );
+  const storeEnhancer = composeEnhancers(applyMiddleware(epicMiddleware));
+
+  if (preloadedState) {
+    return createStore(rootReducer, preloadedState, storeEnhancer);
+  }
+
+  return createStore(rootReducer, storeEnhancer);
 }

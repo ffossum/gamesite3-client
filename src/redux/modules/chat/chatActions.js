@@ -5,11 +5,12 @@ export const RECEIVE_MESSAGE = 'chat/receive message';
 
 export type ChannelName = string;
 export type UserMessage = {
-  uid: string,
+  ch: ChannelName,
   txt: string,
+  uid: string,
 };
 
-type JoinChannelAction = {
+export type JoinChannelAction = {
   type: 'chat/join channel',
   payload: string,
 };
@@ -20,43 +21,33 @@ export function joinChannel(channelName: ChannelName): JoinChannelAction {
   };
 }
 
-type SendMessageAction = {
+export type SendMessageAction = {
   type: 'chat/send message',
-  payload: {
-    ch: ChannelName,
-    msg: UserMessage,
-  },
+  payload: UserMessage,
 };
 export function sendMessage(
-  ch: ChannelName,
-  msg: UserMessage
+  userId: string,
+  channelName: string,
+  messageText: string
 ): SendMessageAction {
   return {
     type: SEND_MESSAGE,
     payload: {
-      ch,
-      msg,
+      ch: channelName,
+      txt: messageText,
+      uid: userId,
     },
   };
 }
 
 type ReceiveMessageAction = {
   type: 'chat/receive message',
-  payload: {
-    ch: ChannelName,
-    msg: UserMessage,
-  },
+  payload: UserMessage,
 };
-export function receiveMessage(
-  ch: ChannelName,
-  msg: UserMessage
-): ReceiveMessageAction {
+export function receiveMessage(msg: UserMessage): ReceiveMessageAction {
   return {
     type: RECEIVE_MESSAGE,
-    payload: {
-      ch,
-      msg,
-    },
+    payload: msg,
   };
 }
 

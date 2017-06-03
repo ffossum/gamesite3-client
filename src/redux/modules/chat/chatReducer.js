@@ -6,7 +6,7 @@ import type { ChannelName } from './chatActions';
 import { SEND_MESSAGE, RECEIVE_MESSAGE } from './chatActions';
 import channelReducer from './channelReducer';
 
-type ChatState = {
+export type ChatState = {
   [ChannelName]: ChannelState,
 };
 const initialState: ChatState = {};

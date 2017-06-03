@@ -1,10 +1,12 @@
 /* @flow */
 import { RECEIVE_MESSAGE } from './chatActions';
 import type { Action } from '../../actions';
-import type { UserMessage } from './chatActions';
 
 export type ChannelState = {
-  messages: UserMessage[],
+  messages: Array<{
+    userId: string,
+    text: string,
+  }>,
 };
 
 const initialState: ChannelState = {
@@ -16,10 +18,14 @@ export default function channelReducer(
 ): ChannelState {
   switch (action.type) {
     case RECEIVE_MESSAGE: {
-      const { msg } = action.payload;
+      const message = {
+        userId: action.payload.uid,
+        text: action.payload.txt,
+      };
+
       return {
         ...state,
-        messages: [...state.messages, msg],
+        messages: [...state.messages, message],
       };
     }
 

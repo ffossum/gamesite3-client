@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react';
 import UserTextMessage from './UserTextMessage';
-import type { UserChatMessage } from './UserTextMessage';
+import type { MessageProp } from './UserTextMessage';
 import ChatInput from './ChatInput';
 
-type Props = {
-  messages: UserChatMessage[],
+export type Props = {
+  messages: MessageProp[],
   sendMessage: (text: string) => void,
 };
 export default function Chat(props: Props) {
@@ -13,8 +13,8 @@ export default function Chat(props: Props) {
   return (
     <div>
       <ul>
-        {messages.map(msg => (
-          <UserTextMessage key={msg.user.id + msg.time} message={msg} />
+        {messages.map((msg, i) => (
+          <UserTextMessage key={msg.user.id + i} message={msg} />
         ))}
       </ul>
       <ChatInput sendMessage={sendMessage} />

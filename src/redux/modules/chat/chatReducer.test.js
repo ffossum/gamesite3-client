@@ -11,13 +11,17 @@ describe('chat reducer', () => {
   });
 
   test('adds received message to channel', () => {
-    const action = receiveMessage('mainchat', { uid: 'userid', txt: 'hello' });
+    const action = receiveMessage({
+      ch: 'mainchat',
+      uid: 'userid',
+      txt: 'hello',
+    });
     const state = chatReducer(initialState, action);
 
     expect(state.mainchat && state.mainchat.messages).toHaveLength(1);
     expect(state.mainchat && state.mainchat.messages[0]).toEqual({
-      uid: 'userid',
-      txt: 'hello',
+      userId: 'userid',
+      text: 'hello',
     });
   });
 });

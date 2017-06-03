@@ -12,10 +12,13 @@ import { login as deepstreamLogin } from './redux/deepstream';
 import configureStore from './redux/configureStore';
 import { rootReducer } from './redux/modules/root';
 import { loginSuccess } from './redux/modules/login/loginActions';
+import { joinChannel } from './redux/modules/chat/chatActions';
 
 let preloadedState;
-if (window.__USER__) {
-  preloadedState = rootReducer(preloadedState, loginSuccess(window.__USER__));
+const user = window.__USER__;
+
+if (user) {
+  preloadedState = rootReducer(preloadedState, loginSuccess(user));
 }
 
 deepstreamLogin().then(deepstreamClient => {
@@ -27,6 +30,8 @@ deepstreamLogin().then(deepstreamClient => {
   };
 
   const store = configureStore(preloadedState, dependencies);
+
+  store.dispatch(joinChannel('general'));
 
   render(
     <Provider store={store}>
