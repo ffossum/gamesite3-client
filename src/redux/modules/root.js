@@ -34,6 +34,7 @@ export const rootReducer = combineReducers({
   session,
   users,
 });
+
 export const rootEpic = combineEpics(
   chatEpic,
   registrationEpic,

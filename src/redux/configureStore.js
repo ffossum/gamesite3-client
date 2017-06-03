@@ -15,8 +15,7 @@ export default function configureStore(
   preloadedState?: State,
   dependencies: Dependencies
 ) {
-  const composeEnhancers =
-    (DEVELOPMENT && dependencies.devToolsCompose) || compose;
+  const composeEnhancers = dependencies.devToolsCompose || compose;
 
   const epicMiddleware = createEpicMiddleware(rootEpic, {
     dependencies,
