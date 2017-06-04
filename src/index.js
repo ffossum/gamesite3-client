@@ -6,9 +6,10 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ajax } from 'rxjs/observable/dom/ajax';
+import deepstream from 'deepstream.io-client-js';
 
 import Routes from './Routes';
-import { login as deepstreamLogin } from './redux/deepstream';
+import DeepstreamClient from './redux/deepstreamClient';
 import configureStore from './redux/configureStore';
 import { rootReducer } from './redux/modules/root';
 import { loginSuccess } from './redux/modules/login/loginActions';
@@ -21,7 +22,9 @@ if (user) {
   preloadedState = rootReducer(preloadedState, loginSuccess(user));
 }
 
-deepstreamLogin().then(deepstreamClient => {
+const deepstreamClient = new DeepstreamClient(deepstream, 'localhost:6020');
+
+deepstreamClient.login().then(() => {
   const dependencies = {
     ajax,
     deepstreamClient,
