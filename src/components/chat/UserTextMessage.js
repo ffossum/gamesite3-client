@@ -13,7 +13,7 @@ export default function UserTextMessage(props: Props) {
   const { message } = props;
   return (
     <div>
-      <span>{message.user.username}</span> <span>{message.text}</span>
+      <strong>{message.user.username}</strong> <span>{message.text}</span>
     </div>
   );
 }

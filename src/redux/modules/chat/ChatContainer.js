@@ -17,13 +17,17 @@ export default connect(
 
     return {
       user: state.session.user,
-      messages: messages.map(msg => ({
-        user: {
-          id: msg.userId,
-          username: msg.userId, // TODO
-        },
-        text: msg.text,
-      })),
+      messages: messages.map(msg => {
+        const msgUser = state.users[msg.userId];
+        const msgUsername = msgUser ? msgUser.username : '';
+        return {
+          user: {
+            id: msg.userId,
+            username: msgUsername,
+          },
+          text: msg.text,
+        };
+      }),
     };
   },
   (dispatch: Dispatch<*>) => bindActionCreators({ sendMessage }, dispatch),
