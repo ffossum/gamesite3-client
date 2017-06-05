@@ -12,6 +12,32 @@ describe('deepstream client', () => {
     expect(deepstream).toHaveBeenCalledWith('localhost:6020');
   });
 
+  describe('login', () => {
+    test('passes args to deepstream login', () => {
+      const mockClient = {
+        login: jest.fn(),
+      };
+      const deepstream = () => mockClient;
+
+      const client = new DeepstreamClient(deepstream);
+      client.login();
+
+      expect(mockClient.login).toHaveBeenCalledTimes(1);
+    });
+
+    test('returns a promise', async () => {
+      const mockClient = {
+        login: cb => cb(true),
+      };
+      const deepstream = () => mockClient;
+
+      const client = new DeepstreamClient(deepstream);
+      const resolved = await client.login();
+
+      expect(resolved).toBe(client);
+    });
+  });
+
   test('subscribe returns an observable of a deepstream event', async () => {
     const testEvents = [
       {
