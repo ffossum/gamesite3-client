@@ -1,0 +1,70 @@
+/* @flow */
+/* eslint-env jest */
+import { createStore } from 'redux';
+import { loginSuccess } from '../login/loginActions';
+import { rootReducer } from '../root';
+import { sendMessage, receiveMessage } from './chatActions';
+import { fetchedUserData } from '../users/userDataActions';
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+} from './ChatContainer';
+
+describe('chat container', () => {
+  let store;
+  let dispatch;
+  const ownProps = { channelName: 'channel' };
+
+  beforeEach(() => {
+    store = createStore(rootReducer);
+    dispatch = jest.fn();
+  });
+
+  test('does not dispatch action when logged out user tries to send message', () => {
+    const stateProps = mapStateToProps(store.getState(), ownProps);
+    const dispatchProps = mapDispatchToProps(dispatch);
+
+    const props = mergeProps(stateProps, dispatchProps, ownProps);
+
+    props.sendMessage('hello');
+
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  test('dispatches action when logged in user sends message', () => {
+    store.dispatch(loginSuccess({ id: 'asdf-id', username: 'asdf' }));
+
+    const stateProps = mapStateToProps(store.getState(), ownProps);
+    const dispatchProps = mapDispatchToProps(dispatch);
+
+    const props = mergeProps(stateProps, dispatchProps, ownProps);
+
+    props.sendMessage('hello');
+
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith(
+      sendMessage('asdf-id', 'channel', 'hello')
+    );
+  });
+
+  test('creates denormalized message array', () => {
+    store.dispatch(
+      receiveMessage({ ch: 'channel', txt: 'hey', uid: 'zxcv-id' })
+    );
+    store.dispatch(
+      receiveMessage({ ch: 'channel', txt: 'hi', uid: 'qwer-id' })
+    );
+
+    store.dispatch(
+      fetchedUserData([
+        { id: 'qwer-id', username: 'qwer' },
+        { id: 'zxcv-id', username: 'zxcv' },
+      ])
+    );
+
+    const stateProps = mapStateToProps(store.getState(), ownProps);
+
+    expect(stateProps).toMatchSnapshot();
+  });
+});

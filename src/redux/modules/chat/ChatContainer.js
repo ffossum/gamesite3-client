@@ -10,41 +10,49 @@ type Props = {
   channelName: string,
 };
 
-export default connect(
-  (state: State, ownProps: Props) => {
-    const channel = state.chat[ownProps.channelName] || {};
-    const messages = channel.messages || [];
+export function mapStateToProps(state: State, ownProps: Props) {
+  const channel = state.chat[ownProps.channelName] || {};
+  const messages = channel.messages || [];
 
-    return {
-      user: state.session.user,
-      messages: messages.map(msg => {
-        const msgUser = state.users[msg.userId];
-        const msgUsername = msgUser ? msgUser.username : '';
-        return {
-          user: {
-            id: msg.userId,
-            username: msgUsername,
-          },
-          text: msg.text,
-        };
-      }),
-    };
-  },
-  (dispatch: Dispatch<*>) => bindActionCreators({ sendMessage }, dispatch),
-  (stateProps, dispatchProps, ownProps: Props): ChatProps => {
-    const userId = stateProps.user && stateProps.user.id;
-    let partialSendMessage = () => {};
-
-    if (userId) {
-      partialSendMessage = messageText => {
-        dispatchProps.sendMessage(userId, ownProps.channelName, messageText);
+  return {
+    user: state.session.user,
+    messages: messages.map(msg => {
+      const msgUser = state.users[msg.userId];
+      const msgUsername = msgUser ? msgUser.username : '';
+      return {
+        user: {
+          id: msg.userId,
+          username: msgUsername,
+        },
+        text: msg.text,
       };
-    }
+    }),
+  };
+}
 
-    return {
-      ...stateProps,
-      ...ownProps,
-      sendMessage: partialSendMessage,
+export function mapDispatchToProps(dispatch: Dispatch<*>) {
+  return bindActionCreators({ sendMessage }, dispatch);
+}
+
+export function mergeProps(
+  stateProps: *,
+  dispatchProps: *,
+  ownProps: Props
+): ChatProps {
+  const userId = stateProps.user && stateProps.user.id;
+  let partialSendMessage = () => {};
+
+  if (userId) {
+    partialSendMessage = messageText => {
+      dispatchProps.sendMessage(userId, ownProps.channelName, messageText);
     };
   }
-)(Chat);
+
+  return {
+    ...stateProps,
+    ...ownProps,
+    sendMessage: partialSendMessage,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Chat);

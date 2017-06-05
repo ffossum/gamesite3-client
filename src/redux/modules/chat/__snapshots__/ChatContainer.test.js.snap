@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chat container creates denormalized message array 1`] = `
+Object {
+  "messages": Array [
+    Object {
+      "text": "hey",
+      "user": Object {
+        "id": "zxcv-id",
+        "username": "zxcv",
+      },
+    },
+    Object {
+      "text": "hi",
+      "user": Object {
+        "id": "qwer-id",
+        "username": "qwer",
+      },
+    },
+  ],
+  "user": null,
+}
+`;
