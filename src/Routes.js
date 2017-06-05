@@ -5,6 +5,7 @@ import NavContainer from './redux/modules/nav/NavContainer';
 import FrontPage from './components/FrontPage';
 import RegistrationFormContainer from './redux/modules/registration/RegistrationFormContainer';
 import LoginFormContainer from './redux/modules/login/LoginFormContainer';
+import Lobby from './components/lobby/Lobby';
 import NotFound from './components/NotFound';
 
 export default function Routes() {
@@ -13,6 +14,7 @@ export default function Routes() {
       <NavContainer />
       <Switch>
         <Route exact path="/" component={FrontPage} />
+        <Route path="/lobby" component={Lobby} />
         <Route
           exact
           path="/registration"

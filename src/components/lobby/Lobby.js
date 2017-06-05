@@ -1,14 +1,12 @@
 /* @flow */
 import React from 'react';
-import ChatContainer from '../redux/modules/chat/ChatContainer';
+import ChatContainer from '../../redux/modules/chat/ChatContainer';
 
-export default function FrontPage() {
+export default function Lobby() {
   return (
     <main>
-      <h1>Welcome</h1>
-
       <section>
-        <h2>News</h2>
+        <h2>Lobby</h2>
       </section>
 
       <section>

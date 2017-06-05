@@ -13,6 +13,7 @@ export default function Nav(props: Props) {
     <nav>
       <ul>
         <li><Link to="/">Home</Link></li>
+        <li><Link to="/lobby">Lobby</Link></li>
 
         {user
           ? [
