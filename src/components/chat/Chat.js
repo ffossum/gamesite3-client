@@ -13,9 +13,9 @@ export default function Chat(props: Props) {
   return (
     <div>
       <ul>
-        {messages.map((msg, i) => (
+        {messages.map((msg, i) =>
           <UserTextMessage key={msg.user.id + i} message={msg} />
-        ))}
+        )}
       </ul>
       <ChatInput sendMessage={sendMessage} />
     </div>

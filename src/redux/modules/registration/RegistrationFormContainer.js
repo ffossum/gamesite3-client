@@ -1,7 +1,6 @@
 /* @flow */
 import { connect } from 'react-redux';
-import RegistrationForm
-  from '../../../components/registration/RegistrationForm';
+import RegistrationForm from '../../../components/registration/RegistrationForm';
 import { registrationRequest } from './registrationActions';
 
 import type { State } from '../root';
