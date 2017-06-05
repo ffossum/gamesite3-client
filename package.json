@@ -30,7 +30,7 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "deepstream.io-client-js": "^2.1.5",
+    "deepstream.io-client-js": "^2.2.1",
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
