@@ -5,6 +5,7 @@ Object {
   "messages": Array [
     Object {
       "text": "hey",
+      "time": "2017-06-08T02:07:37.605Z",
       "user": Object {
         "id": "zxcv-id",
         "username": "zxcv",
@@ -12,6 +13,7 @@ Object {
     },
     Object {
       "text": "hi",
+      "time": "2017-06-08T02:07:37.605Z",
       "user": Object {
         "id": "qwer-id",
         "username": "qwer",
