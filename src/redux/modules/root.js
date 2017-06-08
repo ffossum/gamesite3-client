@@ -19,12 +19,16 @@ import users from './users/usersReducer';
 import userDataEpic from './users/userDataEpic';
 import type { UsersState } from './users/usersReducer';
 
+import lobby from './lobby/lobbyReducer';
+import type { LobbyState } from './lobby/lobbyReducer';
+
 export type State = {
   chat: ChatState,
   login: LoginState,
   registration: RegistrationState,
   session: SessionState,
   users: UsersState,
+  lobby: LobbyState,
 };
 
 export const rootReducer = combineReducers({
@@ -33,6 +37,7 @@ export const rootReducer = combineReducers({
   registration,
   session,
   users,
+  lobby,
 });
 
 export const rootEpic = combineEpics(
