@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ActionsObservable } from 'redux-observable';
 import chatEpic from './chatEpic';
 import { sendMessage, joinChannel, receiveMessage } from './chatActions';
+import { isISO8601 } from 'validator';
 
 describe('chat epic', () => {
   let deepstreamClient;
@@ -69,7 +70,12 @@ describe('chat epic', () => {
           expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
 
           expect(actions).toHaveLength(1);
-          expect(actions[0]).toEqual(receiveMessage(eventData));
+
+          const resultAction = actions[0];
+          const timeStamp = resultAction.payload.time;
+
+          expect(isISO8601(timeStamp)).toBe(true);
+          expect(resultAction).toEqual(receiveMessage(eventData, timeStamp));
 
           resolve();
         });

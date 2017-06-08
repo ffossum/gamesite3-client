@@ -9,11 +9,14 @@ import { fetchedUserData } from './userDataActions';
 
 describe('user data epic', () => {
   test('fetches user data when a message is received', async () => {
-    const action = receiveMessage({
-      ch: 'channel name',
-      uid: 'user-id',
-      txt: 'message text',
-    });
+    const action = receiveMessage(
+      {
+        ch: 'channel name',
+        uid: 'user-id',
+        txt: 'message text',
+      },
+      '2017-06-08T01:49:25.779Z'
+    );
 
     const ajax = {
       getJSON: jest.fn(),

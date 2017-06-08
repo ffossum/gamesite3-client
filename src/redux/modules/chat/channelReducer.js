@@ -19,8 +19,8 @@ export default function channelReducer(
   switch (action.type) {
     case RECEIVE_MESSAGE: {
       const message = {
-        userId: action.payload.uid,
-        text: action.payload.txt,
+        userId: action.payload.msg.uid,
+        text: action.payload.msg.txt,
       };
 
       return {

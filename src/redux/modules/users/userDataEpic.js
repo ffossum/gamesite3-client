@@ -14,7 +14,7 @@ export default function userDataEpic(
 ) {
   return action$
     .ofType(RECEIVE_MESSAGE)
-    .map((action: ReceiveMessageAction) => action.payload.uid)
+    .map((action: ReceiveMessageAction) => action.payload.msg.uid)
     .distinct()
     .bufferTime(100)
     .filter(userIds => userIds.length)

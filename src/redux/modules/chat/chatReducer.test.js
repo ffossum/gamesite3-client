@@ -11,11 +11,14 @@ describe('chat reducer', () => {
   });
 
   test('adds received message to channel', () => {
-    const action = receiveMessage({
-      ch: 'mainchat',
-      uid: 'userid',
-      txt: 'hello',
-    });
+    const action = receiveMessage(
+      {
+        ch: 'mainchat',
+        uid: 'userid',
+        txt: 'hello',
+      },
+      '2017-06-08T01:49:25.779Z'
+    );
     const state = chatReducer(initialState, action);
 
     expect(state.mainchat && state.mainchat.messages).toHaveLength(1);

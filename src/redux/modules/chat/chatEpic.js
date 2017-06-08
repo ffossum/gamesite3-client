@@ -37,8 +37,10 @@ function joinChannelEpic(
     })
     .map(data => {
       switch (data.t) {
-        case 'chatmsg':
-          return receiveMessage(data);
+        case 'chatmsg': {
+          const time = new Date().toISOString();
+          return receiveMessage(data, time);
+        }
 
         default:
           return false;

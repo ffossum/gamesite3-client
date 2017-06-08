@@ -3,7 +3,7 @@ import type { Action } from '../../actions';
 import type { ChannelState } from './channelReducer';
 import type { ChannelName } from './chatActions';
 
-import { SEND_MESSAGE, RECEIVE_MESSAGE } from './chatActions';
+import { RECEIVE_MESSAGE } from './chatActions';
 import channelReducer from './channelReducer';
 
 export type ChatState = {
@@ -16,9 +16,8 @@ export default function chatReducer(
   action: Action
 ) {
   switch (action.type) {
-    case RECEIVE_MESSAGE:
-    case SEND_MESSAGE: {
-      const { ch } = action.payload;
+    case RECEIVE_MESSAGE: {
+      const { ch } = action.payload.msg;
       return {
         ...state,
         [ch]: channelReducer(state[ch], action),

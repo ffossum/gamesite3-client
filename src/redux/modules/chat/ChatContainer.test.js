@@ -50,10 +50,16 @@ describe('chat container', () => {
 
   test('creates denormalized message array', () => {
     store.dispatch(
-      receiveMessage({ ch: 'channel', txt: 'hey', uid: 'zxcv-id' })
+      receiveMessage(
+        { ch: 'channel', txt: 'hey', uid: 'zxcv-id' },
+        '2017-06-08T02:07:37.605Z'
+      )
     );
     store.dispatch(
-      receiveMessage({ ch: 'channel', txt: 'hi', uid: 'qwer-id' })
+      receiveMessage(
+        { ch: 'channel', txt: 'hi', uid: 'qwer-id' },
+        '2017-06-08T02:07:37.605Z'
+      )
     );
 
     store.dispatch(

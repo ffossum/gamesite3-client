@@ -42,12 +42,21 @@ export function sendMessage(
 
 export type ReceiveMessageAction = {
   type: 'chat/receive message',
-  payload: UserMessage,
+  payload: {
+    msg: UserMessage,
+    time: string,
+  },
 };
-export function receiveMessage(msg: UserMessage): ReceiveMessageAction {
+export function receiveMessage(
+  msg: UserMessage,
+  time: string
+): ReceiveMessageAction {
   return {
     type: RECEIVE_MESSAGE,
-    payload: msg,
+    payload: {
+      msg,
+      time,
+    },
   };
 }
 
