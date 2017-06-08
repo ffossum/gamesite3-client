@@ -6,6 +6,7 @@ export type ChannelState = {
   messages: Array<{
     userId: string,
     text: string,
+    time: string,
   }>,
 };
 
@@ -21,6 +22,7 @@ export default function channelReducer(
       const message = {
         userId: action.payload.msg.uid,
         text: action.payload.msg.txt,
+        time: action.payload.time,
       };
 
       return {

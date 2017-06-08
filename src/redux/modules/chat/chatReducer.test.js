@@ -25,6 +25,7 @@ describe('chat reducer', () => {
     expect(state.mainchat && state.mainchat.messages[0]).toEqual({
       userId: 'userid',
       text: 'hello',
+      time: '2017-06-08T01:49:25.779Z',
     });
   });
 });

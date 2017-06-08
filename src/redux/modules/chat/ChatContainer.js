@@ -25,6 +25,7 @@ export function mapStateToProps(state: State, ownProps: Props) {
           username: msgUsername,
         },
         text: msg.text,
+        time: msg.time,
       };
     }),
   };
