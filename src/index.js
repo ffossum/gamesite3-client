@@ -3,7 +3,8 @@ import 'rxjs';
 
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
 import { Provider } from 'react-redux';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import deepstream from 'deepstream.io-client-js';
@@ -15,6 +16,8 @@ import { rootReducer } from './redux/modules/root';
 import { loginSuccess } from './redux/modules/login/loginActions';
 import { joinChannel } from './redux/modules/chat/chatActions';
 import { enterLobby } from './redux/modules/lobby/lobbyActions';
+
+const history = createBrowserHistory();
 
 let preloadedState;
 const user = window.__USER__;
@@ -40,7 +43,7 @@ deepstreamClient.login().then(() => {
 
   render(
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Routes />
       </Router>
     </Provider>,

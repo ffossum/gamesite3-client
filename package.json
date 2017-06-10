@@ -32,6 +32,7 @@
   "dependencies": {
     "date-fns": "^1.28.5",
     "deepstream.io-client-js": "^2.2.1",
+    "history": "^4.6.1",
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
