@@ -1,6 +1,7 @@
 /* @flow */
 import type { Action } from '../../actions';
 import { FETCHED_USER_DATA } from './userDataActions';
+import { LOGIN_SUCCESS } from '../login/loginActions';
 
 export type UsersState = {
   [string]: PublicUserData,
@@ -22,6 +23,13 @@ export default function usersReducer(
       return {
         ...state,
         ...newUsers,
+      };
+    }
+    case LOGIN_SUCCESS: {
+      const user = action.payload;
+      return {
+        ...state,
+        [user.id]: user,
       };
     }
     default:
