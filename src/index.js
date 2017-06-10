@@ -14,6 +14,7 @@ import configureStore from './redux/configureStore';
 import { rootReducer } from './redux/modules/root';
 import { loginSuccess } from './redux/modules/login/loginActions';
 import { joinChannel } from './redux/modules/chat/chatActions';
+import { enterLobby } from './redux/modules/lobby/lobbyActions';
 
 let preloadedState;
 const user = window.__USER__;
@@ -35,6 +36,7 @@ deepstreamClient.login().then(() => {
   const store = configureStore(preloadedState, dependencies);
 
   store.dispatch(joinChannel('general'));
+  store.dispatch(enterLobby());
 
   render(
     <Provider store={store}>

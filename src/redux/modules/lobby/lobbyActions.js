@@ -3,6 +3,16 @@ import type { GameDataState } from './lobbyReducer';
 
 export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
+export const ENTER_LOBBY = 'lobby/enter';
+
+export type EnterLobbyAction = {
+  type: 'lobby/enter',
+};
+export function enterLobby(): EnterLobbyAction {
+  return {
+    type: ENTER_LOBBY,
+  };
+}
 
 export type CreateGameRequestAction = {
   type: 'lobby/create game request',

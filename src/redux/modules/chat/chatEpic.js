@@ -35,18 +35,17 @@ function joinChannelEpic(
       const channelName = `chat:${action.payload}`;
       return deepstreamClient.subscribe(channelName);
     })
-    .map(data => {
+    .flatMap(data => {
       switch (data.t) {
         case 'chatmsg': {
           const time = new Date().toISOString();
-          return receiveMessage(data, time);
+          return [receiveMessage(data, time)];
         }
 
         default:
-          return false;
+          return [];
       }
-    })
-    .filter(v => v);
+    });
 }
 
 export default combineEpics(sendMessageEpic, joinChannelEpic);

@@ -1,26 +1,42 @@
 /* @flow */
-import { CREATE_GAME_REQUEST, gameCreated } from './lobbyActions';
+import { CREATE_GAME_REQUEST, ENTER_LOBBY, gameCreated } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
-import { Observable } from 'rxjs';
+import { combineEpics } from 'redux-observable';
 
 type Dependencies = {
   deepstreamClient: any,
 };
-export default function lobbyEpic(
+function enterLobbyEpic(
+  action$: ActionsObservable<*>,
+  store: Store<*>,
+  { deepstreamClient }: Dependencies
+) {
+  return action$
+    .ofType(ENTER_LOBBY)
+    .flatMap(() => deepstreamClient.subscribe('lobby'))
+    .flatMap(data => {
+      switch (data.t) {
+        case 'create-game':
+          return [gameCreated(data.p)];
+
+        default:
+          return [];
+      }
+    });
+}
+
+function createGameEpic(
   action$: ActionsObservable<*>,
   store: Store<*>,
   { deepstreamClient }: Dependencies
 ) {
   return action$
     .ofType(CREATE_GAME_REQUEST)
-    .flatMap((action: CreateGameRequestAction) => {
+    .do((action: CreateGameRequestAction) => {
       const uid = action.payload.userId;
-      return Observable.fromPromise(
-        deepstreamClient.make('create-game', { uid })
-      )
-        .map(game => {
-          return gameCreated(game);
-        })
-        .catch(() => Observable.empty());
-    });
+      deepstreamClient.make('create-game', { uid });
+    })
+    .ignoreElements();
 }
+
+export default combineEpics(createGameEpic, enterLobbyEpic);
