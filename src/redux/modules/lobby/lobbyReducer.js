@@ -4,6 +4,7 @@ import { GAME_CREATED } from './lobbyActions';
 
 export type GameDataState = {
   id: string,
+  host: string,
 };
 export type LobbyState = {
   [gameId: string]: GameDataState,

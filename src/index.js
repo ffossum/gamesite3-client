@@ -4,7 +4,7 @@ import 'rxjs';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import deepstream from 'deepstream.io-client-js';
@@ -34,6 +34,7 @@ deepstreamClient.login().then(() => {
     deepstreamClient,
     location: window.location,
     devToolsCompose: DEVELOPMENT && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__,
+    history,
   };
 
   const store = configureStore(preloadedState, dependencies);

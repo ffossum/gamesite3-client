@@ -30,7 +30,7 @@ export function createGameRequest(userId: string): CreateGameRequestAction {
   };
 }
 
-type GameCreatedAction = {
+export type GameCreatedAction = {
   type: 'lobby/game created',
   payload: GameDataState,
 };

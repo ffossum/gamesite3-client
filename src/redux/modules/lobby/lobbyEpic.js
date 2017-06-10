@@ -5,6 +5,7 @@ import { combineEpics } from 'redux-observable';
 
 type Dependencies = {
   deepstreamClient: any,
+  history: any,
 };
 function enterLobbyEpic(
   action$: ActionsObservable<*>,
@@ -28,13 +29,20 @@ function enterLobbyEpic(
 function createGameEpic(
   action$: ActionsObservable<*>,
   store: Store<*>,
-  { deepstreamClient }: Dependencies
+  { deepstreamClient, history }: Dependencies
 ) {
   return action$
     .ofType(CREATE_GAME_REQUEST)
     .do((action: CreateGameRequestAction) => {
       const uid = action.payload.userId;
-      deepstreamClient.make('create-game', { uid });
+      deepstreamClient
+        .make('create-game', { uid })
+        .then(game => {
+          history.push(`/game/${game.id}`);
+        })
+        .catch(() => {
+          // TODO
+        });
     })
     .ignoreElements();
 }
