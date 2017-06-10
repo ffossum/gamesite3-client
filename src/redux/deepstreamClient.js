@@ -22,4 +22,14 @@ export default class DeepstreamClient {
   emit(eventName: string, data?: mixed): void {
     this.client.event.emit(eventName, data);
   }
+  make(rpcName: string, data?: mixed) {
+    return new Promise((resolve, reject) => {
+      this.client.rpc.make(rpcName, data, (error, result) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(result);
+      });
+    });
+  }
 }

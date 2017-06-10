@@ -20,6 +20,7 @@ import userDataEpic from './users/userDataEpic';
 import type { UsersState } from './users/usersReducer';
 
 import lobby from './lobby/lobbyReducer';
+import lobbyEpic from './lobby/lobbyEpic';
 import type { LobbyState } from './lobby/lobbyReducer';
 
 export type State = {
@@ -44,5 +45,6 @@ export const rootEpic = combineEpics(
   chatEpic,
   registrationEpic,
   loginEpic,
-  userDataEpic
+  userDataEpic,
+  lobbyEpic
 );

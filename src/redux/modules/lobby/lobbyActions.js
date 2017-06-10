@@ -4,7 +4,7 @@ import type { GameDataState } from './lobbyReducer';
 export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
 
-type CreateGameRequestAction = {
+export type CreateGameRequestAction = {
   type: 'lobby/create game request',
   payload: {
     userId: string,
