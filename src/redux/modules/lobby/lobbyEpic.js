@@ -4,9 +4,10 @@ import { CREATE_GAME_REQUEST, ENTER_LOBBY, gameCreated } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
 import { combineEpics } from 'redux-observable';
 import type { Store } from 'redux';
+import type DeepstreamClient from '../../deepstreamClient';
 
 type Dependencies = {
-  deepstreamClient: any,
+  deepstreamClient: DeepstreamClient,
   history: any,
 };
 function enterLobbyEpic(
