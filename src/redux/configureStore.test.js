@@ -11,9 +11,10 @@ describe('configure redux store', () => {
     id: 'asdf-id',
     username: 'asdf',
   };
+  const deepstreamClient: any = null;
   const dependencies = {
     ajax: null,
-    deepstreamClient: null,
+    deepstreamClient,
     location: null,
     devToolsCompose: null,
   };

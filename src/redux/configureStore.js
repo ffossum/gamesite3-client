@@ -3,10 +3,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { rootReducer, rootEpic } from './modules/root';
 import type { State } from './modules/root';
+import type DeepstreamClient from './deepstreamClient';
 
 type Dependencies = {
   ajax: any,
-  deepstreamClient: any,
+  deepstreamClient: DeepstreamClient,
   location: any,
   devToolsCompose: any,
 };

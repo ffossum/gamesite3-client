@@ -5,9 +5,10 @@ import type { Store } from 'redux';
 
 import { SEND_MESSAGE, JOIN_CHANNEL, receiveMessage } from './chatActions';
 import type { SendMessageAction, JoinChannelAction } from './chatActions';
+import type DeepstreamClient from '../../deepstreamClient';
 
 type Dependencies = {
-  deepstreamClient: any,
+  deepstreamClient: DeepstreamClient,
 };
 
 function sendMessageEpic(
