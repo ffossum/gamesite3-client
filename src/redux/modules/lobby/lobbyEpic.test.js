@@ -15,7 +15,8 @@ describe('lobby epic', () => {
   });
 
   test('subscribes to lobby events when entering lobby', async () => {
-    deepstreamClient.subscribe.mockReturnValue([]);
+    deepstreamClient.subscribe.mockReturnValue(Observable.empty());
+    deepstreamClient.make.mockReturnValue(Promise.resolve([]));
 
     const action = enterLobby();
     const action$ = Observable.of(action);
@@ -36,6 +37,7 @@ describe('lobby epic', () => {
       p: gameData,
     };
     deepstreamClient.subscribe.mockReturnValue(Observable.of(event));
+    deepstreamClient.make.mockReturnValue(Promise.resolve([]));
 
     const action = enterLobby();
     const action$ = Observable.of(action);
@@ -43,7 +45,6 @@ describe('lobby epic', () => {
       .toArray()
       .toPromise();
 
-    expect(resultActions).toHaveLength(1);
     expect(resultActions).toContainEqual(gameCreated(gameData));
   });
 

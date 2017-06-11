@@ -1,6 +1,6 @@
 /* @flow */
 import type { Action } from '../../actions';
-import { GAME_CREATED } from './lobbyActions';
+import { GAME_CREATED, REFRESH_LOBBY } from './lobbyActions';
 
 export type GameDataState = {
   id: string,
@@ -18,6 +18,9 @@ export default function lobbyReducer(
   action: Action,
 ) {
   switch (action.type) {
+    case REFRESH_LOBBY: {
+      return action.payload;
+    }
     case GAME_CREATED: {
       const gameData = action.payload;
       return {

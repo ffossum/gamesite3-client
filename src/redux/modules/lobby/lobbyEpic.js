@@ -1,10 +1,17 @@
 /* @flow */
-import type { Observable } from 'rxjs';
-import { CREATE_GAME_REQUEST, ENTER_LOBBY, gameCreated } from './lobbyActions';
+import { Observable } from 'rxjs';
+import {
+  CREATE_GAME_REQUEST,
+  ENTER_LOBBY,
+  gameCreated,
+  refreshLobby,
+} from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
+import type { GameDataState } from './lobbyReducer';
 import { combineEpics } from 'redux-observable';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';
+import { indexBy } from 'ramda';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
@@ -15,18 +22,27 @@ function enterLobbyEpic(
   store: Store<*, *>,
   { deepstreamClient }: Dependencies,
 ) {
-  return action$
-    .filter(action => action.type === ENTER_LOBBY)
-    .flatMap(() => deepstreamClient.subscribe('lobby'))
-    .flatMap(data => {
-      switch (data.t) {
-        case 'create-game':
-          return [gameCreated(data.p)];
+  return action$.filter(action => action.type === ENTER_LOBBY).flatMap(() =>
+    Observable.merge(
+      Observable.fromPromise(
+        deepstreamClient
+          .make('refresh-lobby')
+          .then((gamesArray: GameDataState[]) => {
+            const lobby = indexBy(game => game.id, gamesArray);
+            return refreshLobby(lobby);
+          }),
+      ),
+      deepstreamClient.subscribe('lobby').flatMap(data => {
+        switch (data.t) {
+          case 'create-game':
+            return [gameCreated(data.p)];
 
-        default:
-          return [];
-      }
-    });
+          default:
+            return [];
+        }
+      }),
+    ),
+  );
 }
 
 function createGameEpic(

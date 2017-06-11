@@ -1,9 +1,10 @@
 /* @flow */
-import type { GameDataState } from './lobbyReducer';
+import type { GameDataState, LobbyState } from './lobbyReducer';
 
 export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
 export const ENTER_LOBBY = 'lobby/enter';
+export const REFRESH_LOBBY = 'lobby/refresh';
 
 export type EnterLobbyAction = {
   type: 'lobby/enter',
@@ -11,6 +12,17 @@ export type EnterLobbyAction = {
 export function enterLobby(): EnterLobbyAction {
   return {
     type: ENTER_LOBBY,
+  };
+}
+
+export type RefreshLobbyAction = {
+  type: 'lobby/refresh',
+  payload: LobbyState,
+};
+export function refreshLobby(lobby: LobbyState): RefreshLobbyAction {
+  return {
+    type: REFRESH_LOBBY,
+    payload: lobby,
   };
 }
 
