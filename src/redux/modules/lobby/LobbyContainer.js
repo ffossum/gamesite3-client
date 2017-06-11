@@ -37,7 +37,7 @@ export function mergeProps(stateProps: *, dispatchProps: *): LobbyProps {
       const { host, ...rest } = game;
       return {
         ...rest,
-        host: users[host],
+        host: users[host] || { id: '', username: '' },
       };
     }),
   );
