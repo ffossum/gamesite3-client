@@ -2,6 +2,7 @@
 import { Observable } from 'rxjs';
 import { LOGIN_REQUEST, loginSuccess, loginFailure } from './loginActions';
 import type { LoginRequestAction } from './loginActions';
+import type { Store } from 'redux';
 
 type Dependencies = {
   ajax: (_: Object) => Observable<*>,
@@ -10,7 +11,7 @@ type Dependencies = {
 
 export default function loginEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { ajax, location }: Dependencies,
 ) {
   return action$

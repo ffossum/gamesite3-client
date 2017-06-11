@@ -7,6 +7,7 @@ import loginEpic from './loginEpic';
 import { loginRequest, loginSuccess, loginFailure } from './loginActions';
 
 describe('login epic', () => {
+  let store;
   const login = {
     email: 'bob@test.com',
     password: 'bobisthebest',
@@ -29,7 +30,7 @@ describe('login epic', () => {
         },
       });
 
-    const actions = await loginEpic(action$, null, { ajax, location })
+    const actions = await loginEpic(action$, store, { ajax, location })
       .toArray()
       .toPromise();
 
@@ -47,7 +48,7 @@ describe('login epic', () => {
     const action$ = Observable.of(action);
     const ajax = () => Observable.throw(new Error('error'));
 
-    const actions = await loginEpic(action$, null, { ajax, location })
+    const actions = await loginEpic(action$, store, { ajax, location })
       .toArray()
       .toPromise();
 

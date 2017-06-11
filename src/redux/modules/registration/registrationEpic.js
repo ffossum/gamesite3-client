@@ -6,6 +6,7 @@ import {
   registrationFailure,
 } from './registrationActions';
 import type { RegistrationRequestAction } from './registrationActions';
+import type { Store } from 'redux';
 
 type Dependencies = {
   ajax: any,
@@ -14,7 +15,7 @@ type Dependencies = {
 
 export default function registrationEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { ajax, location }: Dependencies,
 ) {
   return action$

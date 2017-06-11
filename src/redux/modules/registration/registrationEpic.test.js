@@ -11,6 +11,7 @@ import {
 } from './registrationActions';
 
 describe('registration epic', () => {
+  let store;
   const registration = {
     username: 'bob',
     email: 'bob@test.com',
@@ -35,7 +36,7 @@ describe('registration epic', () => {
         },
       });
 
-    const actions = await registrationEpic(action$, null, { ajax, location })
+    const actions = await registrationEpic(action$, store, { ajax, location })
       .toArray()
       .toPromise();
 
@@ -53,7 +54,7 @@ describe('registration epic', () => {
     const action$ = Observable.of(action);
     const ajax = () => Observable.throw(new Error('error'));
 
-    const actions = await registrationEpic(action$, null, { ajax, location })
+    const actions = await registrationEpic(action$, store, { ajax, location })
       .toArray()
       .toPromise();
 

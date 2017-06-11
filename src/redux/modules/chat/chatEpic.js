@@ -1,6 +1,7 @@
 /* @flow */
 import { combineEpics } from 'redux-observable';
 import type { Observable } from 'rxjs';
+import type { Store } from 'redux';
 
 import { SEND_MESSAGE, JOIN_CHANNEL, receiveMessage } from './chatActions';
 import type { SendMessageAction, JoinChannelAction } from './chatActions';
@@ -11,7 +12,7 @@ type Dependencies = {
 
 function sendMessageEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { deepstreamClient }: Dependencies,
 ) {
   return action$
@@ -27,7 +28,7 @@ function sendMessageEpic(
 
 export function joinChannelEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { deepstreamClient }: Dependencies,
 ) {
   return action$

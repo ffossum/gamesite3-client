@@ -3,6 +3,7 @@ import type { Observable } from 'rxjs';
 import { CREATE_GAME_REQUEST, ENTER_LOBBY, gameCreated } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
 import { combineEpics } from 'redux-observable';
+import type { Store } from 'redux';
 
 type Dependencies = {
   deepstreamClient: any,
@@ -10,7 +11,7 @@ type Dependencies = {
 };
 function enterLobbyEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { deepstreamClient }: Dependencies,
 ) {
   return action$
@@ -29,7 +30,7 @@ function enterLobbyEpic(
 
 function createGameEpic(
   action$: Observable<*>,
-  store: Store<*>,
+  store: Store<*, *>,
   { deepstreamClient, history }: Dependencies,
 ) {
   return action$
