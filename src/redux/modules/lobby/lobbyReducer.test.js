@@ -8,6 +8,7 @@ describe('lobby reducer', () => {
 
   test('adds new created game to lobby', () => {
     const action = gameCreated({
+      createdTime: '2017-06-11T10:57:22.414Z',
       id: 'gameid-1',
       host: 'asdf-id',
     });
@@ -15,6 +16,7 @@ describe('lobby reducer', () => {
 
     expect(state).toEqual({
       'gameid-1': {
+        createdTime: '2017-06-11T10:57:22.414Z',
         id: 'gameid-1',
         host: 'asdf-id',
       },
