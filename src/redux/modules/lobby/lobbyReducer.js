@@ -15,7 +15,7 @@ const initialState = {};
 
 export default function lobbyReducer(
   state: LobbyState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case GAME_CREATED: {

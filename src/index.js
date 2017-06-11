@@ -48,6 +48,6 @@ deepstreamClient.login().then(() => {
         <Routes />
       </Router>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 });

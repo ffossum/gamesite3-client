@@ -15,7 +15,7 @@ const initialState: ChannelState = {
 };
 export default function channelReducer(
   state: ChannelState = initialState,
-  action: Action
+  action: Action,
 ): ChannelState {
   switch (action.type) {
     case RECEIVE_MESSAGE: {

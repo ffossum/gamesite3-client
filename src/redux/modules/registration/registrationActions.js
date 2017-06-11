@@ -16,7 +16,7 @@ export type RegistrationRequestAction = {
   payload: Registration,
 };
 export function registrationRequest(
-  registration: Registration
+  registration: Registration,
 ): RegistrationRequestAction {
   return {
     type: REGISTRATION_REQUEST,
@@ -29,7 +29,7 @@ type RegistrationSuccessAction = {
   payload: SessionUser,
 };
 export function registrationSuccess(
-  user: SessionUser
+  user: SessionUser,
 ): RegistrationSuccessAction {
   return {
     type: REGISTRATION_SUCCESS,

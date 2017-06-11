@@ -32,7 +32,7 @@ describe('registration reducer', () => {
       registrationSuccess({
         id: 'abc123',
         username: 'bob',
-      })
+      }),
     );
     expect(state.loading).toBe(false);
   });

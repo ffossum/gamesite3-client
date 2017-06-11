@@ -15,7 +15,7 @@ type Dependencies = {
 export default function registrationEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { ajax, location }: Dependencies
+  { ajax, location }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === REGISTRATION_REQUEST)
@@ -34,8 +34,8 @@ export default function registrationEpic(
           registrationSuccess({
             username: action.payload.username,
             ...res.response,
-          })
+          }),
         )
-        .catch(() => [registrationFailure()])
+        .catch(() => [registrationFailure()]),
     );
 }

@@ -11,7 +11,7 @@ type Dependencies = {
 function enterLobbyEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { deepstreamClient }: Dependencies
+  { deepstreamClient }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === ENTER_LOBBY)
@@ -30,7 +30,7 @@ function enterLobbyEpic(
 function createGameEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { deepstreamClient, history }: Dependencies
+  { deepstreamClient, history }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === CREATE_GAME_REQUEST)

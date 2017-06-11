@@ -26,7 +26,7 @@ describe('login reducer', () => {
       loginSuccess({
         id: 'abc123',
         username: 'bob',
-      })
+      }),
     );
     expect(state.loading).toBe(false);
   });

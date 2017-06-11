@@ -11,7 +11,7 @@ const initialState = {};
 
 export default function usersReducer(
   state: UsersState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case FETCHED_USER_DATA: {

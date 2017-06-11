@@ -10,7 +10,7 @@ const initialState = {
 };
 export default function reducer(
   state?: LoginState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case LOGIN_REQUEST: {

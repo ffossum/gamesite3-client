@@ -46,5 +46,5 @@ export const rootEpic = combineEpics(
   registrationEpic,
   loginEpic,
   userDataEpic,
-  lobbyEpic
+  lobbyEpic,
 );

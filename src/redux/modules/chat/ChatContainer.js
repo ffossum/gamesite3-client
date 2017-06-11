@@ -38,7 +38,7 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
 export function mergeProps(
   stateProps: *,
   dispatchProps: *,
-  ownProps: Props
+  ownProps: Props,
 ): ChatProps {
   const userId = stateProps.user && stateProps.user.id;
   let partialSendMessage = () => {};

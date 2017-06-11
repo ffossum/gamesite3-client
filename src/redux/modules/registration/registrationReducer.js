@@ -14,7 +14,7 @@ const initialState = {
 };
 export default function reducer(
   state?: RegistrationState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case REGISTRATION_REQUEST: {

@@ -13,7 +13,7 @@ type Dependencies = {
 
 export default function configureStore(
   preloadedState?: State,
-  dependencies: Dependencies
+  dependencies: Dependencies,
 ) {
   const composeEnhancers = dependencies.devToolsCompose || compose;
 

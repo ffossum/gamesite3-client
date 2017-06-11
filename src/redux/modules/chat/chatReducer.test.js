@@ -17,7 +17,7 @@ describe('chat reducer', () => {
         uid: 'userid',
         txt: 'hello',
       },
-      '2017-06-08T01:49:25.779Z'
+      '2017-06-08T01:49:25.779Z',
     );
     const state = chatReducer(initialState, action);
 

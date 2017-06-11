@@ -12,7 +12,7 @@ type Dependencies = {
 function sendMessageEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { deepstreamClient }: Dependencies
+  { deepstreamClient }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === SEND_MESSAGE)
@@ -28,7 +28,7 @@ function sendMessageEpic(
 export function joinChannelEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { deepstreamClient }: Dependencies
+  { deepstreamClient }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === JOIN_CHANNEL)

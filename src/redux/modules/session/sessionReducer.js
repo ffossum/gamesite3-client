@@ -16,7 +16,7 @@ const initialState: SessionState = {
 
 export default function sessionReducer(
   state: SessionState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case LOGIN_SUCCESS:

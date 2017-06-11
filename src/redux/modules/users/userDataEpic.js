@@ -12,7 +12,7 @@ type Dependencies = {
 export default function userDataEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { ajax }: Dependencies
+  { ajax }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === RECEIVE_MESSAGE)

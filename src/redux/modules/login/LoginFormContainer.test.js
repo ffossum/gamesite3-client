@@ -21,7 +21,7 @@ describe('login form container', () => {
     const rendered = mount(
       <Provider store={store}>
         <LoginFormContainer />
-      </Provider>
+      </Provider>,
     );
 
     expect(rendered).toMatchSnapshot();
@@ -33,7 +33,7 @@ describe('login form container', () => {
       expect(mapStateToProps(store.getState()).loading).toBe(false);
 
       store.dispatch(
-        loginRequest({ email: 'asdf@asdf.com', password: 'asdfasdf' })
+        loginRequest({ email: 'asdf@asdf.com', password: 'asdfasdf' }),
       );
       expect(mapStateToProps(store.getState()).loading).toBe(true);
     });
@@ -53,7 +53,7 @@ describe('login form container', () => {
         loginRequest({
           email: 'qwer@qwer.com',
           password: 'qwerqwer',
-        })
+        }),
       );
     });
   });

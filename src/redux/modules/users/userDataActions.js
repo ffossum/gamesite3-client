@@ -6,7 +6,7 @@ type FetchedUserDataAction = {
   payload: PublicUserData[],
 };
 export function fetchedUserData(
-  users: PublicUserData[]
+  users: PublicUserData[],
 ): FetchedUserDataAction {
   return {
     type: FETCHED_USER_DATA,

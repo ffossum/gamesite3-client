@@ -44,7 +44,7 @@ describe('chat container', () => {
 
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith(
-      sendMessage('asdf-id', 'channel', 'hello')
+      sendMessage('asdf-id', 'channel', 'hello'),
     );
   });
 
@@ -52,21 +52,21 @@ describe('chat container', () => {
     store.dispatch(
       receiveMessage(
         { ch: 'channel', txt: 'hey', uid: 'zxcv-id' },
-        '2017-06-08T02:07:37.605Z'
-      )
+        '2017-06-08T02:07:37.605Z',
+      ),
     );
     store.dispatch(
       receiveMessage(
         { ch: 'channel', txt: 'hi', uid: 'qwer-id' },
-        '2017-06-08T02:07:37.605Z'
-      )
+        '2017-06-08T02:07:37.605Z',
+      ),
     );
 
     store.dispatch(
       fetchedUserData([
         { id: 'qwer-id', username: 'qwer' },
         { id: 'zxcv-id', username: 'zxcv' },
-      ])
+      ]),
     );
 
     const stateProps = mapStateToProps(store.getState(), ownProps);

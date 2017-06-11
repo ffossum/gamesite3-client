@@ -11,7 +11,7 @@ type Dependencies = {
 export default function loginEpic(
   action$: Observable<*>,
   store: Store<*>,
-  { ajax, location }: Dependencies
+  { ajax, location }: Dependencies,
 ) {
   return action$
     .filter(action => action.type === LOGIN_REQUEST)
@@ -27,6 +27,6 @@ export default function loginEpic(
       })
         .do(() => location.reload()) // cookie is set, reload page to reconnect deepstream etc
         .map(res => loginSuccess(res.response))
-        .catch(() => Observable.of(loginFailure()))
+        .catch(() => Observable.of(loginFailure())),
     );
 }

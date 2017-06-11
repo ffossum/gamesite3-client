@@ -28,7 +28,7 @@ export type SendMessageAction = {
 export function sendMessage(
   userId: string,
   channelName: string,
-  messageText: string
+  messageText: string,
 ): SendMessageAction {
   return {
     type: SEND_MESSAGE,
@@ -49,7 +49,7 @@ export type ReceiveMessageAction = {
 };
 export function receiveMessage(
   msg: UserMessage,
-  time: string
+  time: string,
 ): ReceiveMessageAction {
   return {
     type: RECEIVE_MESSAGE,

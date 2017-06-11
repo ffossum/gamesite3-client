@@ -13,5 +13,5 @@ export default connect(
     register(...args) {
       dispatch(registrationRequest(...args));
     },
-  })
+  }),
 )(RegistrationForm);

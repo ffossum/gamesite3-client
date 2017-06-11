@@ -14,7 +14,7 @@ describe('user data epic', () => {
         uid: 'user-id',
         txt: 'message text',
       },
-      '2017-06-08T01:49:25.779Z'
+      '2017-06-08T01:49:25.779Z',
     );
 
     const ajax = {
@@ -26,7 +26,7 @@ describe('user data epic', () => {
           id: 'user-id',
           username: 'Username',
         },
-      ])
+      ]),
     );
 
     const action$ = Observable.of(action);
@@ -43,7 +43,7 @@ describe('user data epic', () => {
           id: 'user-id',
           username: 'Username',
         },
-      ])
+      ]),
     );
   });
 });

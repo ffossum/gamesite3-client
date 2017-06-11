@@ -21,7 +21,7 @@ export default function Chat(props: Props) {
         {messages.map((msg, i) =>
           <li key={msg.user.id + i}>
             <UserTextMessage message={msg} />
-          </li>
+          </li>,
         )}
       </ul>
       <ChatInput

@@ -13,7 +13,7 @@ const initialState: ChatState = {};
 
 export default function chatReducer(
   state: ChatState = initialState,
-  action: Action
+  action: Action,
 ) {
   switch (action.type) {
     case RECEIVE_MESSAGE: {

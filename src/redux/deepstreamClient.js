@@ -16,7 +16,7 @@ export default class DeepstreamClient {
   subscribe(eventName: string): Observable<*> {
     return Observable.fromEventPattern(
       handler => this.client.event.subscribe(eventName, handler),
-      handler => this.client.event.unsubscribe(eventName, handler)
+      handler => this.client.event.unsubscribe(eventName, handler),
     );
   }
   emit(eventName: string, data?: mixed): void {
