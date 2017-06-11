@@ -30,20 +30,17 @@ describe('login epic', () => {
         },
       });
 
-    await new Promise(resolve => {
-      loginEpic(action$, null, { ajax, location })
-        .toArray()
-        .subscribe(actions => {
-          expect(location.reload).toHaveBeenCalled();
-          expect(actions).toEqual([
-            loginSuccess({
-              id: 'user id',
-              username: 'bob',
-            }),
-          ]);
-          resolve();
-        });
-    });
+    const actions = await loginEpic(action$, null, { ajax, location })
+      .toArray()
+      .toPromise();
+
+    expect(location.reload).toHaveBeenCalled();
+    expect(actions).toEqual([
+      loginSuccess({
+        id: 'user id',
+        username: 'bob',
+      }),
+    ]);
   });
 
   test('login failure', async () => {
@@ -51,14 +48,11 @@ describe('login epic', () => {
     const action$ = ActionsObservable.of(action);
     const ajax = () => Observable.throw(new Error('error'));
 
-    await new Promise(resolve => {
-      expect(location.reload).not.toHaveBeenCalled();
-      loginEpic(action$, null, { ajax, location })
-        .toArray()
-        .subscribe(actions => {
-          expect(actions).toEqual([loginFailure()]);
-          resolve();
-        });
-    });
+    const actions = await loginEpic(action$, null, { ajax, location })
+      .toArray()
+      .toPromise();
+
+    expect(location.reload).not.toHaveBeenCalled();
+    expect(actions).toEqual([loginFailure()]);
   });
 });

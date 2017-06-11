@@ -36,20 +36,17 @@ describe('registration epic', () => {
         },
       });
 
-    await new Promise(resolve => {
-      registrationEpic(action$, null, { ajax, location })
-        .toArray()
-        .subscribe(actions => {
-          expect(location.reload).toHaveBeenCalled();
-          expect(actions).toEqual([
-            registrationSuccess({
-              id: 'user id',
-              username: 'bob',
-            }),
-          ]);
-          resolve();
-        });
-    });
+    const actions = await registrationEpic(action$, null, { ajax, location })
+      .toArray()
+      .toPromise();
+
+    expect(location.reload).toHaveBeenCalled();
+    expect(actions).toEqual([
+      registrationSuccess({
+        id: 'user id',
+        username: 'bob',
+      }),
+    ]);
   });
 
   test('registration failure', async () => {
@@ -57,14 +54,11 @@ describe('registration epic', () => {
     const action$ = ActionsObservable.of(action);
     const ajax = () => Observable.throw(new Error('error'));
 
-    await new Promise(resolve => {
-      expect(location.reload).not.toHaveBeenCalled();
-      registrationEpic(action$, null, { ajax, location })
-        .toArray()
-        .subscribe(actions => {
-          expect(actions).toEqual([registrationFailure()]);
-          resolve();
-        });
-    });
+    const actions = await registrationEpic(action$, null, { ajax, location })
+      .toArray()
+      .toPromise();
+
+    expect(location.reload).not.toHaveBeenCalled();
+    expect(actions).toEqual([registrationFailure()]);
   });
 });

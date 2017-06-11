@@ -32,20 +32,19 @@ describe('user data epic', () => {
 
     const action$ = ActionsObservable.of(action);
 
-    await new Promise(resolve => {
-      userDataEpic(action$, null, { ajax }).toArray().subscribe(actions => {
-        expect(ajax.getJSON).toHaveBeenCalledWith('/api/users?id=user-id');
-        expect(actions).toHaveLength(1);
-        expect(actions[0]).toEqual(
-          fetchedUserData([
-            {
-              id: 'user-id',
-              username: 'Username',
-            },
-          ])
-        );
-        resolve();
-      });
-    });
+    const actions = await userDataEpic(action$, null, { ajax })
+      .toArray()
+      .toPromise();
+
+    expect(ajax.getJSON).toHaveBeenCalledWith('/api/users?id=user-id');
+    expect(actions).toHaveLength(1);
+    expect(actions[0]).toEqual(
+      fetchedUserData([
+        {
+          id: 'user-id',
+          username: 'Username',
+        },
+      ])
+    );
   });
 });

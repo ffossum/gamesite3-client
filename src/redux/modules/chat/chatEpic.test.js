@@ -21,16 +21,13 @@ describe('chat epic', () => {
     const action = sendMessage('asdf-id', 'general', 'message text');
     const action$ = ActionsObservable.of(action);
 
-    await new Promise(resolve => {
-      chatEpic(action$, store, { deepstreamClient })
-        .toArray()
-        .subscribe(actions => {
-          expect(deepstreamClient.emit).toHaveBeenCalledTimes(1);
-          expect(deepstreamClient.emit.mock.calls).toMatchSnapshot();
-          expect(actions).toHaveLength(0);
-          resolve();
-        });
-    });
+    const actions = await chatEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
+
+    expect(deepstreamClient.emit).toHaveBeenCalledTimes(1);
+    expect(deepstreamClient.emit.mock.calls).toMatchSnapshot();
+    expect(actions).toHaveLength(0);
   });
 
   test('subscribes to chat channel deepstream events', async () => {
@@ -39,16 +36,12 @@ describe('chat epic', () => {
 
     deepstreamClient.subscribe.mockReturnValueOnce(Observable.empty());
 
-    await new Promise(resolve => {
-      chatEpic(action$, store, { deepstreamClient })
-        .toArray()
-        .subscribe(actions => {
-          expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
-          expect(actions).toHaveLength(0);
+    const actions = await chatEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
 
-          resolve();
-        });
-    });
+    expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
+    expect(actions).toHaveLength(0);
   });
 
   test('handles events from deepstream subscription', async () => {
@@ -63,22 +56,18 @@ describe('chat epic', () => {
     };
     deepstreamClient.subscribe.mockReturnValueOnce(Observable.of(eventData));
 
-    await new Promise(resolve => {
-      chatEpic(action$, store, { deepstreamClient })
-        .toArray()
-        .subscribe(actions => {
-          expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
+    const actions = await chatEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
 
-          expect(actions).toHaveLength(1);
+    expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
 
-          const resultAction = actions[0];
-          const timeStamp = resultAction.payload.time;
+    expect(actions).toHaveLength(1);
 
-          expect(isISO8601(timeStamp)).toBe(true);
-          expect(resultAction).toEqual(receiveMessage(eventData, timeStamp));
+    const resultAction = actions[0];
+    const timeStamp = resultAction.payload.time;
 
-          resolve();
-        });
-    });
+    expect(isISO8601(timeStamp)).toBe(true);
+    expect(resultAction).toEqual(receiveMessage(eventData, timeStamp));
   });
 });
