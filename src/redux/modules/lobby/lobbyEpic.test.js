@@ -31,6 +31,7 @@ describe('lobby epic', () => {
       id: 'game-id',
       host: 'user-id',
       createdTime: '2017-06-11T15:47:15.613Z',
+      players: [],
     };
     const event = {
       t: 'create-game',

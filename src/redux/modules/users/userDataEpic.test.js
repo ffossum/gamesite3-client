@@ -31,6 +31,7 @@ describe('user data epic', () => {
       id: 'game-id',
       host: 'user-id',
       createdTime: '2017-06-08T01:49:25.779Z',
+      players: [],
     });
     const action$ = Observable.of(action);
 

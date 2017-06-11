@@ -11,6 +11,7 @@ describe('lobby reducer', () => {
       createdTime: '2017-06-11T10:57:22.414Z',
       id: 'gameid-1',
       host: 'asdf-id',
+      players: [],
     });
     const state = lobbyReducer(initialState, action);
 
@@ -19,6 +20,7 @@ describe('lobby reducer', () => {
         createdTime: '2017-06-11T10:57:22.414Z',
         id: 'gameid-1',
         host: 'asdf-id',
+        players: [],
       },
     });
   });

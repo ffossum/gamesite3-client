@@ -13,7 +13,7 @@ import type {
 } from '../lobby/lobbyActions';
 import type { Store } from 'redux';
 import type { State } from '../root';
-import { values, reduce, concat } from 'ramda';
+import { values, chain } from 'ramda';
 
 type Dependencies = {
   ajax: {
@@ -36,8 +36,8 @@ export default function userDataEpic(
       .filter(action => action.type === REFRESH_LOBBY)
       .flatMap((action: RefreshLobbyAction) => {
         const games = values(action.payload);
-        const userIdLists = games.map(game => [game.host]);
-        return reduce(concat, [], userIdLists);
+        const userIds = chain(game => [game.host, ...game.players], games);
+        return userIds;
       }),
   )
     .distinct()

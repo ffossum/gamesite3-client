@@ -91,6 +91,9 @@ declare module ramda {
     chain<T,V: Monad<T>|Array<T>>(fn: (a:T) => V): (x: V) => V;
   }
 
+  declare function chain<T, U>(T => U[], T[]): U[];
+  declare function chain<T, U>(T => U[]): T[] => U[];
+
   declare class GenericContructor<T> {
     constructor(x: T): GenericContructor<any>
   }
@@ -212,8 +215,8 @@ declare module ramda {
   declare function indexOf<E>(x: E, xs: Array<E>): number
   declare function indexOf<E>(x: E, ...rest: Array<void>): (xs: Array<E>) => number
 
-  declare function indexBy<V,T:{[key: string]:*}>(fn: (x: T) => string, ...rest: Array<void>): (xs: Array<T>) => {[key: string]: T}
-  declare function indexBy<V,T:{[key: string]:*}>(fn: (x: T) => string, xs: Array<T>): {[key: string]: T}
+  declare function indexBy<T>(fn: (x: T) => string): (xs: Array<T>) => {[key: string]: T}
+  declare function indexBy<T>(fn: (x: T) => string, xs: Array<T>): {[key: string]: T}
 
   declare function insert<T>(index: number, ...rest: Array<void>): (elem: T) => (src: Array<T>) => Array<T>
   declare function insert<T>(index: number, elem: T, ...rest: Array<void>): (src: Array<T>) => Array<T>

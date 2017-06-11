@@ -6,6 +6,7 @@ export type GameDataState = {
   id: string,
   host: string,
   createdTime: string,
+  players: string[],
 };
 export type LobbyState = {
   [gameId: string]: GameDataState,
