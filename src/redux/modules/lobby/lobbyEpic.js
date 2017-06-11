@@ -1,4 +1,5 @@
 /* @flow */
+import type { Observable } from 'rxjs';
 import { CREATE_GAME_REQUEST, ENTER_LOBBY, gameCreated } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
 import { combineEpics } from 'redux-observable';
@@ -8,12 +9,12 @@ type Dependencies = {
   history: any,
 };
 function enterLobbyEpic(
-  action$: ActionsObservable<*>,
+  action$: Observable<*>,
   store: Store<*>,
   { deepstreamClient }: Dependencies
 ) {
   return action$
-    .ofType(ENTER_LOBBY)
+    .filter(action => action.type === ENTER_LOBBY)
     .flatMap(() => deepstreamClient.subscribe('lobby'))
     .flatMap(data => {
       switch (data.t) {
@@ -27,12 +28,12 @@ function enterLobbyEpic(
 }
 
 function createGameEpic(
-  action$: ActionsObservable<*>,
+  action$: Observable<*>,
   store: Store<*>,
   { deepstreamClient, history }: Dependencies
 ) {
   return action$
-    .ofType(CREATE_GAME_REQUEST)
+    .filter(action => action.type === CREATE_GAME_REQUEST)
     .do((action: CreateGameRequestAction) => {
       const uid = action.payload.userId;
       deepstreamClient

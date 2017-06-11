@@ -1,7 +1,6 @@
 /* @flow */
 /* eslint-env jest */
 import { Observable } from 'rxjs';
-import { ActionsObservable } from 'redux-observable';
 import chatEpic from './chatEpic';
 import { sendMessage, joinChannel, receiveMessage } from './chatActions';
 import { isISO8601 } from 'validator';
@@ -19,7 +18,7 @@ describe('chat epic', () => {
 
   test('emits send message event to deepstream', async () => {
     const action = sendMessage('asdf-id', 'general', 'message text');
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
 
     const actions = await chatEpic(action$, store, { deepstreamClient })
       .toArray()
@@ -32,7 +31,7 @@ describe('chat epic', () => {
 
   test('subscribes to chat channel deepstream events', async () => {
     const action = joinChannel('general');
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
 
     deepstreamClient.subscribe.mockReturnValueOnce(Observable.empty());
 
@@ -46,7 +45,7 @@ describe('chat epic', () => {
 
   test('handles events from deepstream subscription', async () => {
     const action = joinChannel('general');
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
 
     const eventData = {
       t: 'chatmsg',

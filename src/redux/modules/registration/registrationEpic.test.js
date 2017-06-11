@@ -4,7 +4,6 @@ import 'rxjs';
 
 import { Observable } from 'rxjs';
 import registrationEpic from './registrationEpic';
-import { ActionsObservable } from 'redux-observable';
 import {
   registrationRequest,
   registrationSuccess,
@@ -27,7 +26,7 @@ describe('registration epic', () => {
 
   test('registration success', async () => {
     const action = registrationRequest(registration);
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
     const ajax = () =>
       Observable.of({
         response: {
@@ -51,7 +50,7 @@ describe('registration epic', () => {
 
   test('registration failure', async () => {
     const action = registrationRequest(registration);
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
     const ajax = () => Observable.throw(new Error('error'));
 
     const actions = await registrationEpic(action$, null, { ajax, location })

@@ -1,7 +1,6 @@
 /* @flow */
 /* eslint-env jest */
 import { Observable } from 'rxjs';
-import { ActionsObservable } from 'redux-observable';
 
 import userDataEpic from './userDataEpic';
 import { receiveMessage } from '../chat/chatActions';
@@ -30,7 +29,7 @@ describe('user data epic', () => {
       ])
     );
 
-    const action$ = ActionsObservable.of(action);
+    const action$ = Observable.of(action);
 
     const actions = await userDataEpic(action$, null, { ajax })
       .toArray()

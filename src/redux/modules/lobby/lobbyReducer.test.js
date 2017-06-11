@@ -7,7 +7,10 @@ describe('lobby reducer', () => {
   const initialState = lobbyReducer(undefined, { type: '@@INIT' });
 
   test('adds new created game to lobby', () => {
-    const action = gameCreated({ id: 'gameid-1', host: 'asdf-id' });
+    const action = gameCreated({
+      id: 'gameid-1',
+      host: 'asdf-id',
+    });
     const state = lobbyReducer(initialState, action);
 
     expect(state).toEqual({

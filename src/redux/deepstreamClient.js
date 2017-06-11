@@ -13,7 +13,7 @@ export default class DeepstreamClient {
       });
     });
   }
-  subscribe(eventName: string): rxjs$Observable<*> {
+  subscribe(eventName: string): Observable<*> {
     return Observable.fromEventPattern(
       handler => this.client.event.subscribe(eventName, handler),
       handler => this.client.event.unsubscribe(eventName, handler)

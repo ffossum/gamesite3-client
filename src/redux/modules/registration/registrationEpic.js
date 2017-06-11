@@ -1,4 +1,5 @@
 /* @flow */
+import type { Observable } from 'rxjs';
 import {
   REGISTRATION_REQUEST,
   registrationSuccess,
@@ -12,12 +13,12 @@ type Dependencies = {
 };
 
 export default function registrationEpic(
-  action$: ActionsObservable<*>,
+  action$: Observable<*>,
   store: Store<*>,
   { ajax, location }: Dependencies
 ) {
   return action$
-    .ofType(REGISTRATION_REQUEST)
+    .filter(action => action.type === REGISTRATION_REQUEST)
     .mergeMap((action: RegistrationRequestAction) =>
       ajax({
         url: '/api/registration',

@@ -1,5 +1,6 @@
 /* @flow */
 import { combineEpics } from 'redux-observable';
+import type { Observable } from 'rxjs';
 
 import { SEND_MESSAGE, JOIN_CHANNEL, receiveMessage } from './chatActions';
 import type { SendMessageAction, JoinChannelAction } from './chatActions';
@@ -9,12 +10,12 @@ type Dependencies = {
 };
 
 function sendMessageEpic(
-  action$: ActionsObservable<*>,
+  action$: Observable<*>,
   store: Store<*>,
   { deepstreamClient }: Dependencies
 ) {
   return action$
-    .ofType(SEND_MESSAGE)
+    .filter(action => action.type === SEND_MESSAGE)
     .do((action: SendMessageAction) => {
       deepstreamClient.emit(`chat:${action.payload.ch}`, {
         t: 'chatmsg',
@@ -24,13 +25,13 @@ function sendMessageEpic(
     .ignoreElements();
 }
 
-function joinChannelEpic(
-  action$: ActionsObservable<*>,
+export function joinChannelEpic(
+  action$: Observable<*>,
   store: Store<*>,
   { deepstreamClient }: Dependencies
 ) {
   return action$
-    .ofType(JOIN_CHANNEL)
+    .filter(action => action.type === JOIN_CHANNEL)
     .flatMap((action: JoinChannelAction) => {
       const channelName = `chat:${action.payload}`;
       return deepstreamClient.subscribe(channelName);
