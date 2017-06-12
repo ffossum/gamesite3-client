@@ -6,6 +6,7 @@ import FrontPage from './components/FrontPage';
 import RegistrationFormContainer from './redux/modules/registration/RegistrationFormContainer';
 import LoginFormContainer from './redux/modules/login/LoginFormContainer';
 import LobbyContainer from './redux/modules/lobby/LobbyContainer';
+import GameRoomContainer from './redux/modules/games/GameRoomContainer';
 import NotFound from './components/NotFound';
 
 export default function Routes() {
@@ -15,6 +16,7 @@ export default function Routes() {
       <Switch>
         <Route exact path="/" component={FrontPage} />
         <Route path="/lobby" component={LobbyContainer} />
+        <Route path="/game/:gameId" component={GameRoomContainer} />
         <Route
           exact
           path="/registration"
