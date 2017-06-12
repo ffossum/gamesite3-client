@@ -8,7 +8,8 @@
     "coverage": "jest --coverage --collectCoverageFrom=\"src/**/*.js\"",
     "eslint": "eslint src/",
     "prettier": "prettier --write --single-quote --trailing-comma all \"*.js\" \"src/**/*.js\"",
-    "test": "npm run eslint && flow check && prettier --list-different --single-quote --trailing-comma all \"*.js\" \"src/**/*.js\" && npm run coverage"
+    "prettycheck": "prettier --list-different --single-quote --trailing-comma all \"*.js\" \"src/**/*.js\"",
+    "test": "yarn eslint && flow check && yarn prettycheck && yarn coverage"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
