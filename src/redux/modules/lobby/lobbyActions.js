@@ -1,5 +1,5 @@
 /* @flow */
-import type { GameDataState, LobbyState } from './lobbyReducer';
+import type { GameDataState, GamesState } from '../games/gamesReducer';
 
 export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
@@ -17,9 +17,9 @@ export function enterLobby(): EnterLobbyAction {
 
 export type RefreshLobbyAction = {
   type: 'lobby/refresh',
-  payload: LobbyState,
+  payload: GamesState,
 };
-export function refreshLobby(lobby: LobbyState): RefreshLobbyAction {
+export function refreshLobby(lobby: GamesState): RefreshLobbyAction {
   return {
     type: REFRESH_LOBBY,
     payload: lobby,
@@ -54,4 +54,8 @@ export function gameCreated(gameData: GameDataState): GameCreatedAction {
   };
 }
 
-export type LobbyAction = CreateGameRequestAction | GameCreatedAction;
+export type LobbyAction =
+  | EnterLobbyAction
+  | RefreshLobbyAction
+  | CreateGameRequestAction
+  | GameCreatedAction;

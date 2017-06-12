@@ -17,6 +17,7 @@ export type Props = {
   games: Array<{
     id: string,
     host: PublicUserData,
+    players: PublicUserData[],
     createdTime: string,
   }>,
   createGame: () => void,

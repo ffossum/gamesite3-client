@@ -7,7 +7,7 @@ import {
   refreshLobby,
 } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
-import type { GameDataState } from './lobbyReducer';
+import type { GameDataState } from '../games/gamesReducer';
 import { combineEpics } from 'redux-observable';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';

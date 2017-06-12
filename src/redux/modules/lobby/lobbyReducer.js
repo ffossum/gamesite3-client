@@ -1,18 +1,16 @@
 /* @flow */
 import type { Action } from '../../actions';
 import { GAME_CREATED, REFRESH_LOBBY } from './lobbyActions';
+import { keys, union } from 'ramda';
 
-export type GameDataState = {
-  id: string,
-  host: string,
-  createdTime: string,
-  players: string[],
-};
+type GameId = string;
 export type LobbyState = {
-  [gameId: string]: GameDataState,
+  games: GameId[],
 };
 
-const initialState = {};
+const initialState = {
+  games: [],
+};
 
 export default function lobbyReducer(
   state: LobbyState = initialState,
@@ -20,13 +18,18 @@ export default function lobbyReducer(
 ) {
   switch (action.type) {
     case REFRESH_LOBBY: {
-      return action.payload;
-    }
-    case GAME_CREATED: {
-      const gameData = action.payload;
+      const gameIds = keys(action.payload);
       return {
         ...state,
-        [gameData.id]: gameData,
+        games: gameIds,
+      };
+    }
+    case GAME_CREATED: {
+      const game = action.payload;
+
+      return {
+        ...state,
+        games: union(state.games, [game.id]),
       };
     }
     default:
