@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import type { State } from '../root';
 import GameRoom from '../../../components/game/GameRoom';
+import type { Props as GameRoomProps } from '../../../components/game/GameRoom';
 import type { Match } from 'react-router-dom';
 
 type OwnProps = {
@@ -11,11 +12,12 @@ type OwnProps = {
 };
 
 function mapStateToProps(state: State, ownProps: OwnProps) {
-  const { gameId } = ownProps.match.params;
+  const gameId: string = ownProps.match.params.gameId;
   const game = state.games[gameId];
   return {
     gameId,
     game,
+    users: state.users,
   };
 }
 
@@ -27,9 +29,20 @@ function mergeProps(
   stateProps,
   // dispatchProps,
   // ownProps,
-) {
+): GameRoomProps {
+  const { game, gameId, users } = stateProps;
+
+  const placeholderUser = { id: '', username: '' };
+
+  const transformedGame = game && {
+    id: gameId,
+    host: users[game.host] || placeholderUser,
+    players: game.players.map(playerId => users[playerId] || placeholderUser),
+  };
+
   return {
-    ...stateProps,
+    gameId,
+    game: transformedGame,
   };
 }
 
