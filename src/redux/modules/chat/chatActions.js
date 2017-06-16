@@ -1,5 +1,6 @@
 /* @flow */
 export const JOIN_CHANNEL = 'chat/join channel';
+export const LEAVE_CHANNEL = 'chat/leave channel';
 export const SEND_MESSAGE = 'chat/send message';
 export const RECEIVE_MESSAGE = 'chat/receive message';
 
@@ -17,6 +18,17 @@ export type JoinChannelAction = {
 export function joinChannel(channelName: ChannelName): JoinChannelAction {
   return {
     type: JOIN_CHANNEL,
+    payload: channelName,
+  };
+}
+
+export type LeaveChannelAction = {
+  type: 'chat/leave channel',
+  payload: string,
+};
+export function leaveChannel(channelName: ChannelName): LeaveChannelAction {
+  return {
+    type: LEAVE_CHANNEL,
     payload: channelName,
   };
 }

@@ -2,7 +2,12 @@
 /* eslint-env jest */
 import { Observable } from 'rxjs';
 import chatEpic from './chatEpic';
-import { sendMessage, joinChannel, receiveMessage } from './chatActions';
+import {
+  sendMessage,
+  joinChannel,
+  leaveChannel,
+  receiveMessage,
+} from './chatActions';
 import { isISO8601 } from 'validator';
 
 describe('chat epic', () => {
@@ -68,5 +73,18 @@ describe('chat epic', () => {
 
     expect(isISO8601(timeStamp)).toBe(true);
     expect(resultAction).toEqual(receiveMessage(eventData, timeStamp));
+  });
+
+  test('unsubscribes from events after leave channel action', async () => {
+    const action$ = Observable.of(
+      joinChannel('general'),
+      leaveChannel('general'),
+    );
+
+    deepstreamClient.subscribe.mockReturnValueOnce(Observable.never());
+
+    await chatEpic(action$, store, { deepstreamClient }).toArray().toPromise();
+
+    expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
   });
 });

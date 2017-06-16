@@ -3,7 +3,12 @@ import { combineEpics } from 'redux-observable';
 import type { Observable } from 'rxjs';
 import type { Store } from 'redux';
 
-import { SEND_MESSAGE, JOIN_CHANNEL, receiveMessage } from './chatActions';
+import {
+  SEND_MESSAGE,
+  JOIN_CHANNEL,
+  LEAVE_CHANNEL,
+  receiveMessage,
+} from './chatActions';
 import type { SendMessageAction, JoinChannelAction } from './chatActions';
 import type DeepstreamClient from '../../deepstreamClient';
 
@@ -35,8 +40,15 @@ export function joinChannelEpic(
   return action$
     .filter(action => action.type === JOIN_CHANNEL)
     .flatMap((action: JoinChannelAction) => {
-      const channelName = `chat:${action.payload}`;
-      return deepstreamClient.subscribe(channelName);
+      const channelName = action.payload;
+      return deepstreamClient
+        .subscribe(`chat:${channelName}`)
+        .takeUntil(
+          action$.filter(
+            action =>
+              action.type === LEAVE_CHANNEL && action.payload === channelName,
+          ),
+        );
     })
     .flatMap(data => {
       switch (data.t) {
