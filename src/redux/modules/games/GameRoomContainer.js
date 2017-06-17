@@ -4,7 +4,7 @@ import type { State } from '../root';
 import GameRoom from '../../../components/game/GameRoom';
 import type { Props as GameRoomProps } from '../../../components/game/GameRoom';
 import type { Match } from 'react-router-dom';
-import { enterRoom, exitRoom } from './gameRoomActions';
+import { enterRoom, exitRoom, joinGame, leaveGame } from './gameRoomActions';
 
 type OwnProps = {
   location: Location,
@@ -19,6 +19,7 @@ function mapStateToProps(state: State, ownProps: OwnProps) {
     gameId,
     game,
     users: state.users,
+    user: state.session.user,
   };
 }
 
@@ -30,6 +31,12 @@ function mapDispatchToProps(dispatch: Dispatch<*>) {
     exitRoom(gameId) {
       dispatch(exitRoom(gameId));
     },
+    joinGame(userId, gameId) {
+      dispatch(joinGame(userId, gameId));
+    },
+    leaveGame(userId, gameId) {
+      dispatch(leaveGame(userId, gameId));
+    },
   };
 }
 
@@ -38,7 +45,7 @@ function mergeProps(
   dispatchProps,
   // ownProps,
 ): GameRoomProps {
-  const { game, gameId, users } = stateProps;
+  const { game, gameId, users, user } = stateProps;
 
   const placeholderUser = { id: '', username: '' };
 
@@ -49,10 +56,21 @@ function mergeProps(
   };
 
   return {
-    enterRoom: dispatchProps.enterRoom,
-    exitRoom: dispatchProps.exitRoom,
+    enterRoom() {
+      dispatchProps.enterRoom(gameId);
+    },
+    exitRoom() {
+      dispatchProps.exitRoom(gameId);
+    },
+    joinGame() {
+      user && dispatchProps.joinGame(user.id, gameId);
+    },
+    leaveGame() {
+      user && dispatchProps.leaveGame(user.id, gameId);
+    },
     gameId,
     game: transformedGame,
+    user,
   };
 }
 
