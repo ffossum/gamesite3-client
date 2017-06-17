@@ -4,7 +4,7 @@ import 'rxjs';
 
 import configureStore from './configureStore';
 import { rootReducer } from './modules/root';
-import { loginSuccess } from './modules/login/loginActions';
+import { authenticatedUser } from './modules/session/sessionActions';
 
 describe('configure redux store', () => {
   const user: PublicUserData = {
@@ -29,7 +29,7 @@ describe('configure redux store', () => {
   test('with preloaded state', () => {
     const plainStore = configureStore(undefined, dependencies);
 
-    const preloadedState = rootReducer(undefined, loginSuccess(user));
+    const preloadedState = rootReducer(undefined, authenticatedUser(user));
     const preloadedStore = configureStore(preloadedState, dependencies);
 
     expect(plainStore.getState()).not.toEqual(preloadedStore.getState());

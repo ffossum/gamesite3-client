@@ -1,15 +1,15 @@
 /* @flow */
 /* eslint-env jest */
 import reducer from './sessionReducer';
-import { registrationSuccess } from '../registration/registrationActions';
+import { authenticatedUser } from './sessionActions';
 
 describe('session reducer', () => {
   const initialState = reducer(undefined, { type: '@@INIT' });
   test('initial state', () => {
     expect(initialState).toMatchSnapshot();
   });
-  test('contains user data after successful registration', () => {
-    const action = registrationSuccess({
+  test('contains user data after user is authenticated', () => {
+    const action = authenticatedUser({
       username: 'bob',
       id: 'userid',
     });

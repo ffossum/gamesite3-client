@@ -11,3 +11,5 @@ export function authenticatedUser(user: PublicUserData) {
     payload: user,
   };
 }
+
+export type SessionAction = AuthenticatedUserAction;

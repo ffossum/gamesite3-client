@@ -5,6 +5,7 @@ import type { ChatAction } from './modules/chat/chatActions';
 import type { UserDataAction } from './modules/users/userDataActions';
 import type { LobbyAction } from './modules/lobby/lobbyActions';
 import type { GameRoomAction } from './modules/games/gameRoomActions';
+import type { SessionAction } from './modules/session/sessionActions';
 
 export type Action =
   | ChatAction
@@ -13,4 +14,5 @@ export type Action =
   | UserDataAction
   | LobbyAction
   | GameRoomAction
+  | SessionAction
   | { type: '@@INIT' };

@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 import { createStore } from 'redux';
-import { loginSuccess } from '../login/loginActions';
+import { authenticatedUser } from '../session/sessionActions';
 import { rootReducer } from '../root';
 import { sendMessage, receiveMessage } from './chatActions';
 import { fetchedUserData } from '../users/userDataActions';
@@ -33,7 +33,7 @@ describe('chat container', () => {
   });
 
   test('dispatches action when logged in user sends message', () => {
-    store.dispatch(loginSuccess({ id: 'asdf-id', username: 'asdf' }));
+    store.dispatch(authenticatedUser({ id: 'asdf-id', username: 'asdf' }));
 
     const stateProps = mapStateToProps(store.getState(), ownProps);
     const dispatchProps = mapDispatchToProps(dispatch);
