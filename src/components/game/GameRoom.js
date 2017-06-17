@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import ChatContainer from '../../redux/modules/chat/ChatContainer';
 
 type Game = {
   id: string,
@@ -7,6 +8,8 @@ type Game = {
   players: PublicUserData[],
 };
 export type Props = {
+  enterRoom: (gameId: string) => void,
+  exitRoom: (gameId: string) => void,
   gameId: string,
   game: ?Game,
 };
@@ -14,6 +17,18 @@ export default class GameRoom extends React.Component {
   props: Props;
   constructor() {
     super();
+  }
+  componentDidMount() {
+    this.props.enterRoom(this.props.gameId);
+  }
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.gameId !== this.props.gameId) {
+      this.props.exitRoom(this.props.gameId);
+      this.props.enterRoom(nextProps.gameId);
+    }
+  }
+  componentWillUnmount() {
+    this.props.exitRoom(this.props.gameId);
   }
 
   render() {
@@ -25,6 +40,7 @@ export default class GameRoom extends React.Component {
           <div>
             <p>Host: {game.host.username}</p>
           </div>}
+        <ChatContainer channelName={`game:${gameId}`} />
       </div>
     );
   }

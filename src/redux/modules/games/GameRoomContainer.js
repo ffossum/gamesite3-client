@@ -4,6 +4,7 @@ import type { State } from '../root';
 import GameRoom from '../../../components/game/GameRoom';
 import type { Props as GameRoomProps } from '../../../components/game/GameRoom';
 import type { Match } from 'react-router-dom';
+import { enterRoom, exitRoom } from './gameRoomActions';
 
 type OwnProps = {
   location: Location,
@@ -21,13 +22,20 @@ function mapStateToProps(state: State, ownProps: OwnProps) {
   };
 }
 
-function mapDispatchToProps() {
-  return {};
+function mapDispatchToProps(dispatch: Dispatch<*>) {
+  return {
+    enterRoom(gameId) {
+      dispatch(enterRoom(gameId));
+    },
+    exitRoom(gameId) {
+      dispatch(exitRoom(gameId));
+    },
+  };
 }
 
 function mergeProps(
   stateProps,
-  // dispatchProps,
+  dispatchProps,
   // ownProps,
 ): GameRoomProps {
   const { game, gameId, users } = stateProps;
@@ -41,6 +49,8 @@ function mergeProps(
   };
 
   return {
+    enterRoom: dispatchProps.enterRoom,
+    exitRoom: dispatchProps.exitRoom,
     gameId,
     game: transformedGame,
   };
