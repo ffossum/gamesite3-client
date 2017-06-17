@@ -25,6 +25,7 @@ import type { LobbyState } from './lobby/lobbyReducer';
 
 import games from './games/gamesReducer';
 import type { GamesState } from './games/gamesReducer';
+import gameRoomEpic from './games/gameRoomEpic';
 
 export type State = {
   chat: ChatState,
@@ -52,4 +53,5 @@ export const rootEpic = combineEpics(
   loginEpic,
   userDataEpic,
   lobbyEpic,
+  gameRoomEpic,
 );

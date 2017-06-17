@@ -1,7 +1,7 @@
 /* @flow */
 
-const ENTER_ROOM = 'game/enter room';
-const EXIT_ROOM = 'game/exit room';
+export const ENTER_ROOM = 'game/enter room';
+export const EXIT_ROOM = 'game/exit room';
 
 export type EnterRoomAction = {
   type: 'game/enter room',
