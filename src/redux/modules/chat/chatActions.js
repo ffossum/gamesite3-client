@@ -74,5 +74,6 @@ export function receiveMessage(
 
 export type ChatAction =
   | JoinChannelAction
+  | LeaveChannelAction
   | SendMessageAction
   | ReceiveMessageAction;

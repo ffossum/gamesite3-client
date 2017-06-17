@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { ENTER_ROOM, EXIT_ROOM } from './gameRoomActions';
 import { joinChannel, leaveChannel } from '../chat/chatActions';
 
-export default function gameRoomEpic(
-  action$: Observable<*>,
-) {
+export default function gameRoomEpic(action$: Observable<*>) {
   return Observable.merge(
     action$
       .filter(action => action.type === ENTER_ROOM)
