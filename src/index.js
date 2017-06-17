@@ -12,19 +12,12 @@ import deepstream from 'deepstream.io-client-js';
 import Routes from './Routes';
 import DeepstreamClient from './redux/deepstreamClient';
 import configureStore from './redux/configureStore';
-import { rootReducer } from './redux/modules/root';
-import { loginSuccess } from './redux/modules/login/loginActions';
+import { authenticatedUser } from './redux/modules/session/sessionActions';
 import { joinChannel } from './redux/modules/chat/chatActions';
 import { enterLobby } from './redux/modules/lobby/lobbyActions';
 
 const history = createBrowserHistory();
-
-let preloadedState;
 const user = window.__USER__;
-
-if (user) {
-  preloadedState = rootReducer(preloadedState, loginSuccess(user));
-}
 
 const deepstreamClient = new DeepstreamClient(deepstream, 'localhost:6020');
 
@@ -37,7 +30,11 @@ deepstreamClient.login().then(() => {
     history,
   };
 
-  const store = configureStore(preloadedState, dependencies);
+  const store = configureStore(undefined, dependencies);
+
+  if (user) {
+    store.dispatch(authenticatedUser(user));
+  }
 
   store.dispatch(joinChannel('general'));
   store.dispatch(enterLobby());

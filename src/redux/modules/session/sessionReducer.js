@@ -1,7 +1,6 @@
 /* @flow */
 import type { Action } from '../../actions';
-import { REGISTRATION_SUCCESS } from '../registration/registrationActions';
-import { LOGIN_SUCCESS } from '../login/loginActions';
+import { AUTHENTICATED_USER } from './sessionActions';
 
 export type SessionUser = {
   id: string,
@@ -19,8 +18,7 @@ export default function sessionReducer(
   action: Action,
 ) {
   switch (action.type) {
-    case LOGIN_SUCCESS:
-    case REGISTRATION_SUCCESS:
+    case AUTHENTICATED_USER:
       return {
         ...state,
         user: action.payload,

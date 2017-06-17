@@ -6,6 +6,7 @@ import type { RegistrationState } from './registration/registrationReducer';
 import registrationEpic from './registration/registrationEpic';
 import session from './session/sessionReducer';
 import type { SessionState } from './session/sessionReducer';
+import sessionEpic from './session/sessionEpic';
 
 import login from './login/loginReducer';
 import type { LoginState } from './login/loginReducer';
@@ -49,8 +50,9 @@ export const rootReducer = combineReducers({
 
 export const rootEpic = combineEpics(
   chatEpic,
-  registrationEpic,
   loginEpic,
+  registrationEpic,
+  sessionEpic,
   userDataEpic,
   lobbyEpic,
   gameRoomEpic,
