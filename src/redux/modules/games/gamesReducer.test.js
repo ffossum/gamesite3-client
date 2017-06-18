@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 import { gameCreated, gameUpdated } from '../lobby/lobbyActions';
-import { playerJoined } from '../games/gameRoomActions';
+import { playerJoined, playerLeft } from '../games/gameRoomActions';
 import gamesReducer from './gamesReducer';
 
 describe('games reducer', () => {
@@ -67,5 +67,23 @@ describe('games reducer', () => {
     state = gamesReducer(state, joinAction);
 
     expect(state.gameid_1 && state.gameid_1.players).toContainEqual('qwer-id');
+  });
+
+  test('removes leaving player from game data', () => {
+    let state = gamesReducer(
+      undefined,
+      gameCreated({
+        createdTime: '2017-06-11T10:57:22.414Z',
+        id: 'game_id',
+        host: 'asdf_id',
+        players: ['asdf_id', 'qwer_id', 'zxcv_id'],
+      }),
+    );
+
+    state = gamesReducer(state, playerLeft('qwer_id', 'game_id'));
+    expect(state.game_id && state.game_id.players).toEqual([
+      'asdf_id',
+      'zxcv_id',
+    ]);
   });
 });
