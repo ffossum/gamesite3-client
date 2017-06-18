@@ -4,7 +4,7 @@ import { AUTHENTICATED_USER } from './sessionActions';
 import type { AuthenticatedUserAction } from './sessionActions';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';
-import { playerJoined } from '../games/gameRoomActions';
+import { playerJoined, playerLeft } from '../games/gameRoomActions';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
@@ -26,6 +26,11 @@ export default function sessionEpic(
               const gameId = data.p.gid;
               const userId = data.p.uid;
               return [playerJoined(userId, gameId)];
+            }
+            case 'player-left': {
+              const gameId = data.p.gid;
+              const userId = data.p.uid;
+              return [playerLeft(userId, gameId)];
             }
             default:
               return [];

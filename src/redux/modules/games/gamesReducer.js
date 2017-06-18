@@ -1,5 +1,5 @@
 /* @flow */
-import { union } from 'ramda';
+import { union, without } from 'ramda';
 import type { Action } from '../../actions';
 import {
   GAME_CREATED,
@@ -7,7 +7,7 @@ import {
   REFRESH_LOBBY,
 } from '../lobby/lobbyActions';
 
-import { PLAYER_JOINED } from './gameRoomActions';
+import { PLAYER_JOINED, PLAYER_LEFT } from './gameRoomActions';
 
 export type GameDataState = {
   id: string,
@@ -64,6 +64,21 @@ export default function gamesReducer(
           [gameId]: {
             ...game,
             players: union(game.players, [userId]),
+          },
+        };
+      }
+
+      return state;
+    }
+    case PLAYER_LEFT: {
+      const { gameId, userId } = action.payload;
+      const game = state[gameId];
+      if (game) {
+        return {
+          ...state,
+          [gameId]: {
+            ...game,
+            players: without([userId], game.players),
           },
         };
       }

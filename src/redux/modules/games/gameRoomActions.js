@@ -7,6 +7,7 @@ export const JOIN_GAME = 'game/join';
 export const PLAYER_JOINED = 'game/player joined';
 
 export const LEAVE_GAME = 'game/leave';
+export const PLAYER_LEFT = 'game/player left';
 
 export type EnterRoomAction = {
   type: 'game/enter room',
@@ -84,9 +85,27 @@ export function leaveGame(userId: string, gameId: string) {
   };
 }
 
+export type PlayerLeftAction = {
+  type: 'game/player left',
+  payload: {
+    gameId: string,
+    userId: string,
+  },
+};
+export function playerLeft(userId: string, gameId: string): PlayerLeftAction {
+  return {
+    type: PLAYER_LEFT,
+    payload: {
+      gameId: gameId,
+      userId: userId,
+    },
+  };
+}
+
 export type GameRoomAction =
   | EnterRoomAction
   | ExitRoomAction
   | JoinGameAction
+  | PlayerJoinedAction
   | LeaveGameAction
-  | PlayerJoinedAction;
+  | PlayerLeftAction;

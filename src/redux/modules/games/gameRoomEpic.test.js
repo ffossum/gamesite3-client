@@ -6,10 +6,17 @@ import { enterRoom, exitRoom } from './gameRoomActions';
 import { joinChannel, leaveChannel } from '../chat/chatActions';
 
 describe('game room epic', () => {
+  let store;
+  let deepstreamClient;
+
   test('join chat when entering room', async () => {
     const action$ = Observable.of(enterRoom('game-id'));
 
-    const resultActions = await gameRoomEpic(action$).toArray().toPromise();
+    const resultActions = await gameRoomEpic(action$, store, {
+      deepstreamClient,
+    })
+      .toArray()
+      .toPromise();
 
     expect(resultActions).toEqual([joinChannel('game:game-id')]);
   });
@@ -17,7 +24,11 @@ describe('game room epic', () => {
   test('leave chat when exiting room', async () => {
     const action$ = Observable.of(exitRoom('game-id'));
 
-    const resultActions = await gameRoomEpic(action$).toArray().toPromise();
+    const resultActions = await gameRoomEpic(action$, store, {
+      deepstreamClient,
+    })
+      .toArray()
+      .toPromise();
 
     expect(resultActions).toEqual([leaveChannel('game:game-id')]);
   });
