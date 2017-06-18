@@ -4,6 +4,7 @@ import { AUTHENTICATED_USER } from './sessionActions';
 import type { AuthenticatedUserAction } from './sessionActions';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';
+import { playerJoined } from '../games/gameRoomActions';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
@@ -21,6 +22,11 @@ export default function sessionEpic(
         .subscribe('user:' + action.payload.id)
         .flatMap(data => {
           switch (data.t) {
+            case 'player-joined': {
+              const gameId = data.p.gid;
+              const userId = data.p.uid;
+              return [playerJoined(userId, gameId)];
+            }
             default:
               return [];
           }

@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 import { gameCreated, gameUpdated } from '../lobby/lobbyActions';
+import { playerJoined } from '../games/gameRoomActions';
 import gamesReducer from './gamesReducer';
 
 describe('games reducer', () => {
@@ -50,5 +51,21 @@ describe('games reducer', () => {
         players: ['asdf-id', 'zxcv-id'],
       },
     });
+  });
+
+  test('adds joined player to game data', () => {
+    const action = gameCreated({
+      createdTime: '2017-06-11T10:57:22.414Z',
+      id: 'gameid_1',
+      host: 'asdf-id',
+      players: ['asdf-id'],
+    });
+
+    let state = gamesReducer(initialState, action);
+    const joinAction = playerJoined('qwer-id', 'gameid_1');
+
+    state = gamesReducer(state, joinAction);
+
+    expect(state.gameid_1 && state.gameid_1.players).toContainEqual('qwer-id');
   });
 });
