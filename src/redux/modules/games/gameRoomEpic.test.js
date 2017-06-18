@@ -2,34 +2,41 @@
 /* eslint-env jest */
 import { Observable } from 'rxjs';
 import gameRoomEpic from './gameRoomEpic';
-import { enterRoom, exitRoom } from './gameRoomActions';
-import { joinChannel, leaveChannel } from '../chat/chatActions';
+import { joinGame, leaveGame } from './gameRoomActions';
 
 describe('game room epic', () => {
-  let store;
-  let deepstreamClient;
+  let store: any;
+  let deepstreamClient: any;
 
-  test('join chat when entering room', async () => {
-    const action$ = Observable.of(enterRoom('game-id'));
-
-    const resultActions = await gameRoomEpic(action$, store, {
-      deepstreamClient,
-    })
-      .toArray()
-      .toPromise();
-
-    expect(resultActions).toEqual([joinChannel('game:game-id')]);
+  beforeEach(() => {
+    deepstreamClient = {
+      make: jest.fn(),
+    };
   });
 
-  test('leave chat when exiting room', async () => {
-    const action$ = Observable.of(exitRoom('game-id'));
-
-    const resultActions = await gameRoomEpic(action$, store, {
-      deepstreamClient,
-    })
+  test('makes rpc join game request', async () => {
+    const action = joinGame('user_id', 'game_id');
+    const action$ = Observable.of(action);
+    await gameRoomEpic(action$, store, { deepstreamClient })
       .toArray()
       .toPromise();
 
-    expect(resultActions).toEqual([leaveChannel('game:game-id')]);
+    expect(deepstreamClient.make).toHaveBeenCalledWith(
+      'join-game',
+      action.payload,
+    );
+  });
+
+  test('makes rpc leave game request', async () => {
+    const action = leaveGame('user_id', 'game_id');
+    const action$ = Observable.of(action);
+    await gameRoomEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
+
+    expect(deepstreamClient.make).toHaveBeenCalledWith(
+      'leave-game',
+      action.payload,
+    );
   });
 });
