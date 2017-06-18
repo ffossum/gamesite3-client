@@ -4,6 +4,7 @@ import {
   CREATE_GAME_REQUEST,
   ENTER_LOBBY,
   gameCreated,
+  gameUpdated,
   refreshLobby,
 } from './lobbyActions';
 import type { CreateGameRequestAction } from './lobbyActions';
@@ -36,7 +37,8 @@ function enterLobbyEpic(
         switch (data.t) {
           case 'create-game':
             return [gameCreated(data.p)];
-
+          case 'game-updated':
+            return [gameUpdated(data.p)];
           default:
             return [];
         }

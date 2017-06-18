@@ -3,6 +3,7 @@ import type { GameDataState, GamesState } from '../games/gamesReducer';
 
 export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
+export const GAME_UPDATED = 'lobby/game updated';
 export const ENTER_LOBBY = 'lobby/enter';
 export const REFRESH_LOBBY = 'lobby/refresh';
 
@@ -54,8 +55,22 @@ export function gameCreated(gameData: GameDataState): GameCreatedAction {
   };
 }
 
+export type GameUpdatedAction = {
+  type: 'lobby/game updated',
+  payload: $Shape<GameDataState>,
+};
+export function gameUpdated(
+  partialGameData: $Shape<GameDataState>,
+): GameUpdatedAction {
+  return {
+    type: GAME_UPDATED,
+    payload: partialGameData,
+  };
+}
+
 export type LobbyAction =
   | EnterLobbyAction
   | RefreshLobbyAction
+  | GameUpdatedAction
   | CreateGameRequestAction
   | GameCreatedAction;

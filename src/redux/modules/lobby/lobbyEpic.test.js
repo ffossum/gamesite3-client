@@ -1,7 +1,12 @@
 /* @flow */
 /* eslint-env jest */
 import lobbyEpic from './lobbyEpic';
-import { enterLobby, gameCreated, createGameRequest } from './lobbyActions';
+import {
+  enterLobby,
+  gameCreated,
+  gameUpdated,
+  createGameRequest,
+} from './lobbyActions';
 import { Observable } from 'rxjs';
 
 describe('lobby epic', () => {
@@ -47,6 +52,27 @@ describe('lobby epic', () => {
       .toPromise();
 
     expect(resultActions).toContainEqual(gameCreated(gameData));
+  });
+
+  test('handles game updated events', async () => {
+    const gameUpdateData = {
+      id: 'game-id',
+      players: ['asdf-id', 'zxcv-id'],
+    };
+    const event = {
+      t: 'game-updated',
+      p: gameUpdateData,
+    };
+    deepstreamClient.subscribe.mockReturnValue(Observable.of(event));
+    deepstreamClient.make.mockReturnValue(Promise.resolve([]));
+
+    const action = enterLobby();
+    const action$ = Observable.of(action);
+    const resultActions = await lobbyEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).toContainEqual(gameUpdated(gameUpdateData));
   });
 
   test('makes deepstream rpc request to create game', async () => {

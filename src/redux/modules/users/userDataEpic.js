@@ -4,11 +4,16 @@ import { stringify } from 'query-string';
 
 import { fetchedUserData } from './userDataActions';
 import { RECEIVE_MESSAGE } from '../chat/chatActions';
-import { GAME_CREATED, REFRESH_LOBBY } from '../lobby/lobbyActions';
+import {
+  GAME_CREATED,
+  GAME_UPDATED,
+  REFRESH_LOBBY,
+} from '../lobby/lobbyActions';
 
 import type { ReceiveMessageAction } from '../chat/chatActions';
 import type {
   GameCreatedAction,
+  GameUpdatedAction,
   RefreshLobbyAction,
 } from '../lobby/lobbyActions';
 import type { Store } from 'redux';
@@ -32,6 +37,12 @@ export default function userDataEpic(
     action$
       .filter(action => action.type === GAME_CREATED)
       .map((action: GameCreatedAction) => action.payload.host),
+    action$
+      .filter(action => action.type === GAME_UPDATED)
+      .flatMap((action: GameUpdatedAction) => {
+        const game = action.payload;
+        return game.players ? game.players : [];
+      }),
     action$
       .filter(action => action.type === REFRESH_LOBBY)
       .flatMap((action: RefreshLobbyAction) => {

@@ -1,6 +1,10 @@
 /* @flow */
 import type { Action } from '../../actions';
-import { GAME_CREATED, REFRESH_LOBBY } from '../lobby/lobbyActions';
+import {
+  GAME_CREATED,
+  GAME_UPDATED,
+  REFRESH_LOBBY,
+} from '../lobby/lobbyActions';
 
 export type GameDataState = {
   id: string,
@@ -31,6 +35,22 @@ export default function gamesReducer(
         ...state,
         [gameData.id]: gameData,
       };
+    }
+    case GAME_UPDATED: {
+      const newGameData = action.payload;
+      const gameId: string = newGameData.id;
+      const previousGame = state[gameId];
+      if (previousGame) {
+        return {
+          ...state,
+          [gameId]: {
+            ...previousGame,
+            ...newGameData,
+          },
+        };
+      } else {
+        return state;
+      }
     }
     default:
       return state;
