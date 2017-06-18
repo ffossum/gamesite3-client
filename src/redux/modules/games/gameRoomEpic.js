@@ -1,13 +1,16 @@
 /* @flow */
 import { Observable } from 'rxjs';
 import type { Store } from 'redux';
+import type { State } from '../root';
+import type { EnterSpectatorRoomAction } from './gameRoomActions';
+
 import {
-  ENTER_ROOM,
-  EXIT_ROOM,
+  ENTER_SPECTATOR,
+  EXIT_SPECTATOR,
   JOIN_GAME,
   LEAVE_GAME,
 } from './gameRoomActions';
-import { joinChannel, leaveChannel } from '../chat/chatActions';
+
 import type DeepstreamClient from '../../deepstreamClient';
 
 type Dependencies = {
@@ -16,16 +19,27 @@ type Dependencies = {
 
 export default function gameRoomEpic(
   action$: Observable<*>,
-  store: Store<*, *>,
+  store: Store<State, *>,
   { deepstreamClient }: Dependencies,
 ) {
   return Observable.merge(
     action$
-      .filter(action => action.type === ENTER_ROOM)
-      .map(action => joinChannel('game:' + action.payload)),
-    action$
-      .filter(action => action.type === EXIT_ROOM)
-      .map(action => leaveChannel('game:' + action.payload)),
+      .filter(action => action.type === ENTER_SPECTATOR)
+      .flatMap((action: EnterSpectatorRoomAction) => {
+        const gameId = action.payload;
+        return deepstreamClient
+          .subscribe('spectate:' + gameId)
+          .flatMap(() => {
+            // TODO handle events sent to spectator channel
+            return [];
+          })
+          .takeUntil(
+            action$.filter(
+              action =>
+                action.type === EXIT_SPECTATOR && action.payload === gameId,
+            ),
+          );
+      }),
     action$
       .filter(action => action.type === JOIN_GAME)
       .do(action => {

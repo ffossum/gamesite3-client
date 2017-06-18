@@ -3,6 +3,9 @@
 export const ENTER_ROOM = 'game/enter room';
 export const EXIT_ROOM = 'game/exit room';
 
+export const ENTER_SPECTATOR = 'game/enter spectator';
+export const EXIT_SPECTATOR = 'game/exit spectator';
+
 export const JOIN_GAME = 'game/join';
 export const PLAYER_JOINED = 'game/player joined';
 
@@ -20,6 +23,17 @@ export function enterRoom(gameId: string): EnterRoomAction {
   };
 }
 
+export type EnterSpectatorRoomAction = {
+  type: 'game/enter spectator',
+  payload: string,
+};
+export function enterSpectatorRoom(gameId: string): EnterSpectatorRoomAction {
+  return {
+    type: ENTER_SPECTATOR,
+    payload: gameId,
+  };
+}
+
 export type ExitRoomAction = {
   type: 'game/exit room',
   payload: string,
@@ -27,6 +41,17 @@ export type ExitRoomAction = {
 export function exitRoom(gameId: string): ExitRoomAction {
   return {
     type: EXIT_ROOM,
+    payload: gameId,
+  };
+}
+
+export type ExitSpectatorRoomAction = {
+  type: 'game/exit spectator',
+  payload: string,
+};
+export function exitSpectatorRoom(gameId: string): ExitSpectatorRoomAction {
+  return {
+    type: EXIT_SPECTATOR,
     payload: gameId,
   };
 }

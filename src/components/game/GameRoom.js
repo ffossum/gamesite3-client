@@ -1,16 +1,18 @@
 /* @flow */
 import React from 'react';
-import ChatContainer from '../../redux/modules/chat/ChatContainer';
 import { find } from 'ramda';
+import SpectatorRoom from './SpectatorRoom';
 
-type Game = {
+export type Game = {
   id: string,
   host: PublicUserData,
   players: PublicUserData[],
 };
 export type Props = {
-  enterRoom: () => void,
-  exitRoom: () => void,
+  enterRoom: (gameId: string) => void,
+  exitRoom: (gameId: string) => void,
+  enterSpectatorRoom: (gameId: string) => void,
+  exitSpectatorRoom: (gameId: string) => void,
   joinGame: () => void,
   leaveGame: () => void,
   gameId: string,
@@ -19,16 +21,10 @@ export type Props = {
 };
 export default class GameRoom extends React.Component {
   props: Props;
-  handleJoinClick: SyntheticInputEvent => void;
   handleLeaveClick: SyntheticInputEvent => void;
 
   constructor() {
     super();
-
-    this.handleJoinClick = e => {
-      e.preventDefault();
-      this.props.joinGame();
-    };
 
     this.handleLeaveClick = e => {
       e.preventDefault();
@@ -36,22 +32,41 @@ export default class GameRoom extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.enterRoom();
+    this.props.enterRoom(this.props.gameId);
   }
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.gameId !== this.props.gameId) {
-      this.props.exitRoom();
-      this.props.enterRoom();
+      this.props.exitRoom(this.props.gameId);
+      this.props.enterRoom(nextProps.gameId);
     }
   }
   componentWillUnmount() {
-    this.props.exitRoom();
+    this.props.exitRoom(this.props.gameId);
   }
 
   render() {
     const { gameId, game, user } = this.props;
+
+    if (!game) {
+      return <div>Game data unavailable</div>;
+    }
+
     const isInGame =
       user && game && find(player => player.id === user.id, game.players);
+
+    if (!isInGame) {
+      return (
+        <SpectatorRoom
+          enterSpectatorRoom={this.props.enterSpectatorRoom}
+          exitSpectatorRoom={this.props.exitSpectatorRoom}
+          joinGame={this.props.joinGame}
+          game={game}
+          gameId={gameId}
+          user={user}
+        />
+      );
+    }
+
     return (
       <div>
         <h2>{gameId}</h2>
@@ -68,14 +83,8 @@ export default class GameRoom extends React.Component {
                 )}
               </ul>
             </div>
-            {isInGame
-              ? <button onClick={this.handleLeaveClick}>Leave game</button>
-              : <button disabled={!user} onClick={this.handleJoinClick}>
-                  Join game
-                </button>}
-
+            <button onClick={this.handleLeaveClick}>Leave game</button>
           </div>}
-        <ChatContainer channelName={`game:${gameId}`} />
       </div>
     );
   }
