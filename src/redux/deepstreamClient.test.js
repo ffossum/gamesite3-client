@@ -83,4 +83,45 @@ describe('deepstream client', () => {
     expect(mockClient.event.emit).toHaveBeenCalledTimes(1);
     expect(mockClient.event.emit).toHaveBeenCalledWith('event name', 'data');
   });
+
+  describe('make', () => {
+    test('passes parameters to rpc.make', () => {
+      const mockClient = {
+        rpc: {
+          make: jest.fn(),
+        },
+      };
+      const deepstream = () => mockClient;
+      const client = new DeepstreamClient(deepstream);
+
+      client.make('rpc-name', 'data');
+
+      expect(mockClient.rpc.make.mock.calls[0][0]).toBe('rpc-name');
+      expect(mockClient.rpc.make.mock.calls[0][1]).toBe('data');
+      expect(typeof mockClient.rpc.make.mock.calls[0][2]).toBe('function');
+    });
+
+    test('returns promise', () => {
+      let callback: (error: any, result: any) => void;
+
+      const mockClient = {
+        rpc: {
+          make(rpcName, data, cb) {
+            callback = cb;
+          },
+        },
+      };
+
+      const deepstream = () => mockClient;
+      const client = new DeepstreamClient(deepstream);
+
+      let promise = client.make('rpc-name', 'data');
+      callback && callback('error');
+      expect(promise).rejects.toEqual('error');
+
+      promise = client.make('rpc-name', 'data');
+      callback && callback(undefined, 'success');
+      expect(promise).resolves.toEqual('success');
+    });
+  });
 });
