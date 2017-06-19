@@ -22,5 +22,6 @@ module.exports = {
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(true),
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 };
