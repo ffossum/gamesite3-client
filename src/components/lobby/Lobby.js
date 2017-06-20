@@ -21,35 +21,47 @@ export type Props = {
     createdTime: string,
   }>,
   createGame: () => void,
+  enterLobby: () => void,
+  exitLobby: () => void,
 };
 
-export default function Lobby(props: Props) {
-  const { createGame, games, user } = props;
+export default class Lobby extends React.Component {
+  props: Props;
+  componentDidMount() {
+    this.props.enterLobby();
+  }
+  componentWillUnmount() {
+    this.props.exitLobby();
+  }
+  render() {
+    const { createGame, games, user } = this.props;
 
-  return (
-    <main>
-      <section>
-        <h2>Lobby</h2>
-        <Route exact path="/lobby" render={CreateGameLink} />
-        <Route
-          path="/lobby/create"
-          render={() => <CreateGameForm user={user} createGame={createGame} />}
-        />
-        <ul>
-          {games.map(game =>
-            <li key={game.id}>
-              <Link to={`/game/${game.id}`}>
-                Host: {game.host.username}, created:{' '}
-                {format(game.createdTime, 'ddd, MMM Do HH:mm')}
-              </Link>
-            </li>,
-          )}
-        </ul>
-      </section>
+    return (
+      <main>
+        <section>
+          <h2>Lobby</h2>
+          <Route exact path="/lobby" render={CreateGameLink} />
+          <Route
+            path="/lobby/create"
+            render={() =>
+              <CreateGameForm user={user} createGame={createGame} />}
+          />
+          <ul>
+            {games.map(game =>
+              <li key={game.id}>
+                <Link to={`/game/${game.id}`}>
+                  Host: {game.host.username}, created:{' '}
+                  {format(game.createdTime, 'ddd, MMM Do HH:mm')}
+                </Link>
+              </li>,
+            )}
+          </ul>
+        </section>
 
-      <section>
-        <ChatContainer channelName="general" />
-      </section>
-    </main>
-  );
+        <section>
+          <ChatContainer channelName="general" />
+        </section>
+      </main>
+    );
+  }
 }

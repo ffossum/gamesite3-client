@@ -14,7 +14,6 @@ import DeepstreamClient from './redux/deepstreamClient';
 import configureStore from './redux/configureStore';
 import { authenticatedUser } from './redux/modules/session/sessionActions';
 import { joinChannel } from './redux/modules/chat/chatActions';
-import { enterLobby } from './redux/modules/lobby/lobbyActions';
 
 const history = createBrowserHistory();
 const user = window.__USER__;
@@ -37,7 +36,6 @@ deepstreamClient.login().then(() => {
   }
 
   store.dispatch(joinChannel('general'));
-  store.dispatch(enterLobby());
 
   render(
     <Provider store={store}>

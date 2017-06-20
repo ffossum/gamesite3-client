@@ -5,6 +5,7 @@ export const CREATE_GAME_REQUEST = 'lobby/create game request';
 export const GAME_CREATED = 'lobby/game created';
 export const GAME_UPDATED = 'lobby/game updated';
 export const ENTER_LOBBY = 'lobby/enter';
+export const EXIT_LOBBY = 'lobby/exit';
 export const REFRESH_LOBBY = 'lobby/refresh';
 
 export type EnterLobbyAction = {
@@ -13,6 +14,15 @@ export type EnterLobbyAction = {
 export function enterLobby(): EnterLobbyAction {
   return {
     type: ENTER_LOBBY,
+  };
+}
+
+export type ExitLobbyAction = {
+  type: 'lobby/exit',
+};
+export function exitLobby(): ExitLobbyAction {
+  return {
+    type: EXIT_LOBBY,
   };
 }
 
@@ -70,6 +80,7 @@ export function gameUpdated(
 
 export type LobbyAction =
   | EnterLobbyAction
+  | ExitLobbyAction
   | RefreshLobbyAction
   | GameUpdatedAction
   | CreateGameRequestAction

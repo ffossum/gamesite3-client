@@ -3,7 +3,7 @@ import Lobby from '../../../components/lobby/Lobby';
 import type { Props as LobbyProps } from '../../../components/lobby/Lobby';
 import { connect } from 'react-redux';
 import type { State } from '../root';
-import { createGameRequest } from './lobbyActions';
+import { createGameRequest, enterLobby, exitLobby } from './lobbyActions';
 import { map, values, compose, pick } from 'ramda';
 
 export function mapStateToProps(state: State) {
@@ -19,6 +19,12 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
     createGame(userId: string) {
       dispatch(createGameRequest(userId));
+    },
+    enterLobby() {
+      dispatch(enterLobby());
+    },
+    exitLobby() {
+      dispatch(exitLobby());
     },
   };
 }
@@ -51,6 +57,8 @@ export function mergeProps(stateProps: *, dispatchProps: *): LobbyProps {
     user,
     games: transformGames(games),
     createGame: partialCreateGame,
+    enterLobby: dispatchProps.enterLobby,
+    exitLobby: dispatchProps.exitLobby,
   };
 }
 

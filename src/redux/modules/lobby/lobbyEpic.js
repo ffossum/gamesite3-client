@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {
   CREATE_GAME_REQUEST,
   ENTER_LOBBY,
+  EXIT_LOBBY,
   gameCreated,
   gameUpdated,
   refreshLobby,
@@ -33,16 +34,19 @@ function enterLobbyEpic(
             return refreshLobby(lobby);
           }),
       ),
-      deepstreamClient.subscribe('lobby').flatMap(data => {
-        switch (data.t) {
-          case 'create-game':
-            return [gameCreated(data.p)];
-          case 'game-updated':
-            return [gameUpdated(data.p)];
-          default:
-            return [];
-        }
-      }),
+      deepstreamClient
+        .subscribe('lobby')
+        .flatMap(data => {
+          switch (data.t) {
+            case 'create-game':
+              return [gameCreated(data.p)];
+            case 'game-updated':
+              return [gameUpdated(data.p)];
+            default:
+              return [];
+          }
+        })
+        .takeUntil(action$.filter(action => action.type === EXIT_LOBBY)),
     ),
   );
 }
