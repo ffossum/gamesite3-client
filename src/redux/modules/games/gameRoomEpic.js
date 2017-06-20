@@ -9,6 +9,8 @@ import {
   EXIT_SPECTATOR,
   JOIN_GAME,
   LEAVE_GAME,
+  playerJoined,
+  playerLeft,
 } from './gameRoomActions';
 
 import type DeepstreamClient from '../../deepstreamClient';
@@ -29,9 +31,21 @@ export default function gameRoomEpic(
         const gameId = action.payload;
         return deepstreamClient
           .subscribe('spectate:' + gameId)
-          .flatMap(() => {
-            // TODO handle events sent to spectator channel
-            return [];
+          .flatMap(data => {
+            switch (data.t) {
+              case 'player-joined': {
+                const gameId = data.p.gid;
+                const userId = data.p.uid;
+                return [playerJoined(userId, gameId)];
+              }
+              case 'player-left': {
+                const gameId = data.p.gid;
+                const userId = data.p.uid;
+                return [playerLeft(userId, gameId)];
+              }
+              default:
+                return [];
+            }
           })
           .takeUntil(
             action$.filter(
