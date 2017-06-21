@@ -9,7 +9,8 @@ import {
   GAME_UPDATED,
   REFRESH_LOBBY,
 } from '../lobby/lobbyActions';
-
+import { PLAYER_JOINED } from '../games/gameRoomActions';
+import type { PlayerJoinedAction } from '../games/gameRoomActions';
 import type { ReceiveMessageAction } from '../chat/chatActions';
 import type {
   GameCreatedAction,
@@ -31,6 +32,9 @@ export default function userDataEpic(
   { ajax }: Dependencies,
 ) {
   return Observable.merge(
+    action$
+      .filter(action => action.type === PLAYER_JOINED)
+      .map((action: PlayerJoinedAction) => action.payload.userId),
     action$
       .filter(action => action.type === RECEIVE_MESSAGE)
       .map((action: ReceiveMessageAction) => action.payload.msg.uid),
@@ -55,9 +59,9 @@ export default function userDataEpic(
     .filter(userId => !store.getState().users[userId])
     .bufferTime(100)
     .filter(userIds => userIds.length > 0)
-    .flatMap(userId => {
+    .flatMap(userIds => {
       const queryString = stringify({
-        id: [userId],
+        id: userIds,
       });
       return ajax.getJSON(`/api/users?${queryString}`);
     })
