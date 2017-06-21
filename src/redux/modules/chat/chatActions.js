@@ -2,7 +2,9 @@
 export const JOIN_CHANNEL = 'chat/join channel';
 export const LEAVE_CHANNEL = 'chat/leave channel';
 export const SEND_MESSAGE = 'chat/send message';
+export const SEND_GAME_MESSAGE = 'chat/send game message';
 export const RECEIVE_MESSAGE = 'chat/receive message';
+export const CLEAR_CHAT = 'chat/clear';
 
 export type ChannelName = string;
 export type UserMessage = {
@@ -52,6 +54,31 @@ export function sendMessage(
   };
 }
 
+export type SendGameMessageAction = {
+  type: 'chat/send game message',
+  payload: {
+    players: string[],
+    gameId: string,
+    userId: string,
+    text: string,
+  },
+};
+export function sendGameMessage(
+  userId: string,
+  gameId: string,
+  players: string[],
+  text: string,
+) {
+  return {
+    type: SEND_GAME_MESSAGE,
+    payload: {
+      userId,
+      gameId,
+      players,
+      text,
+    },
+  };
+}
 export type ReceiveMessageAction = {
   type: 'chat/receive message',
   payload: {
@@ -72,8 +99,21 @@ export function receiveMessage(
   };
 }
 
+export type ClearChatAction = {
+  type: 'chat/clear',
+  payload: string,
+};
+export function clearChat(channelName: string) {
+  return {
+    type: CLEAR_CHAT,
+    payload: channelName,
+  };
+}
+
 export type ChatAction =
   | JoinChannelAction
   | LeaveChannelAction
   | SendMessageAction
-  | ReceiveMessageAction;
+  | SendGameMessageAction
+  | ReceiveMessageAction
+  | ClearChatAction;

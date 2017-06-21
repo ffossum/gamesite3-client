@@ -4,7 +4,7 @@ import type { ChannelState } from './channelReducer';
 import type { ChannelName } from './chatActions';
 
 import { omit } from 'ramda';
-import { RECEIVE_MESSAGE, LEAVE_CHANNEL } from './chatActions';
+import { RECEIVE_MESSAGE, CLEAR_CHAT } from './chatActions';
 import channelReducer from './channelReducer';
 
 export type ChatState = {
@@ -24,7 +24,7 @@ export default function chatReducer(
         [ch]: channelReducer(state[ch], action),
       };
     }
-    case LEAVE_CHANNEL: {
+    case CLEAR_CHAT: {
       const channelName = action.payload;
       return omit([channelName], state);
     }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { find } from 'ramda';
 import SpectatorRoom from './SpectatorRoom';
+import GameChatContainer from '../../redux/modules/chat/GameChatContainer';
 
 export type Game = {
   id: string,
@@ -84,6 +85,7 @@ export default class GameRoom extends React.Component {
               </ul>
             </div>
             <button onClick={this.handleLeaveClick}>Leave game</button>
+            <GameChatContainer gameId={gameId} />
           </div>}
       </div>
     );

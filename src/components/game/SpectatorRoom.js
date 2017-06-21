@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import type { Game } from './GameRoom';
+import GameChatContainer from '../../redux/modules/chat/GameChatContainer';
 
 export type Props = {
   enterSpectatorRoom: (gameId: string) => void,
@@ -56,6 +57,7 @@ export default class SpectatorRoom extends React.Component {
             <button disabled={!user} onClick={this.handleJoinClick}>
               Join game
             </button>
+            <GameChatContainer gameId={gameId} />
           </div>}
       </div>
     );

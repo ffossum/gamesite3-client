@@ -36,12 +36,18 @@ export function enterSpectatorRoom(gameId: string): EnterSpectatorRoomAction {
 
 export type ExitRoomAction = {
   type: 'game/exit room',
-  payload: string,
+  payload: {
+    gameId: string,
+    isInGame: boolean,
+  },
 };
-export function exitRoom(gameId: string): ExitRoomAction {
+export function exitRoom(gameId: string, isInGame: boolean): ExitRoomAction {
   return {
     type: EXIT_ROOM,
-    payload: gameId,
+    payload: {
+      gameId,
+      isInGame,
+    },
   };
 }
 

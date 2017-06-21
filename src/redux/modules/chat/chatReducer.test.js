@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 import chatReducer from './chatReducer';
-import { receiveMessage, leaveChannel } from './chatActions';
+import { receiveMessage, clearChat } from './chatActions';
 
 describe('chat reducer', () => {
   const initialState = chatReducer(undefined, { type: '@@INIT' });
@@ -29,7 +29,7 @@ describe('chat reducer', () => {
     });
   });
 
-  test('removes all channel data when leaving channel', () => {
+  test('removes all channel data when clearing channel', () => {
     const addMessageAction = receiveMessage(
       {
         ch: 'mainchat',
@@ -41,7 +41,7 @@ describe('chat reducer', () => {
     let state = chatReducer(initialState, addMessageAction);
 
     expect(state).toHaveProperty('mainchat');
-    const leaveChannelAction = leaveChannel('mainchat');
+    const leaveChannelAction = clearChat('mainchat');
 
     state = chatReducer(state, leaveChannelAction);
     expect(state).not.toHaveProperty('mainchat');

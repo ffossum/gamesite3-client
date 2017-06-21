@@ -12,6 +12,7 @@ import {
   joinGame,
   leaveGame,
 } from './gameRoomActions';
+import { contains } from 'ramda';
 
 type OwnProps = {
   location: Location,
@@ -35,8 +36,8 @@ function mapDispatchToProps(dispatch: Dispatch<*>) {
     enterRoom(gameId) {
       dispatch(enterRoom(gameId));
     },
-    exitRoom(gameId) {
-      dispatch(exitRoom(gameId));
+    exitRoom(gameId, isInGame) {
+      dispatch(exitRoom(gameId, isInGame));
     },
     enterSpectatorRoom(gameId) {
       dispatch(enterSpectatorRoom(gameId));
@@ -68,9 +69,13 @@ function mergeProps(
     players: game.players.map(playerId => users[playerId] || placeholderUser),
   };
 
+  const isInGame = !!(game && user && contains(user.id, game.players));
+
   return {
     enterRoom: dispatchProps.enterRoom,
-    exitRoom: dispatchProps.exitRoom,
+    exitRoom(gameId) {
+      dispatchProps.exitRoom(gameId, isInGame);
+    },
     enterSpectatorRoom: dispatchProps.enterSpectatorRoom,
     exitSpectatorRoom: dispatchProps.exitSpectatorRoom,
     joinGame() {

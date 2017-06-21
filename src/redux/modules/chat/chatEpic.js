@@ -5,11 +5,16 @@ import type { Store } from 'redux';
 
 import {
   SEND_MESSAGE,
+  SEND_GAME_MESSAGE,
   JOIN_CHANNEL,
   LEAVE_CHANNEL,
   receiveMessage,
 } from './chatActions';
-import type { SendMessageAction, JoinChannelAction } from './chatActions';
+import type {
+  SendMessageAction,
+  SendGameMessageAction,
+  JoinChannelAction,
+} from './chatActions';
 import type DeepstreamClient from '../../deepstreamClient';
 
 type Dependencies = {
@@ -32,7 +37,33 @@ function sendMessageEpic(
     .ignoreElements();
 }
 
-export function joinChannelEpic(
+function sendGameMessageEpic(
+  action$: Observable<*>,
+  store: Store<*, *>,
+  { deepstreamClient }: Dependencies,
+) {
+  return action$
+    .filter(action => action.type === SEND_GAME_MESSAGE)
+    .do((action: SendGameMessageAction) => {
+      const { userId, gameId, players, text } = action.payload;
+      const channelName = `game:${gameId}`;
+
+      const data = {
+        t: 'chatmsg',
+        ch: channelName,
+        txt: text,
+        uid: userId,
+      };
+
+      deepstreamClient.emit(`spectate:${gameId}`, data);
+      players.forEach(playerId => {
+        deepstreamClient.emit(`user:${playerId}`, data);
+      });
+    })
+    .ignoreElements();
+}
+
+function joinChannelEpic(
   action$: Observable<*>,
   store: Store<*, *>,
   { deepstreamClient }: Dependencies,
@@ -63,4 +94,8 @@ export function joinChannelEpic(
     });
 }
 
-export default combineEpics(sendMessageEpic, joinChannelEpic);
+export default combineEpics(
+  sendMessageEpic,
+  sendGameMessageEpic,
+  joinChannelEpic,
+);

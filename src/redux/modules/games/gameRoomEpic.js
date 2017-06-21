@@ -1,12 +1,18 @@
 /* @flow */
 import { Observable } from 'rxjs';
+import { combineEpics } from 'redux-observable';
 import type { Store } from 'redux';
 import type { State } from '../root';
-import type { EnterSpectatorRoomAction } from './gameRoomActions';
+import type {
+  EnterSpectatorRoomAction,
+  ExitRoomAction,
+} from './gameRoomActions';
+import { receiveMessage, clearChat } from '../chat/chatActions';
 
 import {
   ENTER_SPECTATOR,
   EXIT_SPECTATOR,
+  EXIT_ROOM,
   JOIN_GAME,
   LEAVE_GAME,
   playerJoined,
@@ -19,7 +25,21 @@ type Dependencies = {
   deepstreamClient: DeepstreamClient,
 };
 
-export default function gameRoomEpic(
+function exitRoomEpic(action$: Observable<*>) {
+  return action$
+    .filter(action => action.type === EXIT_ROOM)
+    .flatMap((action: ExitRoomAction) => {
+      const { gameId, isInGame } = action.payload;
+      if (!isInGame) {
+        const channelName = `game:${gameId}`;
+        return Observable.of(clearChat(channelName));
+      } else {
+        return Observable.empty();
+      }
+    });
+}
+
+function gameRoomEpic(
   action$: Observable<*>,
   store: Store<State, *>,
   { deepstreamClient }: Dependencies,
@@ -42,6 +62,10 @@ export default function gameRoomEpic(
                 const gameId = data.p.gid;
                 const userId = data.p.uid;
                 return [playerLeft(userId, gameId)];
+              }
+              case 'chatmsg': {
+                const time = new Date().toISOString();
+                return [receiveMessage(data, time)];
               }
               default:
                 return [];
@@ -68,3 +92,5 @@ export default function gameRoomEpic(
       .ignoreElements(),
   );
 }
+
+export default combineEpics(exitRoomEpic, gameRoomEpic);

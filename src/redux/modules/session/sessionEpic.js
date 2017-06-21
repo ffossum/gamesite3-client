@@ -5,6 +5,7 @@ import type { AuthenticatedUserAction } from './sessionActions';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';
 import { playerJoined, playerLeft } from '../games/gameRoomActions';
+import { receiveMessage } from '../chat/chatActions';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
@@ -31,6 +32,10 @@ export default function sessionEpic(
               const gameId = data.p.gid;
               const userId = data.p.uid;
               return [playerLeft(userId, gameId)];
+            }
+            case 'chatmsg': {
+              const time = new Date().toISOString();
+              return [receiveMessage(data, time)];
             }
             default:
               return [];
