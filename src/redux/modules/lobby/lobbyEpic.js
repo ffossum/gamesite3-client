@@ -58,18 +58,15 @@ function createGameEpic(
 ) {
   return action$
     .filter(action => action.type === CREATE_GAME_REQUEST)
-    .do((action: CreateGameRequestAction) => {
+    .flatMap((action: CreateGameRequestAction) => {
       const uid = action.payload.userId;
-      deepstreamClient
-        .make('create-game', { uid })
-        .then(game => {
+      return Observable.fromPromise(
+        deepstreamClient.make('create-game', { uid }).then(game => {
           history.push(`/game/${game.id}`);
-        })
-        .catch(() => {
-          // TODO
-        });
-    })
-    .ignoreElements();
+          return gameCreated(game);
+        }),
+      ).catch(Observable.empty()); // TODO handle error
+    });
 }
 
 export default combineEpics(createGameEpic, enterLobbyEpic);
