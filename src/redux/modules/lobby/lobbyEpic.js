@@ -65,7 +65,7 @@ function createGameEpic(
           history.push(`/game/${game.id}`);
           return gameCreated(game);
         }),
-      ).catch(Observable.empty()); // TODO handle error
+      ).catch(() => Observable.empty()); // TODO handle error
     });
 }
 
