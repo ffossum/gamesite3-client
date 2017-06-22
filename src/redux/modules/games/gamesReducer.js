@@ -6,6 +6,7 @@ import {
   GAME_UPDATED,
   REFRESH_LOBBY,
 } from '../lobby/lobbyActions';
+import { FETCH_GAME_DATA_SUCCESS } from './gameDataActions';
 
 import { PLAYER_JOINED, PLAYER_LEFT } from './gameRoomActions';
 
@@ -30,6 +31,13 @@ export default function gamesReducer(
       return {
         ...state,
         ...action.payload,
+      };
+    }
+    case FETCH_GAME_DATA_SUCCESS: {
+      const game = action.payload;
+      return {
+        ...state,
+        [game.id]: game,
       };
     }
     case GAME_CREATED: {

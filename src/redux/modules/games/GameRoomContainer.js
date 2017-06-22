@@ -33,8 +33,8 @@ function mapStateToProps(state: State, ownProps: OwnProps) {
 
 function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
-    enterRoom(gameId) {
-      dispatch(enterRoom(gameId));
+    enterRoom(gameId, isGameDataAvailable) {
+      dispatch(enterRoom(gameId, isGameDataAvailable));
     },
     exitRoom(gameId, isInGame) {
       dispatch(exitRoom(gameId, isInGame));
@@ -72,7 +72,10 @@ function mergeProps(
   const isInGame = !!(game && user && contains(user.id, game.players));
 
   return {
-    enterRoom: dispatchProps.enterRoom,
+    enterRoom(gameId) {
+      const isGameDataAvailable = !!game;
+      dispatchProps.enterRoom(gameId, isGameDataAvailable);
+    },
     exitRoom(gameId) {
       dispatchProps.exitRoom(gameId, isInGame);
     },

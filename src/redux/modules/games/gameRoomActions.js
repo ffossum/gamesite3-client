@@ -14,12 +14,21 @@ export const PLAYER_LEFT = 'game/player left';
 
 export type EnterRoomAction = {
   type: 'game/enter room',
-  payload: string,
+  payload: {
+    gameId: string,
+    isGameDataAvailable: boolean,
+  },
 };
-export function enterRoom(gameId: string): EnterRoomAction {
+export function enterRoom(
+  gameId: string,
+  isGameDataAvailable: boolean,
+): EnterRoomAction {
   return {
     type: ENTER_ROOM,
-    payload: gameId,
+    payload: {
+      gameId,
+      isGameDataAvailable,
+    },
   };
 }
 

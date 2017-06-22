@@ -1,10 +1,12 @@
 /* @flow */
+import type { Action } from '../../actions';
 import { Observable } from 'rxjs';
 import { combineEpics } from 'redux-observable';
 import type { Store } from 'redux';
 import type { State } from '../root';
 import type {
   EnterSpectatorRoomAction,
+  EnterRoomAction,
   ExitRoomAction,
 } from './gameRoomActions';
 import { receiveMessage, clearChat } from '../chat/chatActions';
@@ -12,18 +14,55 @@ import { receiveMessage, clearChat } from '../chat/chatActions';
 import {
   ENTER_SPECTATOR,
   EXIT_SPECTATOR,
+  ENTER_ROOM,
   EXIT_ROOM,
   JOIN_GAME,
   LEAVE_GAME,
   playerJoined,
   playerLeft,
 } from './gameRoomActions';
+import {
+  FETCH_GAME_DATA_REQUEST,
+  fetchGameDataRequest,
+  fetchGameDataSuccess,
+} from './gameDataActions';
+import type { FetchGameDataRequestAction } from './gameDataActions';
 
 import type DeepstreamClient from '../../deepstreamClient';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
+  ajax: {
+    getJSON: string => Observable<*>,
+  },
 };
+
+function enterRoomEpic(action$: Observable<*>) {
+  return action$
+    .filter(
+      (action: Action) =>
+        action.type === ENTER_ROOM && !action.payload.isGameDataAvailable,
+    )
+    .map((action: EnterRoomAction) =>
+      fetchGameDataRequest(action.payload.gameId),
+    );
+}
+
+function fetchGameDataEpic(
+  action$: Observable<*>,
+  store: Store<State, *>,
+  { ajax }: Dependencies,
+) {
+  return action$
+    .filter(action => action.type === FETCH_GAME_DATA_REQUEST)
+    .switchMap((action: FetchGameDataRequestAction) => {
+      const gameId = action.payload;
+      return ajax
+        .getJSON(`/api/game/${gameId}`)
+        .map(game => fetchGameDataSuccess(game))
+        .catch(() => Observable.empty());
+    });
+}
 
 function exitRoomEpic(action$: Observable<*>) {
   return action$
@@ -93,4 +132,9 @@ function gameRoomEpic(
   );
 }
 
-export default combineEpics(exitRoomEpic, gameRoomEpic);
+export default combineEpics(
+  enterRoomEpic,
+  fetchGameDataEpic,
+  exitRoomEpic,
+  gameRoomEpic,
+);
