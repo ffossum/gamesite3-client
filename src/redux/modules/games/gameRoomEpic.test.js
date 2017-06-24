@@ -5,9 +5,11 @@ import gameRoomEpic from './gameRoomEpic';
 import {
   joinGame,
   leaveGame,
+  enterRoom,
   enterSpectatorRoom,
   exitSpectatorRoom,
 } from './gameRoomActions';
+import { fetchGameDataRequest } from './gameDataActions';
 
 describe('game room epic', () => {
   let store: any;
@@ -45,6 +47,34 @@ describe('game room epic', () => {
       .toArray()
       .toPromise();
     // Pass = No timeout
+  });
+
+  test('fetches game data if needed when entering room', async () => {
+    const shouldFetchGameData = true;
+    const action = enterRoom('game_id', shouldFetchGameData);
+    const action$ = Observable.of(action);
+
+    const resultActions = await gameRoomEpic(action$, store, {
+      deepstreamClient,
+    })
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).toContainEqual(fetchGameDataRequest('game_id'));
+  });
+
+  test('does not fetch game data if not needed when entering room', async () => {
+    const shouldFetchGameData = false;
+    const action = enterRoom('game_id', shouldFetchGameData);
+    const action$ = Observable.of(action);
+
+    const resultActions = await gameRoomEpic(action$, store, {
+      deepstreamClient,
+    })
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).not.toContainEqual(fetchGameDataRequest('game_id'));
   });
 
   test('makes rpc join game request', async () => {
