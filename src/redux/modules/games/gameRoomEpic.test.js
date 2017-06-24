@@ -9,7 +9,8 @@ import {
   enterSpectatorRoom,
   exitSpectatorRoom,
 } from './gameRoomActions';
-import { fetchGameDataRequest } from './gameDataActions';
+import { fetchGameDataRequest, fetchGameDataSuccess } from './gameDataActions';
+import type { GameDataState } from './gamesReducer';
 
 describe('game room epic', () => {
   let store: any;
@@ -75,6 +76,29 @@ describe('game room epic', () => {
       .toPromise();
 
     expect(resultActions).not.toContainEqual(fetchGameDataRequest('game_id'));
+  });
+
+  test('fetch game request action performs ajax call', async () => {
+    const action = fetchGameDataRequest('game_id');
+    const action$ = Observable.of(action);
+
+    const mockGame: GameDataState = {
+      createdTime: '2017-06-24T19:03:37.996Z',
+      host: 'user_id',
+      players: ['user_id'],
+      id: 'game_id',
+    };
+
+    const ajax = {
+      getJSON: jest.fn(),
+    };
+    ajax.getJSON.mockReturnValue(Observable.of(mockGame));
+
+    const resultActions = await gameRoomEpic(action$, store, { ajax })
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).toContainEqual(fetchGameDataSuccess(mockGame));
   });
 
   test('makes rpc join game request', async () => {
