@@ -16,18 +16,18 @@ export type EnterRoomAction = {
   type: 'game/enter room',
   payload: {
     gameId: string,
-    isGameDataAvailable: boolean,
+    shouldFetchGameData: boolean,
   },
 };
 export function enterRoom(
   gameId: string,
-  isGameDataAvailable: boolean,
+  shouldFetchGameData: boolean,
 ): EnterRoomAction {
   return {
     type: ENTER_ROOM,
     payload: {
       gameId,
-      isGameDataAvailable,
+      shouldFetchGameData,
     },
   };
 }

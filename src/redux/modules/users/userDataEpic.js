@@ -9,6 +9,8 @@ import {
   GAME_UPDATED,
   REFRESH_LOBBY,
 } from '../lobby/lobbyActions';
+import { FETCH_GAME_DATA_SUCCESS } from '../games/gameDataActions';
+import type { FetchGameDataSuccessAction } from '../games/gameDataActions';
 import { PLAYER_JOINED } from '../games/gameRoomActions';
 import type { PlayerJoinedAction } from '../games/gameRoomActions';
 import type { ReceiveMessageAction } from '../chat/chatActions';
@@ -46,6 +48,12 @@ export default function userDataEpic(
       .flatMap((action: GameUpdatedAction) => {
         const game = action.payload;
         return game.players ? game.players : [];
+      }),
+    action$
+      .filter(action => action.type === FETCH_GAME_DATA_SUCCESS)
+      .flatMap((action: FetchGameDataSuccessAction) => {
+        const game = action.payload;
+        return game.players;
       }),
     action$
       .filter(action => action.type === REFRESH_LOBBY)

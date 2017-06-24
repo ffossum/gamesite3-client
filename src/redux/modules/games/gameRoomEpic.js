@@ -41,7 +41,7 @@ function enterRoomEpic(action$: Observable<*>) {
   return action$
     .filter(
       (action: Action) =>
-        action.type === ENTER_ROOM && !action.payload.isGameDataAvailable,
+        action.type === ENTER_ROOM && action.payload.shouldFetchGameData,
     )
     .map((action: EnterRoomAction) =>
       fetchGameDataRequest(action.payload.gameId),
