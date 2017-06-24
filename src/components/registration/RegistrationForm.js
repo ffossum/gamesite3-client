@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import Recaptcha from 'react-google-recaptcha';
 
 export default class RegistrationForm extends React.Component {
   props: {
@@ -8,11 +9,13 @@ export default class RegistrationForm extends React.Component {
   };
   handleSubmit: (e: SyntheticInputEvent) => void;
   handleChange: (e: SyntheticInputEvent) => void;
+  handleRecaptcha: (recaptchaResponse: string) => void;
   state: {
     username: string,
     email: string,
     password: string,
     repeatPassword: string,
+    recaptchaResponse: string,
   };
   constructor() {
     super();
@@ -28,6 +31,12 @@ export default class RegistrationForm extends React.Component {
       const { name, value } = e.target;
       this.setState(() => ({
         [name]: value,
+      }));
+    };
+
+    this.handleRecaptcha = recaptchaResponse => {
+      this.setState(() => ({
+        recaptchaResponse,
       }));
     };
   }
@@ -79,6 +88,10 @@ export default class RegistrationForm extends React.Component {
             readOnly={loading}
           />
         </div>
+        <Recaptcha
+          sitekey="6LfOuSYUAAAAAAclQ1FS0hsa-PJvWr_p1FGms3b-" // TODO do not hard-code sitekey
+          onChange={this.handleRecaptcha}
+        />
 
         <button type="submit" disabled={loading}>Register</button>
       </form>
