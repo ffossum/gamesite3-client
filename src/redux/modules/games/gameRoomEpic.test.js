@@ -115,7 +115,7 @@ describe('game room epic', () => {
     expect(resultActions).toContainEqual(clearChat('game:game_id'));
   });
 
-  test("does not clear chat if exiting room you are playing in", async () => {
+  test('does not clear chat if exiting room you are playing in', async () => {
     const isInGame = true;
     const action = exitRoom('game_id', isInGame);
     const action$ = Observable.of(action);
