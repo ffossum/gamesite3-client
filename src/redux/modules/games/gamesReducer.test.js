@@ -1,14 +1,65 @@
 /* @flow */
 /* eslint-env jest */
-import { gameCreated, gameUpdated } from '../lobby/lobbyActions';
-import { playerJoined, playerLeft } from '../games/gameRoomActions';
+import { gameCreated, gameUpdated, refreshLobby } from '../lobby/lobbyActions';
+import { playerJoined, playerLeft } from './gameRoomActions';
+import { fetchGameDataSuccess } from './gameDataActions';
 import gamesReducer from './gamesReducer';
 
 describe('games reducer', () => {
   const initialState = gamesReducer(undefined, { type: '@@INIT' });
 
+  test('adds refreshed lobby to games without removing other games', () => {
+    const game0 = {
+      createdTime: '2017-06-11T10:57:22.414Z',
+      id: 'game_id0',
+      host: 'qwer-id',
+      players: ['qwer-id'],
+    };
+
+    const game1 = {
+      createdTime: '2017-06-11T10:57:22.414Z',
+      id: 'game_id1',
+      host: 'asdf-id',
+      players: ['asdf-id'],
+    };
+
+    const initialState = {
+      game_id0: game0,
+    };
+
+    const action = refreshLobby({
+      game_id1: game1,
+    });
+
+    const state = gamesReducer(initialState, action);
+
+    expect(state).toEqual({
+      game_id0: game0,
+      game_id1: game1,
+    });
+  });
+
   test('adds new created game to games', () => {
     const action = gameCreated({
+      createdTime: '2017-06-11T10:57:22.414Z',
+      id: 'gameid-1',
+      host: 'asdf-id',
+      players: ['asdf-id'],
+    });
+    const state = gamesReducer(initialState, action);
+
+    expect(state).toEqual({
+      'gameid-1': {
+        createdTime: '2017-06-11T10:57:22.414Z',
+        id: 'gameid-1',
+        host: 'asdf-id',
+        players: ['asdf-id'],
+      },
+    });
+  });
+
+  test('adds fetched game data to games', () => {
+    const action = fetchGameDataSuccess({
       createdTime: '2017-06-11T10:57:22.414Z',
       id: 'gameid-1',
       host: 'asdf-id',
