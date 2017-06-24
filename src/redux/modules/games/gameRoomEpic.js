@@ -9,8 +9,7 @@ import type {
   EnterRoomAction,
   ExitRoomAction,
 } from './gameRoomActions';
-import { receiveMessage, clearChat } from '../chat/chatActions';
-
+import { clearChat } from '../chat/chatActions';
 import {
   ENTER_SPECTATOR,
   EXIT_SPECTATOR,
@@ -18,14 +17,13 @@ import {
   EXIT_ROOM,
   JOIN_GAME,
   LEAVE_GAME,
-  playerJoined,
-  playerLeft,
 } from './gameRoomActions';
 import {
   FETCH_GAME_DATA_REQUEST,
   fetchGameDataRequest,
   fetchGameDataSuccess,
 } from './gameDataActions';
+import deepstreamEventToActions from '../../deepstreamEventToActions';
 import type { FetchGameDataRequestAction } from './gameDataActions';
 
 import type DeepstreamClient from '../../deepstreamClient';
@@ -90,26 +88,7 @@ function gameRoomEpic(
         const gameId = action.payload;
         return deepstreamClient
           .subscribe('spectate:' + gameId)
-          .flatMap(data => {
-            switch (data.t) {
-              case 'player-joined': {
-                const gameId = data.p.gid;
-                const userId = data.p.uid;
-                return [playerJoined(userId, gameId)];
-              }
-              case 'player-left': {
-                const gameId = data.p.gid;
-                const userId = data.p.uid;
-                return [playerLeft(userId, gameId)];
-              }
-              case 'chatmsg': {
-                const time = new Date().toISOString();
-                return [receiveMessage(data, time)];
-              }
-              default:
-                return [];
-            }
-          })
+          .flatMap(deepstreamEventToActions)
           .takeUntil(
             action$.filter(
               action =>

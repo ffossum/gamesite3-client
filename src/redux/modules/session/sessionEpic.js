@@ -4,8 +4,7 @@ import { AUTHENTICATED_USER } from './sessionActions';
 import type { AuthenticatedUserAction } from './sessionActions';
 import type { Store } from 'redux';
 import type DeepstreamClient from '../../deepstreamClient';
-import { playerJoined, playerLeft } from '../games/gameRoomActions';
-import { receiveMessage } from '../chat/chatActions';
+import deepstreamEventToActions from '../../deepstreamEventToActions';
 
 type Dependencies = {
   deepstreamClient: DeepstreamClient,
@@ -21,25 +20,6 @@ export default function sessionEpic(
     .switchMap((action: AuthenticatedUserAction) => {
       return deepstreamClient
         .subscribe('user:' + action.payload.id)
-        .flatMap(data => {
-          switch (data.t) {
-            case 'player-joined': {
-              const gameId = data.p.gid;
-              const userId = data.p.uid;
-              return [playerJoined(userId, gameId)];
-            }
-            case 'player-left': {
-              const gameId = data.p.gid;
-              const userId = data.p.uid;
-              return [playerLeft(userId, gameId)];
-            }
-            case 'chatmsg': {
-              const time = new Date().toISOString();
-              return [receiveMessage(data, time)];
-            }
-            default:
-              return [];
-          }
-        });
+        .flatMap(deepstreamEventToActions);
     });
 }
