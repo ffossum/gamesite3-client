@@ -6,10 +6,12 @@ import {
   joinGame,
   leaveGame,
   enterRoom,
+  exitRoom,
   enterSpectatorRoom,
   exitSpectatorRoom,
 } from './gameRoomActions';
 import { fetchGameDataRequest, fetchGameDataSuccess } from './gameDataActions';
+import { clearChat } from '../chat/chatActions';
 import type { GameDataState } from './gamesReducer';
 
 describe('game room epic', () => {
@@ -99,6 +101,30 @@ describe('game room epic', () => {
       .toPromise();
 
     expect(resultActions).toContainEqual(fetchGameDataSuccess(mockGame));
+  });
+
+  test("clears chat if exiting room you're not playing in", async () => {
+    const isInGame = false;
+    const action = exitRoom('game_id', isInGame);
+    const action$ = Observable.of(action);
+
+    const resultActions = await gameRoomEpic(action$, store, {})
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).toContainEqual(clearChat('game:game_id'));
+  });
+
+  test("does not clear chat if exiting room you are playing in", async () => {
+    const isInGame = true;
+    const action = exitRoom('game_id', isInGame);
+    const action$ = Observable.of(action);
+
+    const resultActions = await gameRoomEpic(action$, store, {})
+      .toArray()
+      .toPromise();
+
+    expect(resultActions).not.toContainEqual(clearChat('game:game_id'));
   });
 
   test('makes rpc join game request', async () => {
