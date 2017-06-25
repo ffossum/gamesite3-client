@@ -5,35 +5,21 @@ import Chat from '../../../components/chat/Chat';
 import type { Props as ChatProps } from '../../../components/chat/Chat';
 import { sendGameMessage } from './chatActions';
 import type { State } from '../root';
+import { createGameChatContainerSelector } from './chatSelectors';
+import type { GameDataState } from '../games/gamesReducer';
+import type { MessageProp } from '../../../components/chat/UserTextMessage';
 
-type Props = {
+export type Props = {
   gameId: string,
 };
+export type StateProps = {
+  game: ?GameDataState,
+  messages: MessageProp[],
+  user: ?PublicUserData,
+};
 
-export function mapStateToProps(state: State, ownProps: Props) {
-  const { gameId } = ownProps;
-  const channelName = `game:${ownProps.gameId}`;
-  const channel = state.chat[channelName] || {};
-  const messages = channel.messages || [];
-  const game = state.games[gameId];
-
-  return {
-    channelName,
-    game,
-    user: state.session.user,
-    messages: messages.map(msg => {
-      const msgUser = state.users[msg.userId];
-      const msgUsername = msgUser ? msgUser.username : '';
-      return {
-        user: {
-          id: msg.userId,
-          username: msgUsername,
-        },
-        text: msg.text,
-        time: msg.time,
-      };
-    }),
-  };
+export function mapStateToProps(state: ?State, ownProps: Props) {
+  return createGameChatContainerSelector(ownProps.gameId);
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<*>) {
@@ -41,11 +27,10 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
 }
 
 export function mergeProps(
-  stateProps: *,
+  stateProps: StateProps,
   dispatchProps: *,
-  ownProps: Props,
 ): ChatProps {
-  const { game, user } = stateProps;
+  const { game, messages, user } = stateProps;
 
   let partialSendMessage = () => {};
 
@@ -61,9 +46,9 @@ export function mergeProps(
   }
 
   return {
-    ...stateProps,
-    ...ownProps,
+    messages,
     sendMessage: partialSendMessage,
+    user,
   };
 }
 

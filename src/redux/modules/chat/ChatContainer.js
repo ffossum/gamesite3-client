@@ -5,30 +5,19 @@ import Chat from '../../../components/chat/Chat';
 import type { Props as ChatProps } from '../../../components/chat/Chat';
 import { sendMessage } from './chatActions';
 import type { State } from '../root';
+import { createChatContainerSelector } from './chatSelectors';
+import type { MessageProp } from '../../../components/chat/UserTextMessage';
 
-type Props = {
+export type Props = {
   channelName: string,
 };
+export type StateProps = {
+  user: ?PublicUserData,
+  messages: MessageProp[],
+};
 
-export function mapStateToProps(state: State, ownProps: Props) {
-  const channel = state.chat[ownProps.channelName] || {};
-  const messages = channel.messages || [];
-
-  return {
-    user: state.session.user,
-    messages: messages.map(msg => {
-      const msgUser = state.users[msg.userId];
-      const msgUsername = msgUser ? msgUser.username : '';
-      return {
-        user: {
-          id: msg.userId,
-          username: msgUsername,
-        },
-        text: msg.text,
-        time: msg.time,
-      };
-    }),
-  };
+export function mapStateToProps(state: ?State, ownProps: Props) {
+  return createChatContainerSelector(ownProps.channelName);
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<*>) {
@@ -36,23 +25,23 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
 }
 
 export function mergeProps(
-  stateProps: *,
+  stateProps: StateProps,
   dispatchProps: *,
   ownProps: Props,
 ): ChatProps {
-  const userId = stateProps.user && stateProps.user.id;
+  const { messages, user } = stateProps;
   let partialSendMessage = () => {};
 
-  if (userId) {
+  if (user) {
     partialSendMessage = messageText => {
-      dispatchProps.sendMessage(userId, ownProps.channelName, messageText);
+      dispatchProps.sendMessage(user.id, ownProps.channelName, messageText);
     };
   }
 
   return {
-    ...stateProps,
-    ...ownProps,
+    messages,
     sendMessage: partialSendMessage,
+    user,
   };
 }
 

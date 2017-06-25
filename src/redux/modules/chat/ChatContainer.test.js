@@ -6,7 +6,7 @@ import { rootReducer } from '../root';
 import { sendMessage, receiveMessage } from './chatActions';
 import { fetchedUserData } from '../users/userDataActions';
 import {
-  mapStateToProps,
+  mapStateToProps as createMapStateToProps,
   mapDispatchToProps,
   mergeProps,
 } from './ChatContainer';
@@ -14,11 +14,13 @@ import {
 describe('chat container', () => {
   let store;
   let dispatch;
+  let mapStateToProps;
   const ownProps = { channelName: 'channel' };
 
   beforeEach(() => {
     store = createStore(rootReducer);
     dispatch = jest.fn();
+    mapStateToProps = createMapStateToProps(undefined, ownProps);
   });
 
   test('does not dispatch action when logged out user tries to send message', () => {
