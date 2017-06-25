@@ -20,7 +20,7 @@ type OwnProps = {
   match: Match,
 };
 
-function mapStateToProps(state: State, ownProps: OwnProps) {
+export function mapStateToProps(state: State, ownProps: OwnProps) {
   const gameId: string = ownProps.match.params.gameId;
   const game = state.games[gameId];
   return {
@@ -31,42 +31,44 @@ function mapStateToProps(state: State, ownProps: OwnProps) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<*>) {
+export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
-    enterRoom(gameId, shouldFetchGameData) {
+    enterRoom(gameId: string, shouldFetchGameData: boolean) {
       dispatch(enterRoom(gameId, shouldFetchGameData));
     },
-    exitRoom(gameId, isInGame) {
+    exitRoom(gameId: string, isInGame: boolean) {
       dispatch(exitRoom(gameId, isInGame));
     },
-    enterSpectatorRoom(gameId) {
+    enterSpectatorRoom(gameId: string) {
       dispatch(enterSpectatorRoom(gameId));
     },
-    exitSpectatorRoom(gameId) {
+    exitSpectatorRoom(gameId: string) {
       dispatch(exitSpectatorRoom(gameId));
     },
-    joinGame(userId, gameId) {
+    joinGame(userId: string, gameId: string) {
       dispatch(joinGame(userId, gameId));
     },
-    leaveGame(userId, gameId) {
+    leaveGame(userId: string, gameId: string) {
       dispatch(leaveGame(userId, gameId));
     },
   };
 }
 
-function mergeProps(
-  stateProps,
-  dispatchProps,
+export function mergeProps(
+  stateProps: *,
+  dispatchProps: *,
   // ownProps,
 ): GameRoomProps {
   const { game, gameId, users, user } = stateProps;
 
-  const placeholderUser = { id: '', username: '' };
+  const placeholderUser = userId => ({ id: userId, username: '' });
 
   const transformedGame = game && {
     id: gameId,
-    host: users[game.host] || placeholderUser,
-    players: game.players.map(playerId => users[playerId] || placeholderUser),
+    host: users[game.host] || placeholderUser(game.host),
+    players: game.players.map(
+      playerId => users[playerId] || placeholderUser(playerId),
+    ),
   };
 
   const isInGame = !!(game && user && contains(user.id, game.players));
