@@ -1,14 +1,6 @@
 /* @flow */
 import { createSelector } from 'reselect';
 import type { State } from '../root';
-import type {
-  Props as ChatOwnProps,
-  StateProps as ChatStateProps,
-} from './ChatContainer';
-import type {
-  Props as GameChatOwnProps,
-  StateProps as GameChatStateProps,
-} from './GameChatContainer';
 
 const getChat = (state: State) => state.chat;
 const getUsers = (state: State) => state.users;
@@ -26,9 +18,7 @@ function createMessagesSelector(channelName: string) {
   });
 }
 
-export function createChatContainerSelector(
-  channelName: string,
-): (State, ChatOwnProps) => ChatStateProps {
+export function createChatContainerSelector(channelName: string) {
   return createSelector(
     createMessagesSelector(channelName),
     getUsers,
@@ -53,9 +43,7 @@ export function createChatContainerSelector(
   );
 }
 
-export function createGameChatContainerSelector(
-  gameId: string,
-): (State, GameChatOwnProps) => GameChatStateProps {
+export function createGameChatContainerSelector(gameId: string) {
   const channelName = `game:${gameId}`;
 
   return createSelector(
