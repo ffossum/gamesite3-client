@@ -29,16 +29,17 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
   };
 }
 
+function placeholderUser(userId: string): PublicUserData {
+  return { id: userId, username: '' };
+}
+
 export function mergeProps(stateProps: *, dispatchProps: *): LobbyProps {
   const { user, games, users, lobby } = stateProps;
-  const userId = user && user.id;
 
   let partialCreateGame = () => {};
-  if (userId) {
-    partialCreateGame = () => dispatchProps.createGame(userId);
+  if (user) {
+    partialCreateGame = () => dispatchProps.createGame(user.id);
   }
-
-  const placeholderUser = { id: '', username: '' };
 
   const transformGames = compose(
     values,
@@ -46,8 +47,10 @@ export function mergeProps(stateProps: *, dispatchProps: *): LobbyProps {
       const { host, players, ...rest } = game;
       return {
         ...rest,
-        host: users[host] || placeholderUser,
-        players: players.map(playerId => users[playerId] || placeholderUser),
+        host: users[host] || placeholderUser(host),
+        players: players.map(
+          playerId => users[playerId] || placeholderUser(playerId),
+        ),
       };
     }),
     pick(lobby.games),
