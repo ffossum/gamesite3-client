@@ -1,2 +1,17 @@
+engines:
+  fixme:
+    enabled: true
+
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript:
+
+  eslint:
+    enabled: true
+    config:
+      config: .eslintrc.json
+
 exclude_paths:
 - "flow-typed/"
