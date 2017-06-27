@@ -93,7 +93,9 @@ export default class RegistrationForm extends React.Component {
           onChange={this.handleRecaptcha}
         />
 
-        <button type="submit" disabled={loading}>Register</button>
+        <button type="submit" disabled={loading}>
+          Register
+        </button>
       </form>
     );
   }

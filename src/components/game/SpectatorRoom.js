@@ -40,7 +40,9 @@ export default class SpectatorRoom extends React.Component {
     const { gameId, game, user } = this.props;
     return (
       <div>
-        <h2>{gameId}</h2>
+        <h2>
+          {gameId}
+        </h2>
         {game &&
           <div>
             <div>

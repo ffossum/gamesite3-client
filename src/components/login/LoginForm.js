@@ -56,7 +56,9 @@ export default class LoginForm extends React.Component {
           />
         </div>
 
-        <button type="submit" disabled={loading}>Log in</button>
+        <button type="submit" disabled={loading}>
+          Log in
+        </button>
       </form>
     );
   }

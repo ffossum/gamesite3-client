@@ -70,7 +70,9 @@ export default class GameRoom extends React.Component {
 
     return (
       <div>
-        <h2>{gameId}</h2>
+        <h2>
+          {gameId}
+        </h2>
         {game &&
           <div>
             <div>

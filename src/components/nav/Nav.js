@@ -12,19 +12,29 @@ export default function Nav(props: Props) {
   return (
     <nav>
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/lobby">Lobby</Link></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/lobby">Lobby</Link>
+        </li>
 
         {user
           ? [
-              <li key="user">Logged in as: {user.username}</li>,
-              <li key="logout"><a href="/logout">Log out</a></li>,
+              <li key="user">
+                Logged in as: {user.username}
+              </li>,
+              <li key="logout">
+                <a href="/logout">Log out</a>
+              </li>,
             ]
           : [
               <li key="registration">
                 <Link to="/registration">Register</Link>
               </li>,
-              <li key="login"><Link to="/login">Log in</Link></li>,
+              <li key="login">
+                <Link to="/login">Log in</Link>
+              </li>,
             ]}
       </ul>
     </nav>

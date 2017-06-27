@@ -36,9 +36,8 @@ export default class ChatInput extends React.Component {
   render() {
     const { disabled, disabledPlaceholder } = this.props;
 
-    const placeholder = disabled && disabledPlaceholder
-      ? disabledPlaceholder
-      : 'Say something';
+    const placeholder =
+      disabled && disabledPlaceholder ? disabledPlaceholder : 'Say something';
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -47,9 +46,10 @@ export default class ChatInput extends React.Component {
           value={this.state.text}
           onChange={this.handleChange}
           readOnly={disabled}
-        />
-        {' '}
-        <button disabled={disabled} type="submit">Send</button>
+        />{' '}
+        <button disabled={disabled} type="submit">
+          Send
+        </button>
       </form>
     );
   }

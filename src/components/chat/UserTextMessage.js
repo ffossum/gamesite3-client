@@ -19,8 +19,8 @@ export default function UserTextMessage(props: Props) {
     <div>
       <strong>
         {format(message.time, dateFormat)} {message.user.username}
-      </strong>
-      {' '}<span>{message.text}</span>
+      </strong>{' '}
+      <span>{message.text}</span>
     </div>
   );
 }
