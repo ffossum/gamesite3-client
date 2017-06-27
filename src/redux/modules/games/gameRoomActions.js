@@ -12,6 +12,9 @@ export const PLAYER_JOINED = 'game/player joined';
 export const LEAVE_GAME = 'game/leave';
 export const PLAYER_LEFT = 'game/player left';
 
+export const CANCEL_GAME = 'game/cancel';
+export const GAME_CANCELED = 'game/canceled';
+
 export type EnterRoomAction = {
   type: 'game/enter room',
   payload: {
@@ -139,6 +142,34 @@ export function playerLeft(userId: string, gameId: string): PlayerLeftAction {
       gameId: gameId,
       userId: userId,
     },
+  };
+}
+
+export type CancelGameAction = {
+  type: 'game/cancel',
+  payload: {
+    gameId: string,
+    userId: string,
+  },
+};
+export function cancelGame(userId: string, gameId: string): CancelGameAction {
+  return {
+    type: CANCEL_GAME,
+    payload: {
+      gameId,
+      userId,
+    },
+  };
+}
+
+export type GameCanceledAction = {
+  type: 'game/canceled',
+  payload: string,
+};
+export function gameCanceled(gameId: string): GameCanceledAction {
+  return {
+    type: GAME_CANCELED,
+    payload: gameId,
   };
 }
 

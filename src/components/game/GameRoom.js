@@ -10,23 +10,29 @@ export type Game = {
   players: PublicUserData[],
 };
 export type Props = {
-  enterRoom: (gameId: string) => void,
-  exitRoom: (gameId: string) => void,
-  enterSpectatorRoom: (gameId: string) => void,
-  exitSpectatorRoom: (gameId: string) => void,
-  joinGame: () => void,
-  leaveGame: () => void,
+  enterRoom: (gameId: string) => any,
+  exitRoom: (gameId: string) => any,
+  enterSpectatorRoom: (gameId: string) => any,
+  exitSpectatorRoom: (gameId: string) => any,
+  joinGame: () => any,
+  leaveGame: () => any,
+  cancelGame: () => any,
   gameId: string,
   game: ?Game,
   user: ?PublicUserData,
 };
 export default class GameRoom extends React.Component {
   props: Props;
+  handleCancelClick: SyntheticInputEvent => void;
   handleLeaveClick: SyntheticInputEvent => void;
 
   constructor() {
     super();
 
+    this.handleCancelClick = e => {
+      e.preventDefault();
+      this.props.cancelGame();
+    };
     this.handleLeaveClick = e => {
       e.preventDefault();
       this.props.leaveGame();
@@ -68,6 +74,8 @@ export default class GameRoom extends React.Component {
       );
     }
 
+    const isHost = user && user.id === game.host;
+
     return (
       <div>
         <h2>
@@ -86,7 +94,9 @@ export default class GameRoom extends React.Component {
                 )}
               </ul>
             </div>
-            <button onClick={this.handleLeaveClick}>Leave game</button>
+            {isHost
+              ? <button onClick={this.handleLeaveClick}>Leave game</button>
+              : <button onClick={this.handleCancelClick}>Cancel game</button>}
             <GameChatContainer gameId={gameId} />
           </div>}
       </div>

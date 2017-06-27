@@ -1,4 +1,5 @@
 /* @flow */
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import type { State } from '../root';
 import GameRoom from '../../../components/game/GameRoom';
@@ -11,6 +12,7 @@ import {
   exitSpectatorRoom,
   joinGame,
   leaveGame,
+  cancelGame,
 } from './gameRoomActions';
 import { contains } from 'ramda';
 
@@ -32,26 +34,18 @@ export function mapStateToProps(state: State, ownProps: OwnProps) {
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<*>) {
-  return {
-    enterRoom(gameId: string, shouldFetchGameData: boolean) {
-      dispatch(enterRoom(gameId, shouldFetchGameData));
+  return bindActionCreators(
+    {
+      enterRoom,
+      exitRoom,
+      enterSpectatorRoom,
+      exitSpectatorRoom,
+      joinGame,
+      leaveGame,
+      cancelGame,
     },
-    exitRoom(gameId: string, isInGame: boolean) {
-      dispatch(exitRoom(gameId, isInGame));
-    },
-    enterSpectatorRoom(gameId: string) {
-      dispatch(enterSpectatorRoom(gameId));
-    },
-    exitSpectatorRoom(gameId: string) {
-      dispatch(exitSpectatorRoom(gameId));
-    },
-    joinGame(userId: string, gameId: string) {
-      dispatch(joinGame(userId, gameId));
-    },
-    leaveGame(userId: string, gameId: string) {
-      dispatch(leaveGame(userId, gameId));
-    },
-  };
+    dispatch,
+  );
 }
 
 export function mergeProps(
@@ -88,6 +82,12 @@ export function mergeProps(
     },
     leaveGame() {
       user && dispatchProps.leaveGame(user.id, gameId);
+    },
+    cancelGame() {
+      user &&
+        game &&
+        user.id === game.host &&
+        dispatchProps.cancelGame(user.id, game.id);
     },
     gameId,
     game: transformedGame,
