@@ -7,8 +7,8 @@
     "jest": "jest",
     "coverage": "jest --coverage --collectCoverageFrom=\"src/**/*.js\"",
     "eslint": "eslint src/",
-    "prettier": "prettier --write --single-quote --trailing-comma all \"*.js\" \"src/**/*.js\"",
-    "prettycheck": "prettier --list-different --single-quote --trailing-comma all \"*.js\" \"src/**/*.js\"",
+    "prettier": "prettier --write --single-quote --trailing-comma all \"src/**/*.js\"",
+    "prettycheck": "prettier --list-different --single-quote --trailing-comma all \"src/**/*.js\"",
     "test": "yarn eslint && flow check && yarn prettycheck && yarn coverage"
   },
   "devDependencies": {

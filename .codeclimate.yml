@@ -13,5 +13,9 @@ engines:
     config:
       config: .eslintrc.json
 
+ratings:
+   paths:
+   - "src/**/*.js"
+
 exclude_paths:
 - "flow-typed/"
