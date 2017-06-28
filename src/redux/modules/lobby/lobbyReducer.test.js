@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 import lobbyReducer from './lobbyReducer';
-import { refreshLobby, gameCreated } from './lobbyActions';
+import { refreshLobby, gameCreated, gameUpdated } from './lobbyActions';
 
 describe('lobby reducer', () => {
   test('initial state', () => {
@@ -52,5 +52,19 @@ describe('lobby reducer', () => {
     expect(state.games).toHaveLength(2);
     expect(state.games).toContainEqual('game0');
     expect(state.games).toContainEqual('game1');
+  });
+
+  test('removes canceled game', () => {
+    const initialState = {
+      games: ['game0'],
+    };
+
+    const action = gameUpdated({
+      id: 'game0',
+      status: 'canceled',
+    });
+
+    const state = lobbyReducer(initialState, action);
+    expect(state.games).toHaveLength(0);
   });
 });
