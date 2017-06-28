@@ -9,3 +9,5 @@ export type PublicUserData = {
   id: string,
   username: string,
 }
+
+export type GameStatus = 'not_started' | 'in_progress' | 'canceled';

@@ -8,7 +8,7 @@ export type Game = {
   id: string,
   host: PublicUserData,
   players: PublicUserData[],
-  status?: ?string,
+  status?: ?GameStatus,
 };
 export type Props = {
   enterRoom: (gameId: string) => any,

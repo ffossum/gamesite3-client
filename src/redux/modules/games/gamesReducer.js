@@ -15,7 +15,7 @@ export type GameDataState = {
   host: string,
   createdTime: string,
   players: string[],
-  status?: ?string,
+  status?: ?GameStatus,
 };
 export type GamesState = {
   [gameId: string]: GameDataState,
