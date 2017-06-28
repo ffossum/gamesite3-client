@@ -63,6 +63,7 @@ export function mergeProps(
     players: game.players.map(
       playerId => users[playerId] || placeholderUser(playerId),
     ),
+    status: game.status,
   };
 
   const isInGame = !!(game && user && contains(user.id, game.players));

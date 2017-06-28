@@ -179,4 +179,6 @@ export type GameRoomAction =
   | JoinGameAction
   | PlayerJoinedAction
   | LeaveGameAction
-  | PlayerLeftAction;
+  | PlayerLeftAction
+  | CancelGameAction
+  | GameCanceledAction;

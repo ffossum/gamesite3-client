@@ -8,6 +8,7 @@ import type {
   EnterSpectatorRoomAction,
   EnterRoomAction,
   ExitRoomAction,
+  CancelGameAction,
 } from './gameRoomActions';
 import { clearChat } from '../chat/chatActions';
 import {
@@ -17,6 +18,7 @@ import {
   EXIT_ROOM,
   JOIN_GAME,
   LEAVE_GAME,
+  CANCEL_GAME,
 } from './gameRoomActions';
 import {
   FETCH_GAME_DATA_REQUEST,
@@ -106,6 +108,14 @@ function gameRoomEpic(
       .filter(action => action.type === LEAVE_GAME)
       .do(action => {
         deepstreamClient.make('leave-game', action.payload);
+      })
+      .ignoreElements(),
+    action$
+      .filter(action => action.type === CANCEL_GAME)
+      .do((action: CancelGameAction) => {
+        const gid = action.payload.gameId;
+        const uid = action.payload.userId;
+        deepstreamClient.make('cancel-game', { gid, uid });
       })
       .ignoreElements(),
   );

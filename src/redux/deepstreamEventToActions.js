@@ -1,5 +1,9 @@
 /* @flow */
-import { playerJoined, playerLeft } from './modules/games/gameRoomActions';
+import {
+  playerJoined,
+  playerLeft,
+  gameCanceled,
+} from './modules/games/gameRoomActions';
 import { receiveMessage } from './modules/chat/chatActions';
 import type { Action } from './actions';
 
@@ -19,6 +23,13 @@ type PlayerLeftEvent = {
   },
 };
 
+type GameCanceledEvent = {
+  t: 'game-canceled',
+  p: {
+    gid: string,
+  },
+};
+
 type ChatMessageEvent = {
   t: 'chatmsg',
   uid: string,
@@ -26,7 +37,11 @@ type ChatMessageEvent = {
   ch: string,
 };
 
-type DeepstreamEvent = PlayerJoinedEvent | PlayerLeftEvent | ChatMessageEvent;
+type DeepstreamEvent =
+  | PlayerJoinedEvent
+  | PlayerLeftEvent
+  | ChatMessageEvent
+  | GameCanceledEvent;
 
 export default function deepstreamEventToActions(
   event: DeepstreamEvent,
@@ -41,6 +56,10 @@ export default function deepstreamEventToActions(
       const gameId = event.p.gid;
       const userId = event.p.uid;
       return [playerLeft(userId, gameId)];
+    }
+    case 'game-canceled': {
+      const gameId = event.p.gid;
+      return [gameCanceled(gameId)];
     }
     case 'chatmsg': {
       const time = new Date().toISOString();

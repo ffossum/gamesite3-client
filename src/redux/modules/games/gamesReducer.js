@@ -8,13 +8,14 @@ import {
 } from '../lobby/lobbyActions';
 import { FETCH_GAME_DATA_SUCCESS } from './gameDataActions';
 
-import { PLAYER_JOINED, PLAYER_LEFT } from './gameRoomActions';
+import { PLAYER_JOINED, PLAYER_LEFT, GAME_CANCELED } from './gameRoomActions';
 
 export type GameDataState = {
   id: string,
   host: string,
   createdTime: string,
   players: string[],
+  status?: ?string,
 };
 export type GamesState = {
   [gameId: string]: GameDataState,
@@ -62,6 +63,17 @@ export default function gamesReducer(
       } else {
         return state;
       }
+    }
+    case GAME_CANCELED: {
+      const gameId = action.payload;
+      const previousGame = state[gameId];
+      return {
+        ...state,
+        [gameId]: {
+          ...previousGame,
+          status: 'canceled',
+        },
+      };
     }
     case PLAYER_JOINED: {
       const { gameId, userId } = action.payload;

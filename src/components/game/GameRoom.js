@@ -8,6 +8,7 @@ export type Game = {
   id: string,
   host: PublicUserData,
   players: PublicUserData[],
+  status?: ?string,
 };
 export type Props = {
   enterRoom: (gameId: string) => any,
@@ -56,6 +57,9 @@ export default class GameRoom extends React.Component {
 
     if (!game) {
       return <div>Game data unavailable</div>;
+    }
+    if (game.status === 'canceled') {
+      return <div>Game canceled</div>;
     }
 
     const isInGame =
