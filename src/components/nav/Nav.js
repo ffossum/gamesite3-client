@@ -24,6 +24,9 @@ export default function Nav(props: Props) {
               <li key="user">
                 Logged in as: {user.username}
               </li>,
+              <li key="settings">
+                <Link to="/settings">Settings</Link>
+              </li>,
               <li key="logout">
                 <a href="/logout">Log out</a>
               </li>,

@@ -7,6 +7,7 @@ import RegistrationFormContainer from './redux/modules/registration/Registration
 import LoginFormContainer from './redux/modules/login/LoginFormContainer';
 import LobbyContainer from './redux/modules/lobby/LobbyContainer';
 import GameRoomContainer from './redux/modules/games/GameRoomContainer';
+import Settings from './components/settings/Settings';
 import NotFound from './components/NotFound';
 
 export default function Routes() {
@@ -23,6 +24,7 @@ export default function Routes() {
           component={RegistrationFormContainer}
         />
         <Route exact path="/login" component={LoginFormContainer} />
+        <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </div>
