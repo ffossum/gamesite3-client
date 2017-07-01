@@ -49,6 +49,7 @@ describe('lobby container', () => {
     state = rootReducer(
       state,
       authenticatedUser({
+        email: 'user@test.com',
         id: 'user_id',
         username: 'user_name',
       }),

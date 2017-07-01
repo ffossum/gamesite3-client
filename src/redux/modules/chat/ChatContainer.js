@@ -7,12 +7,13 @@ import { sendMessage } from './chatActions';
 import type { State } from '../root';
 import { createChatContainerSelector } from './chatSelectors';
 import type { MessageProp } from '../../../components/chat/UserTextMessage';
+import type { SessionUser } from '../session/sessionReducer';
 
 export type Props = {
   channelName: string,
 };
 export type StateProps = {
-  user: ?PublicUserData,
+  user: ?SessionUser,
   messages: MessageProp[],
 };
 

@@ -56,7 +56,11 @@ describe('GameRoomContainer', () => {
     beforeEach(() => {
       state = rootReducer(
         state,
-        authenticatedUser({ id: 'user_id', username: 'user_name' }),
+        authenticatedUser({
+          email: 'user@test.com',
+          id: 'user_id',
+          username: 'user_name',
+        }),
       );
     });
 
@@ -102,7 +106,11 @@ describe('GameRoomContainer', () => {
     test('should fetch data when user enters while not having joined', () => {
       state = rootReducer(
         state,
-        authenticatedUser({ id: 'user_id', username: 'user_name' }),
+        authenticatedUser({
+          email: 'user@test.com',
+          id: 'user_id',
+          username: 'user_name',
+        }),
       );
 
       const stateProps = mapStateToProps(state, ownProps);
@@ -116,7 +124,11 @@ describe('GameRoomContainer', () => {
     test('should not fetch data when user enters while having previously joined', () => {
       state = rootReducer(
         state,
-        authenticatedUser({ id: 'user_id', username: 'user_name' }),
+        authenticatedUser({
+          email: 'user@test.com',
+          id: 'user_id',
+          username: 'user_name',
+        }),
       );
       state = rootReducer(state, playerJoined('user_id', 'game_id'));
 

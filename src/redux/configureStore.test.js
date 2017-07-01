@@ -7,7 +7,8 @@ import { rootReducer } from './modules/root';
 import { authenticatedUser } from './modules/session/sessionActions';
 
 describe('configure redux store', () => {
-  const user: PublicUserData = {
+  const user = {
+    email: 'asdf@asdf.com',
     id: 'asdf-id',
     username: 'asdf',
   };

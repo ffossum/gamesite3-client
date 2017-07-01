@@ -30,6 +30,7 @@ describe('registration reducer', () => {
     state = reducer(
       state,
       registrationSuccess({
+        email: 'bob@bob.com',
         id: 'abc123',
         username: 'bob',
       }),

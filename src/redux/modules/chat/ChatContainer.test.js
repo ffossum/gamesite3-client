@@ -35,7 +35,13 @@ describe('chat container', () => {
   });
 
   test('dispatches action when logged in user sends message', () => {
-    store.dispatch(authenticatedUser({ id: 'asdf-id', username: 'asdf' }));
+    store.dispatch(
+      authenticatedUser({
+        email: 'asdf@asdf.com',
+        id: 'asdf-id',
+        username: 'asdf',
+      }),
+    );
 
     const stateProps = mapStateToProps(store.getState(), ownProps);
     const dispatchProps = mapDispatchToProps(dispatch);

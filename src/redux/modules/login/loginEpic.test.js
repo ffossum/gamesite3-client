@@ -37,6 +37,7 @@ describe('login epic', () => {
     expect(location.reload).toHaveBeenCalled();
     expect(actions).toEqual([
       loginSuccess({
+        email: 'bob@test.com',
         id: 'user id',
         username: 'bob',
       }),

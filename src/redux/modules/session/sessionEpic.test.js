@@ -19,6 +19,7 @@ describe('session epic', () => {
     deepstreamClient.subscribe.mockReturnValue(Observable.empty());
 
     const userData = {
+      email: 'bob@test.com',
       id: 'user_id',
       username: 'Bob',
     };
@@ -55,6 +56,7 @@ describe('session epic', () => {
     );
 
     const userData = {
+      email: 'bob@test.com',
       id: 'user_id',
       username: 'Bob',
     };

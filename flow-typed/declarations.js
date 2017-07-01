@@ -8,6 +8,12 @@ declare module 'rxjs/observable/dom/ajax' {
 export type PublicUserData = {
   id: string,
   username: string,
-}
+};
+
+export type PrivateUserData = {
+  email: string,
+  id: string,
+  username: string,
+};
 
 export type GameStatus = 'not_started' | 'in_progress' | 'canceled';

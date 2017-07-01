@@ -8,6 +8,7 @@ import type { State } from '../root';
 import { createGameChatContainerSelector } from './chatSelectors';
 import type { GameDataState } from '../games/gamesReducer';
 import type { MessageProp } from '../../../components/chat/UserTextMessage';
+import type { SessionUser } from '../session/sessionReducer';
 
 export type Props = {
   gameId: string,
@@ -15,7 +16,7 @@ export type Props = {
 export type StateProps = {
   game: ?GameDataState,
   messages: MessageProp[],
-  user: ?PublicUserData,
+  user: ?SessionUser,
 };
 
 export function mapStateToProps(state: ?State, ownProps: Props) {

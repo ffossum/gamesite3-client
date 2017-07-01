@@ -24,6 +24,7 @@ describe('login reducer', () => {
     state = reducer(
       state,
       loginSuccess({
+        email: 'bob@test.com',
         id: 'abc123',
         username: 'bob',
       }),

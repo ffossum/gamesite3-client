@@ -2,10 +2,7 @@
 import type { Action } from '../../actions';
 import { AUTHENTICATED_USER } from './sessionActions';
 
-export type SessionUser = {
-  id: string,
-  username: string,
-};
+export type SessionUser = PrivateUserData;
 export type SessionState = {
   user: ?SessionUser,
 };

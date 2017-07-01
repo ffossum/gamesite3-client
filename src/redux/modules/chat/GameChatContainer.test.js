@@ -26,7 +26,13 @@ describe('GameChatContainer', () => {
   });
 
   test('does not dispatch send message if game is unavailable', () => {
-    store.dispatch(authenticatedUser({ id: 'user_id', username: 'user_name' }));
+    store.dispatch(
+      authenticatedUser({
+        email: 'user@test.com',
+        id: 'user_id',
+        username: 'user_name',
+      }),
+    );
 
     const stateProps = mapStateToProps(store.getState(), ownProps);
     const dispatchProps = mapDispatchToProps(dispatch);
@@ -57,7 +63,13 @@ describe('GameChatContainer', () => {
   });
 
   test('dispatches message if game data is available and user is authenticated', () => {
-    store.dispatch(authenticatedUser({ id: 'user_id', username: 'user_name' }));
+    store.dispatch(
+      authenticatedUser({
+        email: 'user@test.com',
+        id: 'user_id',
+        username: 'user_name',
+      }),
+    );
     store.dispatch(
       fetchGameDataSuccess({
         id: ownProps.gameId,

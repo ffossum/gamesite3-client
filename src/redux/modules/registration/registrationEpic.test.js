@@ -31,6 +31,7 @@ describe('registration epic', () => {
     const ajax = () =>
       Observable.of({
         response: {
+          email: 'bob@bob.com',
           id: 'user id',
           username: 'bob',
         },
@@ -43,6 +44,7 @@ describe('registration epic', () => {
     expect(location.reload).toHaveBeenCalled();
     expect(actions).toEqual([
       registrationSuccess({
+        email: 'bob@bob.com',
         id: 'user id',
         username: 'bob',
       }),

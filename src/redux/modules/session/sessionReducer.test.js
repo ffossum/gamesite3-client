@@ -10,6 +10,7 @@ describe('session reducer', () => {
   });
   test('contains user data after user is authenticated', () => {
     const action = authenticatedUser({
+      email: 'bob@bob.com',
       username: 'bob',
       id: 'userid',
     });
@@ -17,6 +18,7 @@ describe('session reducer', () => {
     const state = reducer(initialState, action);
     expect(state).toEqual({
       user: {
+        email: 'bob@bob.com',
         username: 'bob',
         id: 'userid',
       },
