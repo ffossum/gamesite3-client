@@ -25,6 +25,7 @@ describe('login epic', () => {
     const ajax = () =>
       Observable.of({
         response: {
+          email: 'bob@test.com',
           id: 'user id',
           username: 'bob',
         },
