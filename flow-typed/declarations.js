@@ -10,10 +10,8 @@ export type PublicUserData = {
   username: string,
 };
 
-export type PrivateUserData = {
+export type PrivateUserData = PublicUserData & {
   email: string,
-  id: string,
-  username: string,
 };
 
 export type GameStatus = 'not_started' | 'in_progress' | 'canceled';
