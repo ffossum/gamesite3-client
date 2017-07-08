@@ -7,8 +7,8 @@ export default class RegistrationForm extends React.Component {
     register: Function,
     loading: boolean,
   };
-  handleSubmit: (e: SyntheticInputEvent) => void;
-  handleChange: (e: SyntheticInputEvent) => void;
+  handleSubmit: SyntheticInputEvent => void;
+  handleChange: SyntheticInputEvent => void;
   handleRecaptcha: (recaptchaResponse: string) => void;
   state: {
     username: string,
@@ -46,47 +46,55 @@ export default class RegistrationForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="username">
+            Username
+            <input
+              type="text"
+              id="username"
+              name="username"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
 
         <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="email">
+            Email
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
 
         <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="password">
+            Password
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
 
         <div>
-          <label htmlFor="password">Repeat password</label>
-          <input
-            type="password"
-            id="repeatPassword"
-            name="repeatPassword"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="password">
+            Repeat password
+            <input
+              type="password"
+              id="repeatPassword"
+              name="repeatPassword"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
         <Recaptcha
           sitekey="6LfOuSYUAAAAAAclQ1FS0hsa-PJvWr_p1FGms3b-" // TODO do not hard-code sitekey

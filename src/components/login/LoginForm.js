@@ -6,8 +6,8 @@ export default class LoginForm extends React.Component {
     logIn: Function,
     loading: boolean,
   };
-  handleSubmit: (e: SyntheticInputEvent) => void;
-  handleChange: (e: SyntheticInputEvent) => void;
+  handleSubmit: SyntheticInputEvent => void;
+  handleChange: SyntheticInputEvent => void;
   state: {
     email: string,
     password: string,
@@ -35,25 +35,29 @@ export default class LoginForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="email">
+            Email
+            <input
+              id="email"
+              type="email"
+              name="email"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
 
         <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={this.handleChange}
-            readOnly={loading}
-          />
+          <label htmlFor="password">
+            Password
+            <input
+              id="password"
+              type="password"
+              name="password"
+              onChange={this.handleChange}
+              readOnly={loading}
+            />
+          </label>
         </div>
 
         <button type="submit" disabled={loading}>

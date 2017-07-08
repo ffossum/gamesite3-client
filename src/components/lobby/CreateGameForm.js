@@ -5,7 +5,7 @@ export default class CreateGameForm extends React.Component {
   props: {
     createGame: () => void,
   };
-  handleSubmit: (e: SyntheticInputEvent) => void;
+  handleSubmit: SyntheticInputEvent => void;
   constructor() {
     super();
 
