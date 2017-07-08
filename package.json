@@ -46,6 +46,6 @@
     "redux-observable": "^0.14.1",
     "reselect": "^3.0.1",
     "rxjs": "^5.4.1",
-    "validator": "^7.2.0"
+    "validator": "^8.0.0"
   }
 }
