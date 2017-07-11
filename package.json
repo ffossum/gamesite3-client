@@ -2,7 +2,7 @@
   "name": "gamesite3-client",
   "version": "0.0.0",
   "main": "index.js",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "scripts": {
     "jest": "jest",
     "coverage": "jest --coverage --collectCoverageFrom=\"src/**/*.js\"",
