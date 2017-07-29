@@ -8,7 +8,10 @@ describe('login reducer', () => {
     email: 'bob@test.com',
     password: 'bobisthebest',
   };
-  const initialState = reducer(undefined, { type: '@@INIT' });
+
+  const initAction: any = { type: '@@INIT' };
+  const initialState = reducer(undefined, initAction);
+
   test('initial state', () => {
     expect(initialState).toMatchSnapshot();
   });

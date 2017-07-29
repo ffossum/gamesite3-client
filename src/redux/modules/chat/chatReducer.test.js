@@ -4,9 +4,9 @@ import chatReducer from './chatReducer';
 import { receiveMessage, clearChat } from './chatActions';
 
 describe('chat reducer', () => {
-  const initialState = chatReducer(undefined, { type: '@@INIT' });
-
   test('initial state', () => {
+    const initAction: any = { type: '@@INIT' };
+    const initialState = chatReducer(undefined, initAction);
     expect(initialState).toMatchSnapshot();
   });
 
@@ -19,7 +19,7 @@ describe('chat reducer', () => {
       },
       '2017-06-08T01:49:25.779Z',
     );
-    const state = chatReducer(initialState, action);
+    const state = chatReducer(undefined, action);
 
     expect(state.mainchat && state.mainchat.messages).toHaveLength(1);
     expect(state.mainchat && state.mainchat.messages[0]).toEqual({
@@ -38,7 +38,7 @@ describe('chat reducer', () => {
       },
       '2017-06-08T01:49:25.779Z',
     );
-    let state = chatReducer(initialState, addMessageAction);
+    let state = chatReducer(undefined, addMessageAction);
 
     expect(state).toHaveProperty('mainchat');
     const leaveChannelAction = clearChat('mainchat');

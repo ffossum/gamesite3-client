@@ -4,8 +4,9 @@ import reducer from './sessionReducer';
 import { authenticatedUser } from './sessionActions';
 
 describe('session reducer', () => {
-  const initialState = reducer(undefined, { type: '@@INIT' });
   test('initial state', () => {
+    const initAction: any = { type: '@@INIT' };
+    const initialState = reducer(undefined, initAction);
     expect(initialState).toMatchSnapshot();
   });
   test('contains user data after user is authenticated', () => {
@@ -15,7 +16,7 @@ describe('session reducer', () => {
       id: 'userid',
     });
 
-    const state = reducer(initialState, action);
+    const state = reducer(undefined, action);
     expect(state).toEqual({
       user: {
         email: 'bob@bob.com',

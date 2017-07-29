@@ -5,7 +5,8 @@ import { refreshLobby, gameCreated, gameUpdated } from './lobbyActions';
 
 describe('lobby reducer', () => {
   test('initial state', () => {
-    const initialState = lobbyReducer(undefined, { type: '@@INIT' });
+    const initAction: any = { type: '@@INIT' };
+    const initialState = lobbyReducer(undefined, initAction);
     expect(initialState).toMatchSnapshot();
   });
 

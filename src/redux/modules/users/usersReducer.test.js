@@ -4,8 +4,9 @@ import usersReducer from './usersReducer';
 import { fetchedUserData } from './userDataActions';
 
 describe('users reducer', () => {
-  const initialState = usersReducer(undefined, { type: '@@INIT' });
   test('initial state', () => {
+    const initAction: any = { type: '@@INIT' };
+    const initialState = usersReducer(undefined, initAction);
     expect(initialState).toMatchSnapshot();
   });
   test('fetched users are added to state', () => {
@@ -19,7 +20,7 @@ describe('users reducer', () => {
         username: 'zxcv',
       },
     ]);
-    const state = usersReducer(initialState, action);
+    const state = usersReducer(undefined, action);
     expect(state).toEqual({
       'asdf-id': {
         id: 'asdf-id',

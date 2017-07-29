@@ -14,7 +14,10 @@ describe('registration reducer', () => {
     password: 'bobisthebest',
     repeatPassword: 'bobisthebest',
   };
-  const initialState = reducer(undefined, { type: '@@INIT' });
+
+  const initAction: any = { type: '@@INIT' };
+  const initialState = reducer(undefined, initAction);
+
   test('initial state', () => {
     expect(initialState).toMatchSnapshot();
   });

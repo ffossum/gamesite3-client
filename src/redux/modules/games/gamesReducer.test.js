@@ -6,8 +6,6 @@ import { fetchGameDataSuccess } from './gameDataActions';
 import gamesReducer from './gamesReducer';
 
 describe('games reducer', () => {
-  const initialState = gamesReducer(undefined, { type: '@@INIT' });
-
   test('adds refreshed lobby to games without removing other games', () => {
     const game0 = {
       createdTime: '2017-06-11T10:57:22.414Z',
@@ -46,7 +44,7 @@ describe('games reducer', () => {
       host: 'asdf-id',
       players: ['asdf-id'],
     });
-    const state = gamesReducer(initialState, action);
+    const state = gamesReducer(undefined, action);
 
     expect(state).toEqual({
       'gameid-1': {
@@ -65,7 +63,7 @@ describe('games reducer', () => {
       host: 'asdf-id',
       players: ['asdf-id'],
     });
-    const state = gamesReducer(initialState, action);
+    const state = gamesReducer(undefined, action);
 
     expect(state).toEqual({
       'gameid-1': {
@@ -85,7 +83,7 @@ describe('games reducer', () => {
       players: ['asdf-id'],
     });
 
-    let state = gamesReducer(initialState, action);
+    let state = gamesReducer(undefined, action);
 
     const updateAction = gameUpdated({
       id: 'gameid-1',
@@ -112,7 +110,7 @@ describe('games reducer', () => {
       players: ['asdf-id'],
     });
 
-    let state = gamesReducer(initialState, action);
+    let state = gamesReducer(undefined, action);
     const joinAction = playerJoined('qwer-id', 'gameid_1');
 
     state = gamesReducer(state, joinAction);

@@ -16,5 +16,4 @@ export type Action =
   | LobbyAction
   | GameRoomAction
   | GameDataAction
-  | SessionAction
-  | { type: '@@INIT' };
+  | SessionAction;
