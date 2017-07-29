@@ -2,7 +2,7 @@
 export const FETCHED_USER_DATA = 'data/fetched user(s)';
 
 type FetchedUserDataAction = {
-  type: 'data/fetched user(s)',
+  type: typeof FETCHED_USER_DATA,
   payload: PublicUserData[],
 };
 export function fetchedUserData(

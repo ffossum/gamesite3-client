@@ -6,7 +6,7 @@ export const FETCH_GAME_DATA_SUCCESS = 'data/fetch game success';
 import type { GameDataState } from './gamesReducer';
 
 export type FetchGameDataRequestAction = {
-  type: 'data/fetch game request',
+  type: typeof FETCH_GAME_DATA_REQUEST,
   payload: string,
 };
 export function fetchGameDataRequest(
@@ -19,7 +19,7 @@ export function fetchGameDataRequest(
 }
 
 export type FetchGameDataSuccessAction = {
-  type: 'data/fetch game success',
+  type: typeof FETCH_GAME_DATA_SUCCESS,
   payload: GameDataState,
 };
 export function fetchGameDataSuccess(

@@ -10,7 +10,7 @@ export type Login = {
   password: string,
 };
 export type LoginRequestAction = {
-  type: 'login/request',
+  type: typeof LOGIN_REQUEST,
   payload: Login,
 };
 export function loginRequest(login: Login): LoginRequestAction {
@@ -21,7 +21,7 @@ export function loginRequest(login: Login): LoginRequestAction {
 }
 
 type LoginSuccessAction = {
-  type: 'login/success',
+  type: typeof LOGIN_SUCCESS,
   payload: SessionUser,
 };
 export function loginSuccess(user: SessionUser): LoginSuccessAction {
@@ -32,7 +32,7 @@ export function loginSuccess(user: SessionUser): LoginSuccessAction {
 }
 
 type LoginFailureAction = {
-  type: 'login/failure',
+  type: typeof LOGIN_FAILURE,
 };
 export function loginFailure(): LoginFailureAction {
   return {

@@ -9,7 +9,7 @@ export const EXIT_LOBBY = 'lobby/exit';
 export const REFRESH_LOBBY = 'lobby/refresh';
 
 export type EnterLobbyAction = {
-  type: 'lobby/enter',
+  type: typeof ENTER_LOBBY,
 };
 export function enterLobby(): EnterLobbyAction {
   return {
@@ -18,7 +18,7 @@ export function enterLobby(): EnterLobbyAction {
 }
 
 export type ExitLobbyAction = {
-  type: 'lobby/exit',
+  type: typeof EXIT_LOBBY,
 };
 export function exitLobby(): ExitLobbyAction {
   return {
@@ -27,7 +27,7 @@ export function exitLobby(): ExitLobbyAction {
 }
 
 export type RefreshLobbyAction = {
-  type: 'lobby/refresh',
+  type: typeof REFRESH_LOBBY,
   payload: GamesState,
 };
 export function refreshLobby(lobby: GamesState): RefreshLobbyAction {
@@ -38,7 +38,7 @@ export function refreshLobby(lobby: GamesState): RefreshLobbyAction {
 }
 
 export type CreateGameRequestAction = {
-  type: 'lobby/create game request',
+  type: typeof CREATE_GAME_REQUEST,
   payload: {
     userId: string,
   },
@@ -54,7 +54,7 @@ export function createGameRequest(userId: string): CreateGameRequestAction {
 }
 
 export type GameCreatedAction = {
-  type: 'lobby/game created',
+  type: typeof GAME_CREATED,
   payload: GameDataState,
 };
 
@@ -66,7 +66,7 @@ export function gameCreated(gameData: GameDataState): GameCreatedAction {
 }
 
 export type GameUpdatedAction = {
-  type: 'lobby/game updated',
+  type: typeof GAME_UPDATED,
   payload: $Shape<GameDataState>,
 };
 export function gameUpdated(

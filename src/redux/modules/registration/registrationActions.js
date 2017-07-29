@@ -12,7 +12,7 @@ export type Registration = {
   repeatPassword: string,
 };
 export type RegistrationRequestAction = {
-  type: 'registration/request',
+  type: typeof REGISTRATION_REQUEST,
   payload: Registration,
 };
 export function registrationRequest(
@@ -25,7 +25,7 @@ export function registrationRequest(
 }
 
 type RegistrationSuccessAction = {
-  type: 'registration/success',
+  type: typeof REGISTRATION_SUCCESS,
   payload: SessionUser,
 };
 export function registrationSuccess(
@@ -38,7 +38,7 @@ export function registrationSuccess(
 }
 
 type RegistrationFailureAction = {
-  type: 'registration/failure',
+  type: typeof REGISTRATION_FAILURE,
 };
 export function registrationFailure(): RegistrationFailureAction {
   return {

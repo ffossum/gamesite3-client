@@ -16,7 +16,7 @@ export const CANCEL_GAME = 'game/cancel';
 export const GAME_CANCELED = 'game/canceled';
 
 export type EnterRoomAction = {
-  type: 'game/enter room',
+  type: typeof ENTER_ROOM,
   payload: {
     gameId: string,
     shouldFetchGameData: boolean,
@@ -36,7 +36,7 @@ export function enterRoom(
 }
 
 export type EnterSpectatorRoomAction = {
-  type: 'game/enter spectator',
+  type: typeof ENTER_SPECTATOR,
   payload: string,
 };
 export function enterSpectatorRoom(gameId: string): EnterSpectatorRoomAction {
@@ -47,7 +47,7 @@ export function enterSpectatorRoom(gameId: string): EnterSpectatorRoomAction {
 }
 
 export type ExitRoomAction = {
-  type: 'game/exit room',
+  type: typeof EXIT_ROOM,
   payload: {
     gameId: string,
     isInGame: boolean,
@@ -64,7 +64,7 @@ export function exitRoom(gameId: string, isInGame: boolean): ExitRoomAction {
 }
 
 export type ExitSpectatorRoomAction = {
-  type: 'game/exit spectator',
+  type: typeof EXIT_SPECTATOR,
   payload: string,
 };
 export function exitSpectatorRoom(gameId: string): ExitSpectatorRoomAction {
@@ -75,7 +75,7 @@ export function exitSpectatorRoom(gameId: string): ExitSpectatorRoomAction {
 }
 
 export type JoinGameAction = {
-  type: 'game/join',
+  type: typeof JOIN_GAME,
   payload: {
     gid: string,
     uid: string,
@@ -92,7 +92,7 @@ export function joinGame(userId: string, gameId: string): JoinGameAction {
 }
 
 export type PlayerJoinedAction = {
-  type: 'game/player joined',
+  type: typeof PLAYER_JOINED,
   payload: {
     gameId: string,
     userId: string,
@@ -112,7 +112,7 @@ export function playerJoined(
 }
 
 export type LeaveGameAction = {
-  type: 'game/leave',
+  type: typeof LEAVE_GAME,
   payload: {
     gid: string,
     uid: string,
@@ -129,7 +129,7 @@ export function leaveGame(userId: string, gameId: string) {
 }
 
 export type PlayerLeftAction = {
-  type: 'game/player left',
+  type: typeof PLAYER_LEFT,
   payload: {
     gameId: string,
     userId: string,
@@ -146,7 +146,7 @@ export function playerLeft(userId: string, gameId: string): PlayerLeftAction {
 }
 
 export type CancelGameAction = {
-  type: 'game/cancel',
+  type: typeof CANCEL_GAME,
   payload: {
     gameId: string,
     userId: string,
@@ -163,7 +163,7 @@ export function cancelGame(userId: string, gameId: string): CancelGameAction {
 }
 
 export type GameCanceledAction = {
-  type: 'game/canceled',
+  type: typeof GAME_CANCELED,
   payload: string,
 };
 export function gameCanceled(gameId: string): GameCanceledAction {

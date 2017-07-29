@@ -14,7 +14,7 @@ export type UserMessage = {
 };
 
 export type JoinChannelAction = {
-  type: 'chat/join channel',
+  type: typeof JOIN_CHANNEL,
   payload: string,
 };
 export function joinChannel(channelName: ChannelName): JoinChannelAction {
@@ -25,7 +25,7 @@ export function joinChannel(channelName: ChannelName): JoinChannelAction {
 }
 
 export type LeaveChannelAction = {
-  type: 'chat/leave channel',
+  type: typeof LEAVE_CHANNEL,
   payload: string,
 };
 export function leaveChannel(channelName: ChannelName): LeaveChannelAction {
@@ -36,7 +36,7 @@ export function leaveChannel(channelName: ChannelName): LeaveChannelAction {
 }
 
 export type SendMessageAction = {
-  type: 'chat/send message',
+  type: typeof SEND_MESSAGE,
   payload: UserMessage,
 };
 export function sendMessage(
@@ -55,7 +55,7 @@ export function sendMessage(
 }
 
 export type SendGameMessageAction = {
-  type: 'chat/send game message',
+  type: typeof SEND_GAME_MESSAGE,
   payload: {
     players: string[],
     gameId: string,
@@ -80,7 +80,7 @@ export function sendGameMessage(
   };
 }
 export type ReceiveMessageAction = {
-  type: 'chat/receive message',
+  type: typeof RECEIVE_MESSAGE,
   payload: {
     msg: UserMessage,
     time: string,
@@ -100,7 +100,7 @@ export function receiveMessage(
 }
 
 export type ClearChatAction = {
-  type: 'chat/clear',
+  type: typeof CLEAR_CHAT,
   payload: string,
 };
 export function clearChat(channelName: string) {
