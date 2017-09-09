@@ -6,7 +6,7 @@ export default class DeepstreamClient {
   constructor(deepstream: any, ...args: any[]) {
     this.client = deepstream(...args);
   }
-  login(...args: any[]) {
+  login(...args: any[]): Promise<DeepstreamClient> {
     return new Promise((resolve, reject) => {
       this.client.login(...args, success => {
         success ? resolve(this) : reject();

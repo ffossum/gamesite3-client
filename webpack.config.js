@@ -24,4 +24,8 @@ module.exports = {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
+  watch: true,
+  watchOptions: {
+    poll: 1000,
+  }
 };

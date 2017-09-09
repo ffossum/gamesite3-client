@@ -2,21 +2,23 @@
 import React from 'react';
 import Recaptcha from 'react-google-recaptcha';
 
-export default class RegistrationForm extends React.Component {
-  props: {
-    register: Function,
-    loading: boolean,
-  };
-  handleSubmit: SyntheticInputEvent => void;
-  handleChange: SyntheticInputEvent => void;
+type Props = {
+  register: Function,
+  loading: boolean,
+};
+type State = {
+  username: string,
+  email: string,
+  password: string,
+  repeatPassword: string,
+  recaptchaResponse: string,
+};
+export default class RegistrationForm extends React.Component<Props, State> {
+  props: Props;
+  state: State;
+  handleSubmit: (SyntheticInputEvent<>) => void;
+  handleChange: (SyntheticInputEvent<>) => void;
   handleRecaptcha: (recaptchaResponse: string) => void;
-  state: {
-    username: string,
-    email: string,
-    password: string,
-    repeatPassword: string,
-    recaptchaResponse: string,
-  };
   constructor() {
     super();
 

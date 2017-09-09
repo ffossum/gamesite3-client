@@ -23,7 +23,7 @@ type OwnProps = {
 };
 
 export function mapStateToProps(state: State, ownProps: OwnProps) {
-  const gameId: string = ownProps.match.params.gameId;
+  const gameId = ownProps.match.params.gameId || '';
   const game = state.games[gameId];
   return {
     gameId,

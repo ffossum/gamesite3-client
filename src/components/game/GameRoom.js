@@ -22,10 +22,10 @@ export type Props = {
   game: ?Game,
   user: ?PublicUserData,
 };
-export default class GameRoom extends React.Component {
+export default class GameRoom extends React.Component<Props> {
   props: Props;
-  handleCancelClick: SyntheticInputEvent => void;
-  handleLeaveClick: SyntheticInputEvent => void;
+  handleCancelClick: (SyntheticInputEvent<>) => void;
+  handleLeaveClick: (SyntheticInputEvent<>) => void;
 
   constructor() {
     super();

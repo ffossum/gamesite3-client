@@ -1,17 +1,19 @@
 /* @flow */
 import React from 'react';
 
-export default class LoginForm extends React.Component {
-  props: {
-    logIn: Function,
-    loading: boolean,
-  };
-  handleSubmit: SyntheticInputEvent => void;
-  handleChange: SyntheticInputEvent => void;
-  state: {
-    email: string,
-    password: string,
-  };
+type Props = {
+  logIn: Function,
+  loading: boolean,
+};
+type State = {
+  email: string,
+  password: string,
+};
+export default class LoginForm extends React.Component<Props, State> {
+  props: Props;
+  state: State;
+  handleSubmit: (SyntheticInputEvent<>) => void;
+  handleChange: (SyntheticInputEvent<>) => void;
   constructor() {
     super();
 

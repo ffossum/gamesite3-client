@@ -11,9 +11,9 @@ export type Props = {
   game: ?Game,
   user: ?PublicUserData,
 };
-export default class SpectatorRoom extends React.Component {
+export default class SpectatorRoom extends React.Component<Props> {
   props: Props;
-  handleJoinClick: SyntheticInputEvent => void;
+  handleJoinClick: (SyntheticInputEvent<>) => void;
 
   constructor() {
     super();

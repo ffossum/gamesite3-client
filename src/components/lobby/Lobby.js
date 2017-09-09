@@ -25,8 +25,9 @@ export type Props = {
   exitLobby: () => void,
 };
 
-export default class Lobby extends React.Component {
+export default class Lobby extends React.Component<Props> {
   props: Props;
+
   componentDidMount() {
     this.props.enterLobby();
   }

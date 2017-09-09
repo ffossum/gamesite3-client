@@ -1,17 +1,19 @@
 /* @flow */
 import React from 'react';
 
-export default class ChatInput extends React.Component {
-  props: {
-    sendMessage: (text: string) => void,
-    disabled?: boolean,
-    disabledPlaceholder?: string,
-  };
-  state: {
-    text: string,
-  };
-  handleChange: (e: SyntheticInputEvent) => void;
-  handleSubmit: (e: SyntheticInputEvent) => void;
+type Props = {
+  sendMessage: (text: string) => void,
+  disabled?: boolean,
+  disabledPlaceholder?: string,
+};
+type State = {
+  text: string,
+};
+export default class ChatInput extends React.Component<Props, State> {
+  props: Props;
+  state: State;
+  handleChange: (e: SyntheticInputEvent<>) => void;
+  handleSubmit: (e: SyntheticInputEvent<>) => void;
 
   constructor() {
     super();

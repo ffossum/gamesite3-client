@@ -1,11 +1,13 @@
 /* @flow */
 import React from 'react';
 
-export default class CreateGameForm extends React.Component {
-  props: {
-    createGame: () => void,
-  };
-  handleSubmit: SyntheticInputEvent => void;
+type Props = {
+  createGame: () => void,
+};
+export default class CreateGameForm extends React.Component<Props> {
+  props: Props;
+  handleSubmit: (SyntheticInputEvent<>) => void;
+
   constructor() {
     super();
 
