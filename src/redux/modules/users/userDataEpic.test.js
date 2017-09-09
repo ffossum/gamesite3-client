@@ -98,7 +98,9 @@ describe('user data epic', () => {
 
     const action$ = Observable.of(action);
 
-    await userDataEpic(action$, store, { ajax }).toArray().toPromise();
+    await userDataEpic(action$, store, { ajax })
+      .toArray()
+      .toPromise();
 
     expect(ajax.getJSON).not.toHaveBeenCalled();
   });

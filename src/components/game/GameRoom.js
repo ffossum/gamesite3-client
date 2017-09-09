@@ -82,27 +82,28 @@ export default class GameRoom extends React.Component {
 
     return (
       <div>
-        <h2>
-          {gameId}
-        </h2>
-        {game &&
+        <h2>{gameId}</h2>
+        {game && (
           <div>
             <div>
               <h3>Players:</h3>
               <ul>
-                {game.players.map(player =>
+                {game.players.map(player => (
                   <li key={player.id}>
                     {player.username}
                     {game.host.id === player.id && <span> (Host)</span>}
-                  </li>,
-                )}
+                  </li>
+                ))}
               </ul>
             </div>
-            {isHost
-              ? <button onClick={this.handleLeaveClick}>Leave game</button>
-              : <button onClick={this.handleCancelClick}>Cancel game</button>}
+            {isHost ? (
+              <button onClick={this.handleLeaveClick}>Leave game</button>
+            ) : (
+              <button onClick={this.handleCancelClick}>Cancel game</button>
+            )}
             <GameChatContainer gameId={gameId} />
-          </div>}
+          </div>
+        )}
       </div>
     );
   }

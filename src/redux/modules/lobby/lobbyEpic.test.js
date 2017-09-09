@@ -25,7 +25,9 @@ describe('lobby epic', () => {
 
     const action = enterLobby();
     const action$ = Observable.of(action);
-    await lobbyEpic(action$, store, { deepstreamClient }).toArray().toPromise();
+    await lobbyEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
 
     expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
     expect(deepstreamClient.subscribe).toHaveBeenCalledWith('lobby');

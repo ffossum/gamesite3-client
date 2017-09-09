@@ -43,18 +43,19 @@ export default class Lobby extends React.Component {
           <Route exact path="/lobby" render={CreateGameLink} />
           <Route
             path="/lobby/create"
-            render={() =>
-              <CreateGameForm user={user} createGame={createGame} />}
+            render={() => (
+              <CreateGameForm user={user} createGame={createGame} />
+            )}
           />
           <ul>
-            {games.map(game =>
+            {games.map(game => (
               <li key={game.id}>
                 <Link to={`/game/${game.id}`}>
                   Host: {game.host.username}, created:{' '}
                   {format(game.createdTime, 'ddd, MMM Do HH:mm')}
                 </Link>
-              </li>,
-            )}
+              </li>
+            ))}
           </ul>
         </section>
 

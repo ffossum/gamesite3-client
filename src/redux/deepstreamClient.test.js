@@ -62,7 +62,10 @@ describe('deepstream client', () => {
     const client = new DeepstreamClient(deepstream);
     const event$ = client.subscribe('event name');
 
-    const eventsPromise = event$.take(testEvents.length).toArray().toPromise();
+    const eventsPromise = event$
+      .take(testEvents.length)
+      .toArray()
+      .toPromise();
     testEvents.forEach(e => handler(e));
 
     const receivedEvents = await eventsPromise;

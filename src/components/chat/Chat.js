@@ -18,11 +18,11 @@ export default function Chat(props: Props) {
   return (
     <div>
       <ul>
-        {messages.map((msg, i) =>
+        {messages.map((msg, i) => (
           <li key={msg.user.id + i}>
             <UserTextMessage message={msg} />
-          </li>,
-        )}
+          </li>
+        ))}
       </ul>
       <ChatInput
         disabled={disabled}

@@ -40,27 +40,26 @@ export default class SpectatorRoom extends React.Component {
     const { gameId, game, user } = this.props;
     return (
       <div>
-        <h2>
-          {gameId}
-        </h2>
-        {game &&
+        <h2>{gameId}</h2>
+        {game && (
           <div>
             <div>
               <h3>Players:</h3>
               <ul>
-                {game.players.map(player =>
+                {game.players.map(player => (
                   <li key={player.id}>
                     {player.username}
                     {game.host.id === player.id && <span> (Host)</span>}
-                  </li>,
-                )}
+                  </li>
+                ))}
               </ul>
             </div>
             <button disabled={!user} onClick={this.handleJoinClick}>
               Join game
             </button>
             <GameChatContainer gameId={gameId} />
-          </div>}
+          </div>
+        )}
       </div>
     );
   }

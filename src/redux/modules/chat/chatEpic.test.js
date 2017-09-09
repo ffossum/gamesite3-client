@@ -83,7 +83,9 @@ describe('chat epic', () => {
 
     deepstreamClient.subscribe.mockReturnValueOnce(Observable.never());
 
-    await chatEpic(action$, store, { deepstreamClient }).toArray().toPromise();
+    await chatEpic(action$, store, { deepstreamClient })
+      .toArray()
+      .toPromise();
 
     expect(deepstreamClient.subscribe).toHaveBeenCalledTimes(1);
   });
