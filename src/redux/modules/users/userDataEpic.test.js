@@ -27,7 +27,7 @@ describe('user data epic', () => {
     store = createStore(rootReducer);
   });
   test('fetches host user data when a new game is created', async () => {
-    const action = gameCreated({
+    const action: any = gameCreated({
       id: 'game-id',
       host: 'user-id',
       createdTime: '2017-06-08T01:49:25.779Z',
@@ -51,7 +51,7 @@ describe('user data epic', () => {
     );
   });
   test('fetches user data when a message is received', async () => {
-    const action = receiveMessage(
+    const action: any = receiveMessage(
       {
         ch: 'channel name',
         uid: 'user-id',
@@ -87,7 +87,7 @@ describe('user data epic', () => {
       ]),
     );
 
-    const action = receiveMessage(
+    const action: any = receiveMessage(
       {
         ch: 'channel name',
         uid: 'user-id',
