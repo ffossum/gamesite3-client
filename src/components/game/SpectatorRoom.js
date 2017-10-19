@@ -12,17 +12,11 @@ export type Props = {
   user: ?PublicUserData,
 };
 export default class SpectatorRoom extends React.Component<Props> {
-  props: Props;
-  handleJoinClick: (SyntheticInputEvent<>) => void;
+  handleJoinClick = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    this.props.joinGame();
+  };
 
-  constructor() {
-    super();
-
-    this.handleJoinClick = e => {
-      e.preventDefault();
-      this.props.joinGame();
-    };
-  }
   componentDidMount() {
     this.props.enterSpectatorRoom(this.props.gameId);
   }

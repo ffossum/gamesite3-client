@@ -10,30 +10,21 @@ type State = {
   text: string,
 };
 export default class ChatInput extends React.Component<Props, State> {
-  props: Props;
-  state: State;
-  handleChange: (e: SyntheticInputEvent<>) => void;
-  handleSubmit: (e: SyntheticInputEvent<>) => void;
+  state = {
+    text: '',
+  };
 
-  constructor() {
-    super();
-
-    this.state = {
-      text: '',
-    };
-
-    this.handleChange = e => {
-      const text = e.target.value;
-      this.setState(() => ({ text }));
-    };
-    this.handleSubmit = e => {
-      e.preventDefault();
-      if (this.state.text.length) {
-        this.props.sendMessage(this.state.text);
-        this.setState(() => ({ text: '' }));
-      }
-    };
-  }
+  handleChange = (e: SyntheticInputEvent<>) => {
+    const text = e.target.value;
+    this.setState(() => ({ text }));
+  };
+  handleSubmit = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    if (this.state.text.length) {
+      this.props.sendMessage(this.state.text);
+      this.setState(() => ({ text: '' }));
+    }
+  };
 
   render() {
     const { disabled, disabledPlaceholder } = this.props;

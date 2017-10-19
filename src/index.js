@@ -38,12 +38,13 @@ deepstreamClient.login().then(() => {
   store.dispatch(joinChannel('general'));
 
   const element = document.getElementById('root');
-  element && render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Routes />
-      </Router>
-    </Provider>,
-    element,
-  );
+  element &&
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </Provider>,
+      element,
+    );
 });

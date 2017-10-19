@@ -23,22 +23,15 @@ export type Props = {
   user: ?PublicUserData,
 };
 export default class GameRoom extends React.Component<Props> {
-  props: Props;
-  handleCancelClick: (SyntheticInputEvent<>) => void;
-  handleLeaveClick: (SyntheticInputEvent<>) => void;
+  handleCancelClick = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    this.props.cancelGame();
+  };
+  handleLeaveClick = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    this.props.leaveGame();
+  };
 
-  constructor() {
-    super();
-
-    this.handleCancelClick = e => {
-      e.preventDefault();
-      this.props.cancelGame();
-    };
-    this.handleLeaveClick = e => {
-      e.preventDefault();
-      this.props.leaveGame();
-    };
-  }
   componentDidMount() {
     this.props.enterRoom(this.props.gameId);
   }

@@ -1,3 +1,6 @@
 {
+  "plugins": [
+    "transform-class-properties" // class fields is stage 3. Include plugin here until babel adds it to stage 3 preset https://github.com/babel/proposals/issues/12
+  ],
   "presets": ["env", "react", "stage-3"]
 }

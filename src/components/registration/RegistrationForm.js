@@ -14,34 +14,25 @@ type State = {
   recaptchaResponse: string,
 };
 export default class RegistrationForm extends React.Component<Props, State> {
-  props: Props;
-  state: State;
-  handleSubmit: (SyntheticInputEvent<>) => void;
-  handleChange: (SyntheticInputEvent<>) => void;
-  handleRecaptcha: (recaptchaResponse: string) => void;
-  constructor() {
-    super();
+  handleSubmit = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    if (!this.props.loading) {
+      this.props.register(this.state);
+    }
+  };
 
-    this.handleSubmit = e => {
-      e.preventDefault();
-      if (!this.props.loading) {
-        this.props.register(this.state);
-      }
-    };
+  handleChange = (e: SyntheticInputEvent<>) => {
+    const { name, value } = e.target;
+    this.setState(() => ({
+      [name]: value,
+    }));
+  };
 
-    this.handleChange = e => {
-      const { name, value } = e.target;
-      this.setState(() => ({
-        [name]: value,
-      }));
-    };
-
-    this.handleRecaptcha = recaptchaResponse => {
-      this.setState(() => ({
-        recaptchaResponse,
-      }));
-    };
-  }
+  handleRecaptcha = (recaptchaResponse: string) => {
+    this.setState(() => ({
+      recaptchaResponse,
+    }));
+  };
 
   render() {
     const { loading } = this.props;

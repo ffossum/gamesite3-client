@@ -10,27 +10,19 @@ type State = {
   password: string,
 };
 export default class LoginForm extends React.Component<Props, State> {
-  props: Props;
-  state: State;
-  handleSubmit: (SyntheticInputEvent<>) => void;
-  handleChange: (SyntheticInputEvent<>) => void;
-  constructor() {
-    super();
+  handleSubmit = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    if (!this.props.loading) {
+      this.props.logIn(this.state);
+    }
+  };
 
-    this.handleSubmit = e => {
-      e.preventDefault();
-      if (!this.props.loading) {
-        this.props.logIn(this.state);
-      }
-    };
-
-    this.handleChange = e => {
-      const { name, value } = e.target;
-      this.setState(() => ({
-        [name]: value,
-      }));
-    };
-  }
+  handleChange = (e: SyntheticInputEvent<>) => {
+    const { name, value } = e.target;
+    this.setState(() => ({
+      [name]: value,
+    }));
+  };
 
   render() {
     const { loading } = this.props;
