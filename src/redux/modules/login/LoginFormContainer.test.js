@@ -11,9 +11,6 @@ import { createStore } from 'redux';
 import { rootReducer } from '../root';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import serializer from 'enzyme-to-json/serializer';
-
-expect.addSnapshotSerializer(serializer);
 
 describe('login form container', () => {
   test('is a renderable React component', () => {

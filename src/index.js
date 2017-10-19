@@ -37,12 +37,13 @@ deepstreamClient.login().then(() => {
 
   store.dispatch(joinChannel('general'));
 
-  render(
+  const element = document.getElementById('root');
+  element && render(
     <Provider store={store}>
       <Router history={history}>
         <Routes />
       </Router>
     </Provider>,
-    document.getElementById('root'),
+    element,
   );
 });

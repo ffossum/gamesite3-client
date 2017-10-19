@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "main": "index.js",
   "license": "GPL-3.0",
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/testSetup.js",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  },
   "scripts": {
-    "jest": "jest",
-    "coverage": "jest --coverage --collectCoverageFrom=\"src/**/*.js\"",
+    "coverage": "jest --coverage",
     "eslint": "eslint src/",
     "prettier": "prettier --write --single-quote --trailing-comma all \"src/**/*.js\"",
     "prettycheck": "prettier --list-different --single-quote --trailing-comma all \"src/**/*.js\"",
@@ -18,16 +23,17 @@
     "babel-preset-env": "^1.5.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "enzyme": "^2.9.1",
-    "enzyme-to-json": "^1.5.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "enzyme-to-json": "^3.1.4",
     "eslint": "^4.6.1",
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
-    "flow-bin": "^0.56.0",
+    "flow-bin": "^0.57.3",
     "jest": "^21.0.2",
     "prettier": "^1.6.1",
-    "react-test-renderer": "^15.6.1",
+    "react-test-renderer": "^16.0.0",
     "webpack": "^3.5.6"
   },
   "dependencies": {
@@ -36,9 +42,9 @@
     "history": "^4.6.3",
     "query-string": "^5.0.0",
     "ramda": "^0.24.1",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-async-script": "^0.9.1",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.0.0",
     "react-google-recaptcha": "^0.9.6",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
