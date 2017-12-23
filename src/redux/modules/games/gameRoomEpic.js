@@ -59,7 +59,13 @@ function fetchGameDataEpic(
       const gameId = action.payload;
       return ajax
         .getJSON(`/api/game/${gameId}`)
-        .map(game => fetchGameDataSuccess(game))
+        .flatMap(game => {
+          if (game) {
+            return [fetchGameDataSuccess(game)];
+          } else {
+            return [];
+          }
+        })
         .catch(() => Observable.empty());
     });
 }
