@@ -15,6 +15,7 @@ Array [
         "username": "",
       },
     ],
+    "status": "not_started",
   },
 ]
 `;

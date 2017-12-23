@@ -4,7 +4,7 @@ import type { Props as LobbyProps } from '../../../components/lobby/Lobby';
 import { connect } from 'react-redux';
 import type { State } from '../root';
 import { createGameRequest, enterLobby, exitLobby } from './lobbyActions';
-import { map, values, compose, pick } from 'ramda';
+import { map, values, compose, pick, filter } from 'ramda';
 
 export function mapStateToProps(state: State) {
   return {
@@ -54,6 +54,7 @@ export function mergeProps(stateProps: *, dispatchProps: *): LobbyProps {
       };
     }),
     pick(lobby.games),
+    filter(game => game.status === 'not_started'),
   );
 
   return {

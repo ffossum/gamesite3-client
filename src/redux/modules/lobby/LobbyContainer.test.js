@@ -18,6 +18,7 @@ describe('lobby container', () => {
       state,
       refreshLobby({
         game_id: {
+          status: 'not_started',
           createdTime: '2017-06-25T08:33:29.565Z',
           host: 'other_user_id',
           players: ['other_user_id'],
