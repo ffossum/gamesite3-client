@@ -71,7 +71,7 @@ export default class GameRoom extends React.Component<Props> {
       );
     }
 
-    const isHost = user && user.id === game.host;
+    const isHost = user && user.id === game.host.id;
 
     return (
       <div>
@@ -89,10 +89,11 @@ export default class GameRoom extends React.Component<Props> {
                 ))}
               </ul>
             </div>
-            {isHost ? (
-              <button onClick={this.handleLeaveClick}>Leave game</button>
-            ) : (
+            {isHost && (
               <button onClick={this.handleCancelClick}>Cancel game</button>
+            )}
+            {!isHost && (
+              <button onClick={this.handleLeaveClick}>Leave game</button>
             )}
             <GameChatContainer gameId={gameId} />
           </div>
