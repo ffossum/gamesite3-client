@@ -8,15 +8,20 @@ import {
 } from '../lobby/lobbyActions';
 import { FETCH_GAME_DATA_SUCCESS } from './gameDataActions';
 
-import { PLAYER_JOINED, PLAYER_LEFT, GAME_CANCELED } from './gameRoomActions';
+import {
+  PLAYER_JOINED,
+  PLAYER_LEFT,
+  GAME_CANCELED,
+  GAME_STARTED,
+} from './gameRoomActions';
 
-export type GameDataState = {
+export type GameDataState = {|
   id: string,
   host: string,
   createdTime: string,
   players: string[],
-  status?: ?GameStatus,
-};
+  status?: GameStatus,
+|};
 export type GamesState = {
   [gameId: string]: GameDataState,
 };
@@ -26,7 +31,7 @@ const initialState: GamesState = {};
 export default function gamesReducer(
   state: GamesState = initialState,
   action: Action,
-) {
+): GamesState {
   switch (action.type) {
     case REFRESH_LOBBY: {
       return {
@@ -72,6 +77,17 @@ export default function gamesReducer(
         [gameId]: {
           ...previousGame,
           status: 'canceled',
+        },
+      };
+    }
+    case GAME_STARTED: {
+      const gameId = action.payload;
+      const previousGame = state[gameId];
+      return {
+        ...state,
+        [gameId]: {
+          ...previousGame,
+          status: 'started',
         },
       };
     }

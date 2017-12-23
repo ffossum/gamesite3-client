@@ -15,6 +15,9 @@ export const PLAYER_LEFT = 'game/player left';
 export const CANCEL_GAME = 'game/cancel';
 export const GAME_CANCELED = 'game/canceled';
 
+export const START_GAME = 'game/start';
+export const GAME_STARTED = 'game/started';
+
 export type EnterRoomAction = {
   type: typeof ENTER_ROOM,
   payload: {
@@ -173,6 +176,34 @@ export function gameCanceled(gameId: string): GameCanceledAction {
   };
 }
 
+export type StartGameAction = {
+  type: typeof START_GAME,
+  payload: {
+    gameId: string,
+    userId: string,
+  },
+};
+export function startGame(userId: string, gameId: string): StartGameAction {
+  return {
+    type: START_GAME,
+    payload: {
+      gameId,
+      userId,
+    },
+  };
+}
+
+type GameStartedAction = {
+  type: typeof GAME_STARTED,
+  payload: string,
+};
+export function gameStarted(gameId: string): GameStartedAction {
+  return {
+    type: GAME_STARTED,
+    payload: gameId,
+  };
+}
+
 export type GameRoomAction =
   | EnterRoomAction
   | ExitRoomAction
@@ -181,4 +212,6 @@ export type GameRoomAction =
   | LeaveGameAction
   | PlayerLeftAction
   | CancelGameAction
-  | GameCanceledAction;
+  | GameCanceledAction
+  | StartGameAction
+  | GameStartedAction;

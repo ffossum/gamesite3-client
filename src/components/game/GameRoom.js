@@ -18,11 +18,16 @@ export type Props = {
   joinGame: () => any,
   leaveGame: () => any,
   cancelGame: () => any,
+  startGame: () => any,
   gameId: string,
   game: ?Game,
   user: ?PublicUserData,
 };
 export default class GameRoom extends React.Component<Props> {
+  handleStartClick = (e: SyntheticInputEvent<>) => {
+    e.preventDefault();
+    this.props.startGame();
+  };
   handleCancelClick = (e: SyntheticInputEvent<>) => {
     e.preventDefault();
     this.props.cancelGame();
@@ -89,9 +94,14 @@ export default class GameRoom extends React.Component<Props> {
                 ))}
               </ul>
             </div>
-            {isHost && (
-              <button onClick={this.handleCancelClick}>Cancel game</button>
-            )}
+            {isHost && [
+              <button key="cancel" onClick={this.handleCancelClick}>
+                Cancel game
+              </button>,
+              <button key="start" onClick={this.handleStartClick}>
+                Start game
+              </button>,
+            ]}
             {!isHost && (
               <button onClick={this.handleLeaveClick}>Leave game</button>
             )}

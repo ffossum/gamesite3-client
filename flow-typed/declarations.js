@@ -14,4 +14,4 @@ export type PrivateUserData = PublicUserData & {
   email: string,
 };
 
-export type GameStatus = 'not_started' | 'in_progress' | 'canceled';
+export type GameStatus = 'not_started' | 'in_progress' | 'canceled' | 'started';

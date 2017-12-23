@@ -13,6 +13,7 @@ import {
   joinGame,
   leaveGame,
   cancelGame,
+  startGame,
 } from './gameRoomActions';
 import { contains } from 'ramda';
 
@@ -43,6 +44,7 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
       joinGame,
       leaveGame,
       cancelGame,
+      startGame,
     },
     dispatch,
   );
@@ -89,6 +91,12 @@ export function mergeProps(
         game &&
         user.id === game.host &&
         dispatchProps.cancelGame(user.id, game.id);
+    },
+    startGame() {
+      user &&
+        game &&
+        user.id === game.host &&
+        dispatchProps.startGame(user.id, game.id);
     },
     gameId,
     game: transformedGame,
